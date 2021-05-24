@@ -2,8 +2,8 @@ package MagicalBattle.career;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import MagicalBattle.Enums.Career;
-import MagicalBattle.Enums.Status;
+import MagicalBattle.enums.Career;
+import MagicalBattle.enums.Status;
 import MagicalBattle.constants.Settings;
 import MagicalBattle.models.SkillObject;
 import MagicalBattle.constants.CareerSettings;

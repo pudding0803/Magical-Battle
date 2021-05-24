@@ -1,7 +1,7 @@
 package MagicalBattle.career;
 
 import javafx.scene.image.ImageView;
-import MagicalBattle.Enums.Career;
+import MagicalBattle.enums.Career;
 
 public class Assassin extends Player {
     public Assassin(ImageView imageView,boolean isPlayer1) {

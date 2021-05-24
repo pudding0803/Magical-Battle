@@ -24,7 +24,7 @@ public final class Settings {
     public static final double FROZEN_AGILITY_EFFECT = 1;
     public static final double BURNED_DAMAGE = 10;
     public static final double KNOCK_BACK_PER_DISTANCE = 8;
-    public static final double KNOCK_UP_VELOCITY = 10;
+    public static final double KNOCK_UP_VELOCITY = 12;
 
     public static final int END_TIME = -1;
     // 20ms * ?

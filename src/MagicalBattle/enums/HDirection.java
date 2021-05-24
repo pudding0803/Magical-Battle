@@ -1,4 +1,4 @@
-package MagicalBattle.Enums;
+package MagicalBattle.enums;
 
 public enum HDirection {
     NULL, LEFT, RIGHT;

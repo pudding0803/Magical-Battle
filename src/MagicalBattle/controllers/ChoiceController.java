@@ -12,7 +12,7 @@ import javafx.animation.Timeline;
 import javafx.animation.KeyFrame;
 import javafx.util.Duration;
 
-import MagicalBattle.Enums.Career;
+import MagicalBattle.enums.Career;
 
 import java.util.ResourceBundle;
 import java.util.HashMap;
@@ -22,7 +22,7 @@ import java.net.URL;
 
 import MagicalBattle.constants.CareerSettings;
 import MagicalBattle.constants.Settings;
-import MagicalBattle.Enums.Direction;
+import MagicalBattle.enums.Direction;
 import MagicalBattle.models.ImageSet;
 import MagicalBattle.models.ProgressBars;
 

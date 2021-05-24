@@ -1,7 +1,7 @@
 package MagicalBattle.config;
 
 import javafx.scene.image.Image;
-import MagicalBattle.Enums.Career;
+import MagicalBattle.enums.Career;
 import MagicalBattle.models.ImageSet;
 
 import java.util.ArrayList;

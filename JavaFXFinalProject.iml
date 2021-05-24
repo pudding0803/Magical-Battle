@@ -40,6 +40,5 @@
     <orderEntry type="library" name="xmlbeans-4.0.0" level="project" />
     <orderEntry type="library" name="commons-compress-1.20" level="project" />
     <orderEntry type="library" name="poi-ooxml-full-5.0.0" level="project" />
-    <orderEntry type="library" name="fontawesomefx-8.9" level="project" />
   </component>
 </module>

@@ -1,4 +1,4 @@
-package MagicalBattle.Enums;
+package MagicalBattle.enums;
 
 import javafx.scene.image.ImageView;
 import MagicalBattle.career.Player;

@@ -7,7 +7,7 @@ import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-import MagicalBattle.Enums.Career;
+import MagicalBattle.enums.Career;
 import MagicalBattle.models.AbilityValue;
 
 public class AbilityReader {

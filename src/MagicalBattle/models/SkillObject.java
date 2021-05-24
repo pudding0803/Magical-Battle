@@ -1,7 +1,7 @@
 package MagicalBattle.models;
 
 import javafx.scene.image.ImageView;
-import MagicalBattle.Enums.Status;
+import MagicalBattle.enums.Status;
 
 import java.util.ArrayList;
 

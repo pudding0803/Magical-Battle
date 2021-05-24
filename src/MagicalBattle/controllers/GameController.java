@@ -19,12 +19,12 @@ import java.util.ResourceBundle;
 import java.io.IOException;
 import java.net.URL;
 
-import MagicalBattle.Enums.HDirection;
+import MagicalBattle.enums.HDirection;
 import MagicalBattle.career.Player;
 import MagicalBattle.models.MissLabel;
 import MagicalBattle.models.SkillObject;
 import MagicalBattle.constants.Settings;
-import MagicalBattle.Enums.VDirection;
+import MagicalBattle.enums.VDirection;
 
 public class GameController implements Initializable {
     @FXML
