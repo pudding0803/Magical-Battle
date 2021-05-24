@@ -1,0 +1,19 @@
+.healthy {
+    -fx-accent: lime;
+}
+
+.warning {
+     -fx-accent: orange;
+}
+
+.dangerous {
+      -fx-accent: red;
+}
+
+.magic {
+    -fx-accent: blue;
+}
+
+#background {
+    -fx-background-image: url("../assets/background/background.png");
+}
