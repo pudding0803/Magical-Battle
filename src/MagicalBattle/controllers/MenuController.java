@@ -33,6 +33,8 @@ public class MenuController implements Initializable {
         ViewController.closeStage();
     }
 
+    private static final Timeline timeline = new Timeline();
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         ArrayList<ImageView> imageViews = new ArrayList<>() {
@@ -78,7 +80,8 @@ public class MenuController implements Initializable {
             }
         };
         AtomicInteger counter = new AtomicInteger(0);
-        Timeline timeline = new Timeline();
+        timeline.stop();
+        timeline.getKeyFrames().clear();
         KeyFrame keyFrame = new KeyFrame(Duration.millis(Settings.WAIT_TIME), (event) -> {
             if (counter.get() % 3 == 0) {
                 Collections.shuffle(imageViews);

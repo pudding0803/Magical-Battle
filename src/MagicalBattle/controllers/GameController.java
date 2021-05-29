@@ -36,6 +36,7 @@ public class GameController implements Initializable {
     @FXML
     private ProgressBar health1, health2, magic1, magic2;
 
+    private static final Timeline timeline = new Timeline();
     private static final ArrayList<SkillObject> allSkillObjects = new ArrayList<>();
     private static final ArrayList<MissLabel> allMissLabel = new ArrayList<>();
 
@@ -49,7 +50,8 @@ public class GameController implements Initializable {
         magic2.setProgress(0);
         player1 = ChoiceController.getSelected1().createPlayer(imageView1, true);
         player2 = ChoiceController.getSelected2().createPlayer(imageView2, false);
-        Timeline timeline = new Timeline();
+        timeline.stop();
+        timeline.getKeyFrames().clear();
         KeyFrame keyFrame = new KeyFrame(Duration.millis(Settings.UPDATE_TIME), (event) -> {
             updateProgressBars();
             player1.updateEffect();

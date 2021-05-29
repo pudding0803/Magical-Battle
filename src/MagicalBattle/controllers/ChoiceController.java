@@ -36,6 +36,8 @@ public class ChoiceController implements Initializable {
     @FXML
     private Button startButton;
 
+    private static final Timeline timeline = new Timeline();
+
     private final HashMap<Career, ImageSet> imageSetMap = CareerSettings.imageSetMap;
     private Direction key1, key2;
     private Career choice1, choice2;
@@ -76,6 +78,8 @@ public class ChoiceController implements Initializable {
             alchemistImageView.setImage(imageSetMap.get(Career.ALCHEMIST).getPrepareOrSelect(count.get(), isSelected(Career.ALCHEMIST)));
             count.set(count.get() == 2 ? 0 : count.incrementAndGet());
         });
+        timeline.stop();
+        timeline.getKeyFrames().clear();
         KeyFrame chooseKeyFrame = new KeyFrame(Duration.millis(Settings.UPDATE_TIME), (event) -> {
             if (selected1 == Career.NULL) choice1 = updateChoice(key1, choice1.ordinal());
             if (selected2 == Career.NULL) choice2 = updateChoice(key2, choice2.ordinal());

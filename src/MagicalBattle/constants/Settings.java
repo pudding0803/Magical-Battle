@@ -6,7 +6,7 @@ public final class Settings {
 
     public static final double STEP = 5;
 
-    public static final double WAIT_TIME = 400;
+    public static final double WAIT_TIME = 300;
     public static final double UPDATE_TIME = 20;
 
     public static final double GROUND_HEIGHT = 500;
