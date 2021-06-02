@@ -69,7 +69,7 @@ public class Mage extends Player {
                 this.attackCounter = 0;
             }
         }
-        SkillObject skillObject = new SkillObject(attack, statusList, damage, this.isPlayer1, (index != -1 ? -Settings.ATTACK_VELOCITY : Settings.ATTACK_VELOCITY), 0);
+        SkillObject skillObject = new SkillObject(attack, statusList, damage, this.isPlayer1, Settings.ATTACK_VELOCITY * (index != -1 ? -1 : 1), 0);
         GameController.newSkillObject(skillObject);
     }
 }
