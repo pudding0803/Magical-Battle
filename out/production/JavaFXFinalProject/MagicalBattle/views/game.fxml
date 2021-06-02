@@ -13,8 +13,8 @@
             <Pane id="background" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
             <Pane fx:id="skillPane" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
             <Pane fx:id="missPane" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-            <ImageView fx:id="imageView1" fitHeight="52.0" layoutX="150.0" layoutY="500.0" pickOnBounds="true" preserveRatio="true" />
-            <ImageView fx:id="imageView2" fitHeight="52.0" layoutX="750.0" layoutY="500.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="imageView1" fitHeight="54.0" layoutX="150.0" layoutY="500.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="imageView2" fitHeight="54.0" layoutX="750.0" layoutY="500.0" pickOnBounds="true" preserveRatio="true" />
             <ProgressBar fx:id="health1" layoutX="110.0" layoutY="20.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="50.0" prefWidth="280.0" progress="1.0" styleClass="health" />
             <ProgressBar fx:id="magic1" layoutX="110.0" layoutY="70.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="30.0" prefWidth="220.0" progress="1.0" styleClass="magic" />
             <ProgressBar fx:id="health2" layoutX="500.0" layoutY="20.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="50.0" prefWidth="280.0" progress="1.0" styleClass="health" />

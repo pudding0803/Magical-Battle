@@ -188,32 +188,31 @@ public abstract class Player {
             else this.self.setImage(imageSetMap.get(this.career).getRight(index == 2 ? 0 : ++index));
         }
         this.moveDistance = Settings.STEP * this.currentValue.getSpeed() * this.hDirection.getValue() * (stunned ? 0 : 1);
-        if (this.getX() - this.moveDistance < 0) {
-            this.setX(0);
-            return;
-        } else if (this.getX() + this.moveDistance > Settings.WIDTH - this.self.getImage().getWidth()) {
-            this.setX(Settings.WIDTH - this.getWidth());
-            return;
-        }
         Timeline timeline = new Timeline();
-        KeyFrame keyFrame = new KeyFrame(Duration.millis(Settings.UPDATE_TIME), (event) ->
-                this.self.setLayoutX(this.getX() + this.moveDistance));
+        KeyFrame keyFrame = new KeyFrame(Duration.millis(Settings.UPDATE_TIME), (event) -> {
+            this.setX(this.getX() + this.moveDistance);
+            if (this.getX() < 0) {
+                this.setX(0);
+            } else if (this.getX() > Settings.WIDTH - this.getWidth() + Settings.FIXED_WIDTH) {
+                this.setX(Settings.WIDTH - this.getWidth() + Settings.FIXED_WIDTH);
+            }
+        });
         timeline.getKeyFrames().add(keyFrame);
         timeline.play();
     }
 
     public void doVerticalMotion() {
-        if (this.getY() + this.velocity > Settings.GROUND_HEIGHT) {
-            this.self.setLayoutY(Settings.GROUND_HEIGHT);
-            this.velocity = 0.0;
-        } else if (this.getY() + this.velocity < 0) {
-            this.self.setLayoutY(0);
-            this.velocity = 0.0;
-        }
         Timeline timeline = new Timeline();
         KeyFrame keyFrame = new KeyFrame(Duration.millis(Settings.UPDATE_TIME), (event) -> {
             this.setY(this.getY() + this.velocity * abilityMap.get(this.career).getSpeed());
             this.velocity += Settings.GRAVITY;
+            if (this.getY() + this.velocity > Settings.GROUND_HEIGHT) {
+                this.setY(Settings.GROUND_HEIGHT);
+                this.velocity = 0;
+            } else if (this.getY() + this.velocity < 0) {
+                this.setY(0);
+                this.velocity = 0;
+            }
             if (this.getY() == Settings.GROUND_HEIGHT) {
                 this.jumpCount = (this.career == Career.ASSASSIN ? 2 : 1);
             }
@@ -243,6 +242,7 @@ public abstract class Player {
                 GameController.newMissLabel(new MissLabel(this));
             } else {
                 this.setHealth(this.getHealth() + this.getDefense() - skillObject.getDamage());
+                this.timer.setHurtTimer(Settings.HURT_TIME);
                 if (skillObject.containFrozen()) {
                     this.timer.setFrozenTimer(this.timer.isBurnedTimerEnd() ? Settings.FROZEN_TIME : 0);
                     this.timer.setBurnedTimer(0);
@@ -283,22 +283,30 @@ public abstract class Player {
         this.setSpeed(this.getMaxSpeed());
         this.setAgility(this.getMaxAgility());
         this.stunned = !this.timer.isStunnedTimerEnd();
-        if (!this.timer.isFrozenTimerEnd()) {
+        if (!this.timer.isHurtTimerEnd()) {
             Lighting lighting = new Lighting();
-            lighting.setLight(new Light.Distant(0, 45, Colors.frozenColor));
+            lighting.setLight(new Light.Distant(0, 45, Color.RED));
             this.self.setEffect(lighting);
+        }
+        if (!this.timer.isFrozenTimerEnd()) {
+            if (this.timer.isHurtTimerEnd()) {
+                Lighting lighting = new Lighting();
+                lighting.setLight(new Light.Distant(0, 45, Colors.frozenColor));
+                this.self.setEffect(lighting);
+            }
             this.setSpeed(this.getMaxSpeed() * Settings.FROZEN_SPEED_EFFECT);
             this.setAgility(this.getMaxAgility() - Settings.FROZEN_AGILITY_EFFECT);
         }
         if (!this.timer.isBurnedTimerEnd()) {
-            Lighting lighting = new Lighting();
-            if(this.timer.getBurnedTimer() % 50 == 0) this.setHealth(this.getHealth() - Settings.BURNED_DAMAGE);
-            if (this.timer.getBurnedTimer() % 50 >= 0 && this.timer.getBurnedTimer() % 50 <= 3) {
-                lighting.setLight(new Light.Distant(0, 45, Color.RED));
-            } else {
-                lighting.setLight(new Light.Distant(0, 45, Colors.burnedColor));
+            if(this.timer.getBurnedTimer() % 50 == 0) {
+                this.setHealth(this.getHealth() - Settings.BURNED_DAMAGE);
+                this.timer.setHurtTimer(Settings.HURT_TIME);
             }
-            this.self.setEffect(lighting);
+            if (this.timer.isHurtTimerEnd()) {
+                Lighting lighting = new Lighting();
+                lighting.setLight(new Light.Distant(0, 45, Colors.burnedColor));
+                this.self.setEffect(lighting);
+            }
         }
         if (!this.timer.isKnockBackTimerEnd()) {
             double knockBackMovement = (this.knockBackFromRight == HDirection.RIGHT ? -1 : 1) * Settings.KNOCK_BACK_PER_DISTANCE;
@@ -310,9 +318,7 @@ public abstract class Player {
     public abstract void attack();
 
     public void debug() {
-        System.out.println(this.getHealth());
-        System.out.println(this.getMaxHealth());
-        System.out.println(this.getHealthRate());
+        System.out.println(this.getX());
     }
 
 }

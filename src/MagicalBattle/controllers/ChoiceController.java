@@ -46,7 +46,7 @@ public class ChoiceController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         key1 = key2 = Direction.NULL;
-        choice1 = Career.MAGE; // Career.WARRIOR;
+        choice1 = Career.ARCHER; // Career.WARRIOR;
         choice2 = Career.MAGE; // Career.ALCHEMIST;
         selected1 = selected2 = Career.NULL;
         for (int i = 0; i < 6; i++) {

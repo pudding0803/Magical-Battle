@@ -4,6 +4,7 @@ import MagicalBattle.constants.Settings;
 
 public class Timer {
     private int attackTimer;
+    private int hurtTimer;
     private int frozenTimer;
     private int burnedTimer;
     private int stunnedTimer;
@@ -11,6 +12,7 @@ public class Timer {
 
     public Timer() {
         this.attackTimer = Settings.END_TIME;
+        this.hurtTimer = Settings.END_TIME;
         this.frozenTimer = Settings.END_TIME;
         this.burnedTimer = Settings.END_TIME;
         this.stunnedTimer = Settings.END_TIME;
@@ -19,6 +21,7 @@ public class Timer {
 
     public void countDown() {
         if (this.attackTimer > Settings.END_TIME) this.attackTimer--;
+        if (this.hurtTimer > Settings.END_TIME) this.hurtTimer--;
         if (this.frozenTimer > Settings.END_TIME) this.frozenTimer--;
         if (this.burnedTimer > Settings.END_TIME) this.burnedTimer--;
         if (this.stunnedTimer > Settings.END_TIME) this.stunnedTimer--;
@@ -27,6 +30,10 @@ public class Timer {
 
     public void setAttackTimer(int time) {
         this.attackTimer = time;
+    }
+
+    public void setHurtTimer(int time) {
+        this.hurtTimer = time;
     }
 
     public void setFrozenTimer(int time) {
@@ -51,6 +58,10 @@ public class Timer {
 
     public boolean isAttackTimerEnd() {
         return this.attackTimer == Settings.END_TIME;
+    }
+
+    public boolean isHurtTimerEnd() {
+        return this.hurtTimer == Settings.END_TIME;
     }
 
     public boolean isFrozenTimerEnd() {

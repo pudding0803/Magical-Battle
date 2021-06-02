@@ -42,7 +42,7 @@ public class Mage extends Player {
         attack.setLayoutX(this.getX() + (index != -1 ? -attack.getImage().getWidth() : this.getWidth()));
         attack.setLayoutY(this.getY() + (this.getHeight() - attack.getImage().getHeight()) / 2);
         ArrayList<Status> statusList = new ArrayList<>();
-        double damage = 0;
+        double damage = this.getAttack();
         switch (this.attackCounter) {
             case 0 -> {
                 statusList.add(Status.FROZEN);
@@ -69,7 +69,7 @@ public class Mage extends Player {
                 this.attackCounter = 0;
             }
         }
-        SkillObject skillObject = new SkillObject(attack, statusList, damage, this.isPlayer1, (index != -1 ? -10 : 10), 0);
+        SkillObject skillObject = new SkillObject(attack, statusList, damage, this.isPlayer1, (index != -1 ? -Settings.ATTACK_VELOCITY : Settings.ATTACK_VELOCITY), 0);
         GameController.newSkillObject(skillObject);
     }
 }
