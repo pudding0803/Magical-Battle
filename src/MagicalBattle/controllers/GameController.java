@@ -8,6 +8,7 @@ import javafx.animation.Timeline;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.media.MediaView;
 import javafx.util.Duration;
 
 import javafx.scene.image.ImageView;
@@ -22,7 +23,7 @@ import java.net.URL;
 import MagicalBattle.enums.HDirection;
 import MagicalBattle.career.Player;
 import MagicalBattle.models.MissLabel;
-import MagicalBattle.models.SkillObject;
+import MagicalBattle.skillObject.SkillObject;
 import MagicalBattle.constants.Settings;
 import MagicalBattle.enums.VDirection;
 
@@ -134,6 +135,12 @@ public class GameController implements Initializable {
     public static void newMissLabel(MissLabel missLabel) {
         allMissLabel.add(missLabel);
     }
+
+//    public static void playSound() {
+//        AudioClip audioClip = new AudioClip(Objects.requireNonNull(getClass().getResource("../assets/media/ground.mp3")).toExternalForm());
+//        System.out.println(audioClip.getSource());
+//        audioClip.play();
+//    }
 
     @FXML
     public void pressHandle(KeyEvent event) throws IOException {

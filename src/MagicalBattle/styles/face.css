@@ -7,91 +7,91 @@
 }
 
 .Warrior0 {
-    -fx-background-iMage: url("../assets/Warrior/face/0.png");
+    -fx-background-iMage: url("../assets/career/Warrior/face/0.png");
     -fx-border-color: #5e7a2c;
 }
 
 .Warrior1 {
-    -fx-background-iMage: url("../assets/Warrior/face/1.png");
+    -fx-background-iMage: url("../assets/career/Warrior/face/1.png");
     -fx-border-color: #5e7a2c;
 }
 
 .Warrior2 {
-    -fx-background-iMage: url("../assets/Warrior/face/2.png");
+    -fx-background-iMage: url("../assets/career/Warrior/face/2.png");
     -fx-border-color: #5e7a2c;
 }
 
 .Guardian0 {
-    -fx-background-iMage: url("../assets/Guardian/face/0.png");
+    -fx-background-iMage: url("../assets/career/Guardian/face/0.png");
     -fx-border-color: #464646;
 }
 
 .Guardian1 {
-    -fx-background-iMage: url("../assets/Guardian/face/1.png");
+    -fx-background-iMage: url("../assets/career/Guardian/face/1.png");
     -fx-border-color: #464646;
 }
 
 .Guardian2 {
-    -fx-background-iMage: url("../assets/Guardian/face/2.png");
+    -fx-background-iMage: url("../assets/career/Guardian/face/2.png");
     -fx-border-color: #464646;
 }
 
 .Mage0 {
-    -fx-background-iMage: url("../assets/Mage/face/0.png");
+    -fx-background-iMage: url("../assets/career/Mage/face/0.png");
     -fx-border-color: #967808;
 }
 
 .Mage1 {
-    -fx-background-iMage: url("../assets/Mage/face/1.png");
+    -fx-background-iMage: url("../assets/career/Mage/face/1.png");
     -fx-border-color: #967808;
 }
 
 .Mage2 {
-    -fx-background-iMage: url("../assets/Mage/face/2.png");
+    -fx-background-iMage: url("../assets/career/Mage/face/2.png");
     -fx-border-color: #967808;
 }
 
 .Archer0 {
-    -fx-background-iMage: url("../assets/Archer/face/0.png");
+    -fx-background-iMage: url("../assets/career/Archer/face/0.png");
     -fx-border-color: #466462;
 }
 
 .Archer1 {
-    -fx-background-iMage: url("../assets/Archer/face/1.png");
+    -fx-background-iMage: url("../assets/career/Archer/face/1.png");
     -fx-border-color: #466462;
 }
 
 .Archer2 {
-    -fx-background-iMage: url("../assets/Archer/face/2.png");
+    -fx-background-iMage: url("../assets/career/Archer/face/2.png");
     -fx-border-color: #466462;
 }
 
 .Assassin0 {
-    -fx-background-iMage: url("../assets/Assassin/face/0.png");
+    -fx-background-iMage: url("../assets/career/Assassin/face/0.png");
     -fx-border-color: #0a2154;
 }
 
 .Assassin1 {
-    -fx-background-iMage: url("../assets/Assassin/face/1.png");
+    -fx-background-iMage: url("../assets/career/Assassin/face/1.png");
     -fx-border-color: #0a2154;
 }
 
 .Assassin2 {
-    -fx-background-iMage: url("../assets/Assassin/face/2.png");
+    -fx-background-iMage: url("../assets/career/Assassin/face/2.png");
     -fx-border-color: #0a2154;
 }
 
 .Alchemist0 {
-    -fx-background-iMage: url("../assets/Alchemist/face/0.png");
+    -fx-background-iMage: url("../assets/career/Alchemist/face/0.png");
     -fx-border-color: #9b390d;
 }
 
 .Alchemist1 {
-    -fx-background-iMage: url("../assets/Alchemist/face/1.png");
+    -fx-background-iMage: url("../assets/career/Alchemist/face/1.png");
     -fx-border-color: #9b390d;
 }
 
 .Alchemist2 {
-    -fx-background-iMage: url("../assets/Alchemist/face/2.png");
+    -fx-background-iMage: url("../assets/career/Alchemist/face/2.png");
     -fx-border-color: #9b390d;
 }

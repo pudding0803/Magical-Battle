@@ -1,8 +1,8 @@
 package MagicalBattle.constants;
 
 import MagicalBattle.enums.Career;
-import MagicalBattle.config.ImagesLoader;
-import MagicalBattle.config.AbilityReader;
+import MagicalBattle.loader.ImagesLoader;
+import MagicalBattle.loader.AbilityReader;
 import MagicalBattle.models.AbilityValue;
 import MagicalBattle.models.ImageSet;
 

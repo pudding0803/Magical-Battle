@@ -1,10 +1,12 @@
 package MagicalBattle.career;
 
+import MagicalBattle.skillObject.SkillObject;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.effect.Light;
 import javafx.scene.effect.Lighting;
 import javafx.scene.image.ImageView;
+import javafx.scene.media.AudioClip;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
 import MagicalBattle.enums.Career;
@@ -17,6 +19,7 @@ import MagicalBattle.controllers.GameController;
 import MagicalBattle.models.*;
 
 import java.util.HashMap;
+import java.util.Objects;
 import java.util.Random;
 
 public abstract class Player {
@@ -172,8 +175,13 @@ public abstract class Player {
     }
 
     public void setVelocity() {
-        if (this.isUp() && this.jumpCount-- > 0 || this.isDown())
-            this.velocity = (Settings.INITIAL_VELOCITY + Settings.BONUS_VELOCITY * this.getSpeed()) * this.vDirection.getValue() * (stunned ? 0 : 1);
+        if (this.isUp() && this.jumpCount-- > 0) {
+            AudioClip audioClip = new AudioClip(Objects.requireNonNull(getClass().getResource("../assets/media/other/jump.mp3")).toExternalForm());
+            audioClip.play();
+            this.velocity = -(Settings.INITIAL_VELOCITY + Settings.BONUS_VELOCITY * this.getSpeed()) * (stunned ? 0 : 1);
+        } else if (this.isDown()) {
+            this.velocity = (Settings.INITIAL_VELOCITY + Settings.BONUS_VELOCITY * this.getSpeed()) * (stunned ? 0 : 1);
+        }
         this.vDirection = VDirection.NULL;
     }
 
@@ -204,8 +212,10 @@ public abstract class Player {
     public void doVerticalMotion() {
         Timeline timeline = new Timeline();
         KeyFrame keyFrame = new KeyFrame(Duration.millis(Settings.UPDATE_TIME), (event) -> {
-            this.setY(this.getY() + this.velocity * abilityMap.get(this.career).getSpeed());
-            this.velocity += Settings.GRAVITY;
+            if (this.getY() + this.velocity < Settings.GROUND_HEIGHT) {
+                this.setY(this.getY() + this.velocity * abilityMap.get(this.career).getSpeed());
+                this.velocity += Settings.GRAVITY;
+            }
             if (this.getY() + this.velocity > Settings.GROUND_HEIGHT) {
                 this.setY(Settings.GROUND_HEIGHT);
                 this.velocity = 0;
@@ -214,6 +224,10 @@ public abstract class Player {
                 this.velocity = 0;
             }
             if (this.getY() == Settings.GROUND_HEIGHT) {
+                if (this.jumpCount <= (this.career == Career.ASSASSIN ? 1 : 0)) {
+                    AudioClip audioClip = new AudioClip(Objects.requireNonNull(getClass().getResource("../assets/media/other/land.mp3")).toExternalForm());
+                    audioClip.play();
+                }
                 this.jumpCount = (this.career == Career.ASSASSIN ? 2 : 1);
             }
         });
@@ -239,8 +253,11 @@ public abstract class Player {
         if (skillObject.isFromOther(this.isPlayer1) && (inSelf(x, y) || inSelf(x + width, y) || inSelf(x, y + height) || inSelf(x + width, y + height))) {
             int random = new Random().nextInt(10);
             if (random < (int) this.getAgility()) {
+                AudioClip audioClip = new AudioClip(Objects.requireNonNull(getClass().getResource("../assets/media/other/miss.mp3")).toExternalForm());
+                audioClip.play();
                 GameController.newMissLabel(new MissLabel(this));
             } else {
+                skillObject.playHitMedia();
                 this.setHealth(this.getHealth() + this.getDefense() - skillObject.getDamage());
                 this.timer.setHurtTimer(Settings.HURT_TIME);
                 if (skillObject.containFrozen()) {
@@ -295,7 +312,7 @@ public abstract class Player {
                 this.self.setEffect(lighting);
             }
             this.setSpeed(this.getMaxSpeed() * Settings.FROZEN_SPEED_EFFECT);
-            this.setAgility(this.getMaxAgility() - Settings.FROZEN_AGILITY_EFFECT);
+            this.setAgility(Math.max(this.getMaxAgility() - Settings.FROZEN_AGILITY_EFFECT, 0));
         }
         if (!this.timer.isBurnedTimerEnd()) {
             if(this.timer.getBurnedTimer() % 50 == 0) {
