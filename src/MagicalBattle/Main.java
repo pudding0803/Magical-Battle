@@ -16,7 +16,7 @@ public class Main extends Application {
         primaryStage.getIcons().add(icon);
         primaryStage.setResizable(false);
         ViewController.currentStage = primaryStage;
-        ViewController.toMenuScene();
+        ViewController.toLoadingScene();
         ViewController.currentStage.show();
     }
 

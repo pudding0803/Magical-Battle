@@ -6,6 +6,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.media.AudioClip;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
 import MagicalBattle.enums.Career;
 import MagicalBattle.constants.CareerSettings;
@@ -24,19 +27,20 @@ public class MenuController implements Initializable {
     private final HashMap<Career, ImageSet> imageSetMap = CareerSettings.imageSetMap;
 
     @FXML
-    public void switchToChoice() throws IOException {
-        ViewController.toChoiceScene();
-    }
-
-    @FXML
     public void exit() {
         ViewController.closeStage();
     }
 
     private static final Timeline timeline = new Timeline();
 
+    private static final Media media = new Media(Objects.requireNonNull(MenuController.class.getResource("../assets/media/bgm/menu.mp3")).toExternalForm());
+    private static final MediaPlayer mediaPlayer = new MediaPlayer(media);
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        mediaPlayer.setVolume(Settings.BGM_VOLUME);
+        mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+        mediaPlayer.play();
         ArrayList<ImageView> imageViews = new ArrayList<>() {
             {
                 add(image1);
@@ -98,4 +102,11 @@ public class MenuController implements Initializable {
         timeline.play();
     }
 
+    @FXML
+    public void switchToChoice() throws IOException {
+        mediaPlayer.stop();
+        AudioClip audioClip = new AudioClip(Objects.requireNonNull(getClass().getResource("../assets/media/other/submit.mp3")).toExternalForm());
+        audioClip.play();
+        ViewController.toChoiceScene();
+    }
 }

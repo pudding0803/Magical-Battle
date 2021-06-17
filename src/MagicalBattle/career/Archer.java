@@ -23,12 +23,12 @@ public class Archer extends Player {
         this.timer.setAttackTimer(Settings.ARCHER_ATTACK_TIME);
         int arrowsNumber = new Random().nextInt(3) + 3;
         for (int i = 0; i < arrowsNumber; i++) {
-            int arrowIndex = new Random().nextInt(7);
+            int attackIndex = new Random().nextInt(6);
             boolean isLeft = (CareerSettings.imageSetMap.get(this.career).indexInLeft(this.self.getImage()) != -1);
             SkillObject skillObject;
-            if (arrowIndex == 0) {
+            if (attackIndex == 0) {
                 skillObject = new FlameArrow(this, isLeft, this.isPlayer1);
-            } else if (arrowIndex == 1) {
+            } else if (attackIndex == 1) {
                 skillObject = new FlashArrow(this, isLeft, this.isPlayer1);
             } else {
                 skillObject = new Arrow(this, isLeft, this.isPlayer1);

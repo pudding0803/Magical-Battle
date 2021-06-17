@@ -8,7 +8,9 @@ import javafx.animation.Timeline;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.media.MediaView;
+import javafx.scene.media.AudioClip;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
 
 import javafx.scene.image.ImageView;
@@ -16,9 +18,11 @@ import javafx.scene.input.KeyEvent;
 
 
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.ResourceBundle;
 import java.io.IOException;
 import java.net.URL;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import MagicalBattle.enums.HDirection;
 import MagicalBattle.career.Player;
@@ -43,8 +47,14 @@ public class GameController implements Initializable {
 
     private static Player player1, player2;
 
+    private static final Media media = new Media(Objects.requireNonNull(GameController.class.getResource("../assets/media/bgm/8bits.mp3")).toExternalForm());
+    private static final MediaPlayer mediaPlayer = new MediaPlayer(media);
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        mediaPlayer.setVolume(Settings.BGM_VOLUME);
+        mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+        mediaPlayer.play();
         health1.setProgress(0);
         health2.setProgress(0);
         magic1.setProgress(0);
@@ -55,41 +65,18 @@ public class GameController implements Initializable {
         timeline.getKeyFrames().clear();
         KeyFrame keyFrame = new KeyFrame(Duration.millis(Settings.UPDATE_TIME), (event) -> {
             updateProgressBars();
+            if (player1.isDead() || player2.isDead()) gameOver();
+
             player1.updateEffect();
             player2.updateEffect();
             player1.getTimer().countDown();
             player2.getTimer().countDown();
 
-            skillPane.getChildren().clear();
-            for (int i = 0; i < allSkillObjects.size(); i++) {
-                SkillObject skillObject = allSkillObjects.get(i);
-                skillPane.getChildren().add(skillObject.getImageView());
-                skillObject.setX(skillObject.getX() + skillObject.getVelocityX());
-                skillObject.setX(skillObject.getX() + skillObject.getVelocityY());
-                if (skillObject.getX() <= 0 || skillObject.getX() >= Settings.WIDTH || player1.isCollidedFromOther(skillObject) || player2.isCollidedFromOther(skillObject))
-                    allSkillObjects.remove(i--);
-            }
+            updateSkillObjects();
+            updateMissLabels();
 
-            missPane.getChildren().clear();
-            for (int i = 0; i < allMissLabel.size(); i++) {
-                MissLabel missLabel = allMissLabel.get(i);
-                missPane.getChildren().add(missLabel.getLabel());
-                missLabel.setY(missLabel.getY() - Settings.MISS_PER_DISTANCE);
-                if (missLabel.isFinished()) allMissLabel.remove(i--);
-            }
-
-            if (player1.isUp() || player1.isDown()) player1.setVelocity();
-            player1.doVerticalMotion();
-            if (player1.isLeft() || player1.isRight()) player1.doHorizonMotion();
-            else player1.setStand();
-            if (player1.isAttacking() && player1.getTimer().isAttackTimerEnd()) player1.attack();
-
-            if (player2.isUp() || player2.isDown()) player2.setVelocity();
-            player2.doVerticalMotion();
-            if (player2.isLeft() || player2.isRight()) player2.doHorizonMotion();
-            else player2.setStand();
-            if (player2.isAttacking() && player2.getTimer().isAttackTimerEnd()) player2.attack();
-
+            playerAction(player1);
+            playerAction(player2);
         });
         timeline.getKeyFrames().add(keyFrame);
         timeline.setCycleCount(Timeline.INDEFINITE);
@@ -124,39 +111,94 @@ public class GameController implements Initializable {
         magic2.setProgress(player2.getMagicRate());
     }
 
-    public static Player otherPlayer(boolean isPlayer1) {
-        return (isPlayer1 ? player2 : player1);
-    }
-
     public static void newSkillObject(SkillObject skillObject) {
         allSkillObjects.add(skillObject);
+    }
+
+    private void updateSkillObjects() {
+        skillPane.getChildren().clear();
+        for (int i = 0; i < allSkillObjects.size(); i++) {
+            SkillObject skillObject = allSkillObjects.get(i);
+            skillPane.getChildren().add(skillObject.getImageView());
+            skillObject.setX(skillObject.getX() + skillObject.getVelocityX());
+            skillObject.setX(skillObject.getX() + skillObject.getVelocityY());
+            skillObject.doByTime();
+            if (skillObject.getX() <= 0 || skillObject.getX() >= Settings.WIDTH || player1.isCollidedFromOther(skillObject) || player2.isCollidedFromOther(skillObject))
+                allSkillObjects.remove(i--);
+        }
     }
 
     public static void newMissLabel(MissLabel missLabel) {
         allMissLabel.add(missLabel);
     }
 
-//    public static void playSound() {
-//        AudioClip audioClip = new AudioClip(Objects.requireNonNull(getClass().getResource("../assets/media/ground.mp3")).toExternalForm());
-//        System.out.println(audioClip.getSource());
-//        audioClip.play();
-//    }
+    private void updateMissLabels() {
+        missPane.getChildren().clear();
+        for (int i = 0; i < allMissLabel.size(); i++) {
+            MissLabel missLabel = allMissLabel.get(i);
+            missPane.getChildren().add(missLabel.getLabel());
+            missLabel.setY(missLabel.getY() - Settings.MISS_PER_DISTANCE);
+            if (missLabel.isFinished()) allMissLabel.remove(i--);
+        }
+    }
+
+    private void playerAction(Player player) {
+        if (player.isUp() || player.isDown()) player.setVelocity();
+        player.doVerticalMotion();
+        if (player.isLeft() || player.isRight()) player.doHorizonMotion();
+        else player.setStand();
+        if (player.isAttacking() && player.getTimer().isAttackTimerEnd()) player.attack();
+    }
+
+    private void gameOver() {
+        mediaPlayer.stop();
+        timeline.stop();
+        timeline.getKeyFrames().clear();
+        player1.getTimer().zero();
+        player2.getTimer().zero();
+        player1.updateEffect();
+        player2.updateEffect();
+        AtomicInteger deadCounter = new AtomicInteger(0);
+        KeyFrame gameOver = new KeyFrame(Duration.millis(Settings.UPDATE_TIME), (event) -> {
+            updateSkillObjects();
+            updateMissLabels();
+            player1.doVerticalMotion();
+            player2.doVerticalMotion();
+
+            if (player1.isDead()) player1.setLoserImage();
+            else player1.setWinnerImage((int) ((deadCounter.get() + 1) * Settings.UPDATE_TIME / Settings.WAIT_TIME));
+
+            if (player2.isDead()) player2.setLoserImage();
+            else player2.setWinnerImage((int) ((deadCounter.get() + 1) * Settings.UPDATE_TIME / Settings.WAIT_TIME));
+
+            deadCounter.set((deadCounter.get() + 2) * Settings.UPDATE_TIME / Settings.WAIT_TIME == 3 ? 0 : deadCounter.incrementAndGet());
+        });
+        timeline.setCycleCount((int) (14 * Settings.WAIT_TIME / Settings.UPDATE_TIME));
+        timeline.getKeyFrames().add(gameOver);
+        timeline.play();
+        timeline.setOnFinished((event) -> {
+            try {
+                switchToChoice();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+    }
 
     @FXML
     public void pressHandle(KeyEvent event) throws IOException {
         switch (event.getCode()) {
-            case ESCAPE -> switchToChoice();
             case W -> player1.setVDirection(VDirection.UP);
             case S -> player1.setVDirection(VDirection.DOWN);
             case A -> player1.setHDirection(HDirection.LEFT);
             case D -> player1.setHDirection(HDirection.RIGHT);
             case SPACE -> player1.setAttacking(true);
-
             case UP -> player2.setVDirection(VDirection.UP);
             case DOWN -> player2.setVDirection(VDirection.DOWN);
             case LEFT -> player2.setHDirection(HDirection.LEFT);
             case RIGHT -> player2.setHDirection(HDirection.RIGHT);
             case ENTER -> player2.setAttacking(true);
+            case ESCAPE -> switchToChoice();
         }
     }
 
@@ -176,6 +218,9 @@ public class GameController implements Initializable {
 
     @FXML
     public void switchToChoice() throws IOException {
+        mediaPlayer.stop();
+        AudioClip audioClip = new AudioClip(Objects.requireNonNull(getClass().getResource("../assets/media/other/cancel.mp3")).toExternalForm());
+        audioClip.play();
         ViewController.toChoiceScene();
     }
 }

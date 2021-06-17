@@ -3,8 +3,10 @@ package MagicalBattle.career;
 import MagicalBattle.skillObject.SkillObject;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.geometry.NodeOrientation;
 import javafx.scene.effect.Light;
 import javafx.scene.effect.Lighting;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.media.AudioClip;
 import javafx.scene.paint.Color;
@@ -30,6 +32,7 @@ public abstract class Player {
     protected Career career;
     protected boolean isPlayer1;
     protected final Timer timer = new Timer();
+    protected boolean flippingNeeded;
 
     protected AbilityValue currentValue;
     protected double moveDistance;
@@ -39,6 +42,7 @@ public abstract class Player {
     protected int jumpCount;
     protected boolean attacking = false;
     protected boolean stunned = false;
+    protected boolean dizzy = false;
     protected HDirection knockBackFromRight = HDirection.NULL;
 
     public void initialize(ImageView imageView, Career career, boolean isPlayer1) {
@@ -48,6 +52,7 @@ public abstract class Player {
         this.currentValue = new AbilityValue(abilityMap.get(this.career));
         this.isPlayer1 = isPlayer1;
         this.jumpCount = (career == Career.ASSASSIN ? 2 : 1);
+        this.flippingNeeded = isPlayer1;
     }
 
     public Career getCareer() {
@@ -56,6 +61,24 @@ public abstract class Player {
 
     public Timer getTimer() {
         return this.timer;
+    }
+
+    public boolean isDead() {
+        return this.currentValue.getHealth() == 0;
+    }
+
+    public void setWinnerImage(int counter) {
+        Image image = imageSetMap.get(this.career).getPrepareOrSelect(counter, true);
+        this.self.setImage(image);
+        this.self.setFitHeight(image.getHeight());
+        if (this.flippingNeeded) this.self.setNodeOrientation(NodeOrientation.RIGHT_TO_LEFT);
+    }
+
+    public void setLoserImage() {
+        Image image = imageSetMap.get(this.career).getDead();
+        this.self.setImage(image);
+        this.self.setFitHeight(image.getHeight());
+        if (this.flippingNeeded) this.self.setNodeOrientation(NodeOrientation.RIGHT_TO_LEFT);
     }
 
     public double getWidth() {
@@ -139,15 +162,15 @@ public abstract class Player {
     }
 
     public void setHealth(double value) {
-        this.currentValue.setHealth(value);
+        this.currentValue.setHealth(Math.max(0, value));
     }
 
     public void setSpeed(double value) {
-        this.currentValue.setSpeed(value);
+        this.currentValue.setSpeed(Math.max(0, value));
     }
 
     public void setAgility(double value) {
-        this.currentValue.setAgility(value);
+        this.currentValue.setAgility(Math.max(0, value));
     }
 
     public boolean isUp() {
@@ -178,14 +201,16 @@ public abstract class Player {
         if (this.isUp() && this.jumpCount-- > 0) {
             AudioClip audioClip = new AudioClip(Objects.requireNonNull(getClass().getResource("../assets/media/other/jump.mp3")).toExternalForm());
             audioClip.play();
-            this.velocity = -(Settings.INITIAL_VELOCITY + Settings.BONUS_VELOCITY * this.getSpeed()) * (stunned ? 0 : 1);
+            this.velocity = -(Settings.INITIAL_VELOCITY + Settings.BONUS_VELOCITY * this.getSpeed()) * (this.stunned || this.dizzy ? 0 : 1);
         } else if (this.isDown()) {
-            this.velocity = (Settings.INITIAL_VELOCITY + Settings.BONUS_VELOCITY * this.getSpeed()) * (stunned ? 0 : 1);
+            this.velocity = (Settings.INITIAL_VELOCITY + Settings.BONUS_VELOCITY * this.getSpeed()) * (this.stunned || this.dizzy ? 0 : 1);
         }
         this.vDirection = VDirection.NULL;
     }
 
     public void doHorizonMotion() {
+        this.flippingNeeded = (imageSetMap.get(this.career).indexInLeft(this.self.getImage()) == -1);
+        if (this.dizzy) return;
         if (this.isLeft()) {
             int index = imageSetMap.get(this.career).indexInLeft(this.self.getImage());
             if(index == -1) this.self.setImage(imageSetMap.get(this.career).getLeft(1));
@@ -195,7 +220,7 @@ public abstract class Player {
             if (index == -1) this.self.setImage(imageSetMap.get(this.career).getRight(1));
             else this.self.setImage(imageSetMap.get(this.career).getRight(index == 2 ? 0 : ++index));
         }
-        this.moveDistance = Settings.STEP * this.currentValue.getSpeed() * this.hDirection.getValue() * (stunned ? 0 : 1);
+        this.moveDistance = Settings.STEP * this.currentValue.getSpeed() * this.hDirection.getValue() * (this.stunned || this.dizzy ? 0 : 1);
         Timeline timeline = new Timeline();
         KeyFrame keyFrame = new KeyFrame(Duration.millis(Settings.UPDATE_TIME), (event) -> {
             this.setX(this.getX() + this.moveDistance);
@@ -212,18 +237,17 @@ public abstract class Player {
     public void doVerticalMotion() {
         Timeline timeline = new Timeline();
         KeyFrame keyFrame = new KeyFrame(Duration.millis(Settings.UPDATE_TIME), (event) -> {
-            if (this.getY() + this.velocity < Settings.GROUND_HEIGHT) {
+            if (this.getY() + this.velocity <= Settings.GROUND_HEIGHT - this.getHeight()) {
                 this.setY(this.getY() + this.velocity * abilityMap.get(this.career).getSpeed());
                 this.velocity += Settings.GRAVITY;
-            }
-            if (this.getY() + this.velocity > Settings.GROUND_HEIGHT) {
-                this.setY(Settings.GROUND_HEIGHT);
+            } else if (this.getY() + this.velocity > Settings.GROUND_HEIGHT - this.getHeight()) {
+                this.setY(Settings.GROUND_HEIGHT - this.getHeight());
                 this.velocity = 0;
             } else if (this.getY() + this.velocity < 0) {
                 this.setY(0);
                 this.velocity = 0;
             }
-            if (this.getY() == Settings.GROUND_HEIGHT) {
+            if (this.getY() == Settings.GROUND_HEIGHT - this.getHeight()) {
                 if (this.jumpCount <= (this.career == Career.ASSASSIN ? 1 : 0)) {
                     AudioClip audioClip = new AudioClip(Objects.requireNonNull(getClass().getResource("../assets/media/other/land.mp3")).toExternalForm());
                     audioClip.play();
@@ -242,7 +266,7 @@ public abstract class Player {
     }
 
     public boolean isAttacking() {
-        return this.attacking;
+        return !this.dizzy && this.attacking;
     }
 
     public boolean isCollidedFromOther(SkillObject skillObject) {
@@ -261,11 +285,11 @@ public abstract class Player {
                 this.setHealth(this.getHealth() + this.getDefense() - skillObject.getDamage());
                 this.timer.setHurtTimer(Settings.HURT_TIME);
                 if (skillObject.containFrozen()) {
-                    this.timer.setFrozenTimer(this.timer.isBurnedTimerEnd() ? Settings.FROZEN_TIME : 0);
+                    this.timer.setFrozenTimer(Settings.FROZEN_TIME);
                     this.timer.setBurnedTimer(0);
                 }
                 if (skillObject.containBurned()) {
-                    this.timer.setBurnedTimer(this.timer.isFrozenTimerEnd() ? Settings.BURNED_TIME : 0);
+                    this.timer.setBurnedTimer(Settings.BURNED_TIME);
                     this.timer.setFrozenTimer(0);
                 }
                 if (skillObject.containStunned()) {
@@ -280,6 +304,9 @@ public abstract class Player {
                     this.timer.setStunnedTimer(Settings.STUNNED_TIME);
                     this.velocity = -Settings.KNOCK_UP_VELOCITY;
                     this.jumpCount = 0;
+                }
+                if (skillObject.containDizzy()) {
+                    this.timer.setDizzyTimer(Settings.DIZZY_TIME);
                 }
             }
             return true;
@@ -300,6 +327,7 @@ public abstract class Player {
         this.setSpeed(this.getMaxSpeed());
         this.setAgility(this.getMaxAgility());
         this.stunned = !this.timer.isStunnedTimerEnd();
+        this.dizzy = !this.timer.isDizzyTimerEnd();
         if (!this.timer.isHurtTimerEnd()) {
             Lighting lighting = new Lighting();
             lighting.setLight(new Light.Distant(0, 45, Color.RED));
@@ -335,7 +363,7 @@ public abstract class Player {
     public abstract void attack();
 
     public void debug() {
-        System.out.println(this.getX());
+
     }
 
 }

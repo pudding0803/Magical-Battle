@@ -13,10 +13,10 @@ import java.util.Objects;
 public class StrongWind extends SkillObject {
 
     public StrongWind(Player player, boolean isLeft, boolean fromPlayer1) {
-        this.fireMedia = new AudioClip(Objects.requireNonNull(getClass().getResource("../assets/media/fire/strong_wind.mp3")).toExternalForm());
-        this.hitMedia = new AudioClip(Objects.requireNonNull(getClass().getResource("../assets/media/hit/strong_wind.mp3")).toExternalForm());
         Image left = new Image(Objects.requireNonNull(getClass().getResource("../assets/attack/left/strong_wind.png")).toExternalForm());
         Image right = new Image(Objects.requireNonNull(getClass().getResource("../assets/attack/right/strong_wind.png")).toExternalForm());
+        this.fireMedia = new AudioClip(Objects.requireNonNull(getClass().getResource("../assets/media/fire/strong_wind.mp3")).toExternalForm());
+        this.hitMedia = new AudioClip(Objects.requireNonNull(getClass().getResource("../assets/media/hit/strong_wind.mp3")).toExternalForm());
         this.imageView = new ImageView();
         this.imageView.setImage(isLeft ? left : right);
         this.imageView.setLayoutX(player.getX() + (isLeft ? -this.getWidth() : player.getWidth()));
@@ -30,8 +30,12 @@ public class StrongWind extends SkillObject {
         this.fromPlayer1 = fromPlayer1;
         this.attackBoth = false;
         this.gravity = false;
-        this.velocityX = Settings.ATTACK_VELOCITY * (isLeft ? -1 : 1);
+        this.velocityX = Settings.MAGE_ATTACK_VELOCITY * (isLeft ? -1 : 1);
         this.velocityY = 0;
     }
 
+    @Override
+    public void doByTime() {
+
+    }
 }

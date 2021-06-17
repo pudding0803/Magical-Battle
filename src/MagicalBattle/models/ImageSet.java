@@ -9,12 +9,14 @@ public class ImageSet {
     private final ArrayList<Image> right;
     private final ArrayList<Image> prepare;
     private final ArrayList<Image> selected;
+    private final Image dead;
 
-    public ImageSet(ArrayList<Image> left, ArrayList<Image> right, ArrayList<Image> prepare, ArrayList<Image> selected) {
+    public ImageSet(ArrayList<Image> left, ArrayList<Image> right, ArrayList<Image> prepare, ArrayList<Image> selected, Image dead) {
         this.left = left;
         this.right = right;
         this.prepare = prepare;
         this.selected = selected;
+        this.dead = dead;
     }
 
     public Image getLeft(int index) {
@@ -31,10 +33,14 @@ public class ImageSet {
     }
 
     public int indexInLeft(Image image) {
-        return left.indexOf(image);
+        return this.left.indexOf(image);
     }
 
     public int indexInRight(Image image) {
-        return right.indexOf(image);
+        return this.right.indexOf(image);
+    }
+
+    public Image getDead() {
+        return this.dead;
     }
 }

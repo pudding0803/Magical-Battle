@@ -20,6 +20,8 @@ public abstract class SkillObject {
     protected double velocityX;
     protected double velocityY;
 
+    public abstract void doByTime();
+
     public ImageView getImageView() {
         return this.imageView;
     }
@@ -78,6 +80,10 @@ public abstract class SkillObject {
 
     public boolean containStunned() {
         return this.statusList.contains(Status.STUNNED);
+    }
+
+    public boolean containDizzy() {
+        return this.statusList.contains(Status.DIZZY);
     }
 
     public boolean containKnockBack() {

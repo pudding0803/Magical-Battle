@@ -8,15 +8,11 @@ public class Timer {
     private int frozenTimer;
     private int burnedTimer;
     private int stunnedTimer;
+    private int dizzyTimer;
     private int knockBackTimer;
 
     public Timer() {
-        this.attackTimer = Settings.END_TIME;
-        this.hurtTimer = Settings.END_TIME;
-        this.frozenTimer = Settings.END_TIME;
-        this.burnedTimer = Settings.END_TIME;
-        this.stunnedTimer = Settings.END_TIME;
-        this.knockBackTimer = Settings.END_TIME;
+        this.zero();
     }
 
     public void countDown() {
@@ -25,7 +21,18 @@ public class Timer {
         if (this.frozenTimer > Settings.END_TIME) this.frozenTimer--;
         if (this.burnedTimer > Settings.END_TIME) this.burnedTimer--;
         if (this.stunnedTimer > Settings.END_TIME) this.stunnedTimer--;
+        if (this.dizzyTimer > Settings.END_TIME) this.dizzyTimer--;
         if (this.knockBackTimer > Settings.END_TIME) this.knockBackTimer--;
+    }
+
+    public void zero() {
+        this.attackTimer = Settings.END_TIME;
+        this.hurtTimer = Settings.END_TIME;
+        this.frozenTimer = Settings.END_TIME;
+        this.burnedTimer = Settings.END_TIME;
+        this.stunnedTimer = Settings.END_TIME;
+        this.dizzyTimer = Settings.END_TIME;
+        this.knockBackTimer = Settings.END_TIME;
     }
 
     public void setAttackTimer(int time) {
@@ -46,6 +53,10 @@ public class Timer {
 
     public void setStunnedTimer(int time) {
         this.stunnedTimer = time;
+    }
+
+    public void setDizzyTimer(int time) {
+        this.dizzyTimer = time;
     }
 
     public void setKnockBackTimer(int time) {
@@ -74,6 +85,10 @@ public class Timer {
 
     public boolean isStunnedTimerEnd() {
         return this.stunnedTimer == Settings.END_TIME;
+    }
+
+    public boolean isDizzyTimerEnd() {
+        return this.dizzyTimer == Settings.END_TIME;
     }
 
     public boolean isKnockBackTimerEnd() {

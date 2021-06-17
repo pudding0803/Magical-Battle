@@ -13,6 +13,14 @@ import MagicalBattle.constants.Settings;
 public class ViewController {
     public static Stage currentStage;
 
+    public static void toLoadingScene() throws IOException {
+        Parent root = FXMLLoader.load(Objects.requireNonNull(ViewController.class.getResource("../views/loading.fxml")));
+        Scene scene = new Scene(root, Settings.WIDTH, Settings.HEIGHT);
+        scene.getRoot().requestFocus();
+        currentStage.setTitle("Loading");
+        currentStage.setScene(scene);
+    }
+
     public static void toMenuScene() throws IOException {
         Parent root = FXMLLoader.load(Objects.requireNonNull(ViewController.class.getResource("../views/menu.fxml")));
         Scene scene = new Scene(root, Settings.WIDTH, Settings.HEIGHT);

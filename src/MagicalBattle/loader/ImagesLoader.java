@@ -41,7 +41,8 @@ public class ImagesLoader {
                                     "../assets/career/" + career.getName() + "/selected/" + i + ".png")
                             ).toExternalForm()));
                     }
-                }
+                },
+                new Image(Objects.requireNonNull(ImagesLoader.class.getResource("../assets/career/" + career.getName() + "/dead.png")).toExternalForm())
         );
     }
 
