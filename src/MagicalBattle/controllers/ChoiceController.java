@@ -15,7 +15,7 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
 
-import MagicalBattle.enums.Career;
+import MagicalBattle.models.enums.Career;
 
 import java.util.Objects;
 import java.util.ResourceBundle;
@@ -26,7 +26,7 @@ import java.net.URL;
 
 import MagicalBattle.constants.CareerSettings;
 import MagicalBattle.constants.Settings;
-import MagicalBattle.enums.Direction;
+import MagicalBattle.models.enums.Direction;
 import MagicalBattle.models.ImageSet;
 import MagicalBattle.models.ProgressBars;
 
@@ -88,7 +88,7 @@ public class ChoiceController implements Initializable {
             archerImageView.setImage(imageSetMap.get(Career.ARCHER).getPrepareOrSelect(count.get(), isSelected(Career.ARCHER)));
             assassinImageView.setImage(imageSetMap.get(Career.ASSASSIN).getPrepareOrSelect(count.get(), isSelected(Career.ASSASSIN)));
             alchemistImageView.setImage(imageSetMap.get(Career.ALCHEMIST).getPrepareOrSelect(count.get(), isSelected(Career.ALCHEMIST)));
-            count.set(count.get() == 2 ? 0 : count.incrementAndGet());
+            count.set(count.get() == Settings.CHOOSE_IMAGES_COUNT - 1 ? 0 : count.incrementAndGet());
 
             if (pressed1) {
                 pressed1 = false;

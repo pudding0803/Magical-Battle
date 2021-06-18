@@ -1,7 +1,7 @@
 package MagicalBattle.controllers;
 
 import MagicalBattle.constants.Settings;
-import MagicalBattle.loader.AssetsNumProcessor;
+import MagicalBattle.config.AssetsNumProcessor;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;

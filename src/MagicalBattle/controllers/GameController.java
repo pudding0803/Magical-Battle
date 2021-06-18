@@ -1,6 +1,6 @@
 package MagicalBattle.controllers;
 
-import MagicalBattle.effectObject.EffectObject;
+import MagicalBattle.models.effectObject.EffectObject;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 
@@ -25,11 +25,11 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import MagicalBattle.enums.HDirection;
-import MagicalBattle.career.Player;
-import MagicalBattle.skillObject.SkillObject;
+import MagicalBattle.models.enums.HDirection;
+import MagicalBattle.models.career.Player;
+import MagicalBattle.models.skillObject.SkillObject;
 import MagicalBattle.constants.Settings;
-import MagicalBattle.enums.VDirection;
+import MagicalBattle.models.enums.VDirection;
 
 public class GameController implements Initializable {
     @FXML

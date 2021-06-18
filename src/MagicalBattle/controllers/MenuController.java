@@ -10,7 +10,7 @@ import javafx.scene.media.AudioClip;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
-import MagicalBattle.enums.Career;
+import MagicalBattle.models.enums.Career;
 import MagicalBattle.constants.CareerSettings;
 import MagicalBattle.constants.Settings;
 import MagicalBattle.models.ImageSet;

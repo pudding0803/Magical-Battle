@@ -6,6 +6,9 @@ public final class Settings {
     public static final double BGM_VOLUME = 0.5;
     public static final double EFFECT_VOLUME = 0.7;
 
+    public static final int MOVE_IMAGES_COUNT = 4;
+    public static final int CHOOSE_IMAGES_COUNT = 3;
+
     public static final double PLAYER_SIZE_RATE = (double) 54 / 48;
     public static final double STEP = 5;
 

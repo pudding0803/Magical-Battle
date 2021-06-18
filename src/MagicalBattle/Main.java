@@ -12,7 +12,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws IOException {
-        Image icon = new Image(Objects.requireNonNull(getClass().getResourceAsStream("icon/pudding.png")));
+        Image icon = new Image(Objects.requireNonNull(Objects.requireNonNull(getClass().getResource("assets/icon/pudding.png")).toExternalForm()));
         primaryStage.getIcons().add(icon);
         primaryStage.setResizable(false);
         ViewController.currentStage = primaryStage;

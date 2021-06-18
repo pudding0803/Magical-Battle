@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import javafx.scene.control.ProgressBar;
-import MagicalBattle.enums.Career;
+import MagicalBattle.models.enums.Career;
 import MagicalBattle.constants.CareerSettings;
 
 
