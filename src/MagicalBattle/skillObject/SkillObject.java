@@ -1,11 +1,11 @@
 package MagicalBattle.skillObject;
 
+import MagicalBattle.constants.Settings;
 import javafx.scene.image.ImageView;
 import MagicalBattle.enums.Status;
 import javafx.scene.media.AudioClip;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 public abstract class SkillObject {
     protected AudioClip fireMedia;
@@ -95,10 +95,12 @@ public abstract class SkillObject {
     }
 
     public void playFireMedia() {
+        fireMedia.setVolume(Settings.EFFECT_VOLUME);
         this.fireMedia.play();
     }
 
     public void playHitMedia() {
+        hitMedia.setVolume(Settings.EFFECT_VOLUME);
         this.hitMedia.play();
     }
 

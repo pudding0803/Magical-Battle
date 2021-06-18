@@ -1,5 +1,8 @@
 package MagicalBattle.career;
 
+import MagicalBattle.effectObject.DizzyEffect;
+import MagicalBattle.effectObject.MissLabel;
+import MagicalBattle.effectObject.StunnedEffect;
 import MagicalBattle.skillObject.SkillObject;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -67,26 +70,28 @@ public abstract class Player {
         return this.currentValue.getHealth() == 0;
     }
 
-    public void setWinnerImage(int counter) {
-        Image image = imageSetMap.get(this.career).getPrepareOrSelect(counter, true);
-        this.self.setImage(image);
-        this.self.setFitHeight(image.getHeight());
-        if (this.flippingNeeded) this.self.setNodeOrientation(NodeOrientation.RIGHT_TO_LEFT);
-    }
+    public void setGameOverImage(boolean winner, int counter) {
+        Image image;
+        if (winner) image = imageSetMap.get(this.career).getPrepareOrSelect(counter, true);
+        else image = imageSetMap.get(this.career).getDead();
 
-    public void setLoserImage() {
-        Image image = imageSetMap.get(this.career).getDead();
         this.self.setImage(image);
         this.self.setFitHeight(image.getHeight());
         if (this.flippingNeeded) this.self.setNodeOrientation(NodeOrientation.RIGHT_TO_LEFT);
+
+        if (this.getX() < 0) {
+            this.setX(0);
+        } else if (this.getX() > Settings.WIDTH - this.getWidth()) {
+            this.setX(Settings.WIDTH - this.getWidth());
+        }
     }
 
     public double getWidth() {
-        return this.self.getImage().getWidth();
+        return this.self.getImage().getWidth() * Settings.PLAYER_SIZE_RATE;
     }
 
     public double getHeight() {
-        return this.self.getImage().getHeight();
+        return this.self.getImage().getHeight() * Settings.PLAYER_SIZE_RATE;
     }
 
     public double getX() {
@@ -200,6 +205,7 @@ public abstract class Player {
     public void setVelocity() {
         if (this.isUp() && this.jumpCount-- > 0) {
             AudioClip audioClip = new AudioClip(Objects.requireNonNull(getClass().getResource("../assets/media/other/jump.mp3")).toExternalForm());
+            audioClip.setVolume(Settings.EFFECT_VOLUME);
             audioClip.play();
             this.velocity = -(Settings.INITIAL_VELOCITY + Settings.BONUS_VELOCITY * this.getSpeed()) * (this.stunned || this.dizzy ? 0 : 1);
         } else if (this.isDown()) {
@@ -226,8 +232,8 @@ public abstract class Player {
             this.setX(this.getX() + this.moveDistance);
             if (this.getX() < 0) {
                 this.setX(0);
-            } else if (this.getX() > Settings.WIDTH - this.getWidth() + Settings.FIXED_WIDTH) {
-                this.setX(Settings.WIDTH - this.getWidth() + Settings.FIXED_WIDTH);
+            } else if (this.getX() > Settings.WIDTH - this.getWidth()) {
+                this.setX(Settings.WIDTH - this.getWidth());
             }
         });
         timeline.getKeyFrames().add(keyFrame);
@@ -250,6 +256,7 @@ public abstract class Player {
             if (this.getY() == Settings.GROUND_HEIGHT - this.getHeight()) {
                 if (this.jumpCount <= (this.career == Career.ASSASSIN ? 1 : 0)) {
                     AudioClip audioClip = new AudioClip(Objects.requireNonNull(getClass().getResource("../assets/media/other/land.mp3")).toExternalForm());
+                    audioClip.setVolume(Settings.EFFECT_VOLUME);
                     audioClip.play();
                 }
                 this.jumpCount = (this.career == Career.ASSASSIN ? 2 : 1);
@@ -275,11 +282,12 @@ public abstract class Player {
         double width = skillObject.getWidth();
         double height = skillObject.getHeight();
         if (skillObject.isFromOther(this.isPlayer1) && (inSelf(x, y) || inSelf(x + width, y) || inSelf(x, y + height) || inSelf(x + width, y + height))) {
-            int random = new Random().nextInt(10);
-            if (random < (int) this.getAgility()) {
+            boolean miss = (new Random().nextInt(10) < (int) this.getAgility());
+            if (miss) {
                 AudioClip audioClip = new AudioClip(Objects.requireNonNull(getClass().getResource("../assets/media/other/miss.mp3")).toExternalForm());
+                audioClip.setVolume(Settings.EFFECT_VOLUME);
                 audioClip.play();
-                GameController.newMissLabel(new MissLabel(this));
+                GameController.newEffectObject(new MissLabel(this));
             } else {
                 skillObject.playHitMedia();
                 this.setHealth(this.getHealth() + this.getDefense() - skillObject.getDamage());
@@ -293,7 +301,18 @@ public abstract class Player {
                     this.timer.setFrozenTimer(0);
                 }
                 if (skillObject.containStunned()) {
+                    AudioClip audioClip = new AudioClip(Objects.requireNonNull(getClass().getResource("../assets/media/effect/stunned.mp3")).toExternalForm());
+                    audioClip.setVolume(Settings.EFFECT_VOLUME);
+                    audioClip.play();
                     this.timer.setStunnedTimer(Settings.STUNNED_TIME);
+                    GameController.newEffectObject(new StunnedEffect(this));
+                }
+                if (skillObject.containDizzy()) {
+                    AudioClip audioClip = new AudioClip(Objects.requireNonNull(getClass().getResource("../assets/media/effect/dizzy.mp3")).toExternalForm());
+                    audioClip.setVolume(Settings.EFFECT_VOLUME);
+                    audioClip.play();
+                    this.timer.setDizzyTimer(Settings.DIZZY_TIME);
+                    GameController.newEffectObject(new DizzyEffect(this));
                 }
                 if (skillObject.containKnockBack()) {
                     this.timer.setStunnedTimer(Settings.STUNNED_TIME);
@@ -304,9 +323,6 @@ public abstract class Player {
                     this.timer.setStunnedTimer(Settings.STUNNED_TIME);
                     this.velocity = -Settings.KNOCK_UP_VELOCITY;
                     this.jumpCount = 0;
-                }
-                if (skillObject.containDizzy()) {
-                    this.timer.setDizzyTimer(Settings.DIZZY_TIME);
                 }
             }
             return true;
@@ -344,6 +360,9 @@ public abstract class Player {
         }
         if (!this.timer.isBurnedTimerEnd()) {
             if(this.timer.getBurnedTimer() % 50 == 0) {
+                AudioClip audioClip = new AudioClip(Objects.requireNonNull(getClass().getResource("../assets/media/effect/burned.mp3")).toExternalForm());
+                audioClip.setVolume(Settings.EFFECT_VOLUME);
+                audioClip.play();
                 this.setHealth(this.getHealth() - Settings.BURNED_DAMAGE);
                 this.timer.setHurtTimer(Settings.HURT_TIME);
             }

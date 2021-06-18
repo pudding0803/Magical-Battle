@@ -106,6 +106,7 @@ public class MenuController implements Initializable {
     public void switchToChoice() throws IOException {
         mediaPlayer.stop();
         AudioClip audioClip = new AudioClip(Objects.requireNonNull(getClass().getResource("../assets/media/other/submit.mp3")).toExternalForm());
+        audioClip.setVolume(Settings.EFFECT_VOLUME);
         audioClip.play();
         ViewController.toChoiceScene();
     }

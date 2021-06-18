@@ -3,9 +3,10 @@ package MagicalBattle.constants;
 public final class Settings {
     public static final double WIDTH = 900;
     public static final double HEIGHT = 600;
-    public static final double FIXED_WIDTH = -6;
-    public static final double BGM_VOLUME = 0.7;
+    public static final double BGM_VOLUME = 0.5;
+    public static final double EFFECT_VOLUME = 0.7;
 
+    public static final double PLAYER_SIZE_RATE = (double) 54 / 48;
     public static final double STEP = 5;
 
     public static final double WAIT_TIME = 260;

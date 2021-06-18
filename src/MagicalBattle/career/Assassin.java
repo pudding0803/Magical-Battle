@@ -17,7 +17,7 @@ public class Assassin extends Player {
     @Override
     public void attack() {
         this.timer.setAttackTimer(Settings.ASSASSIN_ATTACK_TIME);
-        int attackIndex = new Random().nextInt(4);
+        int attackIndex = new Random().nextInt(3);
         boolean isLeft = (CareerSettings.imageSetMap.get(this.career).indexInLeft(this.self.getImage()) != -1);
         SkillObject skillObject;
         if (attackIndex == 0) {

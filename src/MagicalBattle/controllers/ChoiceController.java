@@ -121,21 +121,25 @@ public class ChoiceController implements Initializable {
         switch (key) {
             case UP -> {
                 AudioClip audioClip = new AudioClip(Objects.requireNonNull(getClass().getResource("../assets/media/other/choose.mp3")).toExternalForm());
+                audioClip.setVolume(Settings.EFFECT_VOLUME);
                 audioClip.play();
                 return Career.values()[choice + (choice < 4 ? 3 : -3)];
             }
             case DOWN -> {
                 AudioClip audioClip = new AudioClip(Objects.requireNonNull(getClass().getResource("../assets/media/other/choose.mp3")).toExternalForm());
+                audioClip.setVolume(Settings.EFFECT_VOLUME);
                 audioClip.play();
                 return Career.values()[choice + (choice >= 4 ? -3 : 3)];
             }
             case LEFT -> {
                 AudioClip audioClip = new AudioClip(Objects.requireNonNull(getClass().getResource("../assets/media/other/choose.mp3")).toExternalForm());
+                audioClip.setVolume(Settings.EFFECT_VOLUME);
                 audioClip.play();
                 return Career.values()[choice + (choice == 1 || choice == 4 ? 2 : -1)];
             }
             case RIGHT -> {
                 AudioClip audioClip = new AudioClip(Objects.requireNonNull(getClass().getResource("../assets/media/other/choose.mp3")).toExternalForm());
+                audioClip.setVolume(Settings.EFFECT_VOLUME);
                 audioClip.play();
                 return Career.values()[choice + (choice == 3 || choice == 6 ? -2 : 1)];
             }
@@ -159,6 +163,7 @@ public class ChoiceController implements Initializable {
 
     private void playAudioClip(boolean isSelected) {
         AudioClip audioClip = new AudioClip(Objects.requireNonNull(getClass().getResource("../assets/media/other/" + (!isSelected ? "de" : "") + "select.mp3")).toExternalForm());
+        audioClip.setVolume(Settings.EFFECT_VOLUME);
         audioClip.play();
     }
 
@@ -183,6 +188,7 @@ public class ChoiceController implements Initializable {
     public void switchToGame() throws IOException {
         mediaPlayer.stop();
         AudioClip audioClip = new AudioClip(Objects.requireNonNull(getClass().getResource("../assets/media/other/submit.mp3")).toExternalForm());
+        audioClip.setVolume(Settings.EFFECT_VOLUME);
         audioClip.play();
         ViewController.toGameScene();
     }
@@ -191,6 +197,7 @@ public class ChoiceController implements Initializable {
     public void switchToMenu() throws IOException {
         mediaPlayer.stop();
         AudioClip audioClip = new AudioClip(Objects.requireNonNull(getClass().getResource("../assets/media/other/cancel.mp3")).toExternalForm());
+        audioClip.setVolume(Settings.EFFECT_VOLUME);
         audioClip.play();
         ViewController.toMenuScene();
     }

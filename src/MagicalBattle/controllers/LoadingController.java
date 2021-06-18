@@ -12,6 +12,8 @@ import javafx.scene.control.ProgressBar;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.media.AudioClip;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
 
 import java.io.File;
@@ -71,15 +73,23 @@ public class LoadingController implements Initializable {
     private void findFile(File currentFile) {
         if (!currentFile.isDirectory()) {
             fileCount ++;
+            file.setText("Loading\t\"" + currentFile.getPath() + "\"");
             progress.setProgress(Math.min(1, (double) fileCount / maxFileCount));
             String relativePath = ".." + currentFile.getPath().substring(currentFile.getPath().indexOf("\\assets"));
-            file.setText("Loading\t\"" + relativePath + "\"");
             if (currentFile.getName().contains(".png")) {
                 image.setImage(new Image(Objects.requireNonNull(getClass().getResource(relativePath)).toExternalForm()));
             } else if (currentFile.getName().contains(".mp3")) {
-                AudioClip audioClip = new AudioClip(Objects.requireNonNull(getClass().getResource(relativePath)).toExternalForm());
-                audioClip.setVolume(0);
-                audioClip.play();
+                if (currentFile.getParentFile().getName().equals("bgm")) {
+                    Media media = new Media(Objects.requireNonNull(getClass().getResource(relativePath)).toExternalForm());
+                    MediaPlayer mediaPlayer = new MediaPlayer(media);
+                    mediaPlayer.setVolume(0);
+                    mediaPlayer.play();
+                    mediaPlayer.stop();
+                } else {
+                    AudioClip audioClip = new AudioClip(Objects.requireNonNull(getClass().getResource(relativePath)).toExternalForm());
+                    audioClip.setVolume(0);
+                    audioClip.play();
+                }
             }
             return;
         }
@@ -93,6 +103,7 @@ public class LoadingController implements Initializable {
     @FXML
     public void switchToMenu() throws IOException {
         AudioClip audioClip = new AudioClip(Objects.requireNonNull(getClass().getResource("../assets/media/other/submit.mp3")).toExternalForm());
+        audioClip.setVolume(Settings.EFFECT_VOLUME);
         audioClip.play();
         ViewController.toMenuScene();
     }

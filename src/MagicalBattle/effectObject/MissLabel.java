@@ -1,6 +1,7 @@
-package MagicalBattle.models;
+package MagicalBattle.effectObject;
 
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -8,11 +9,12 @@ import javafx.scene.text.FontWeight;
 import MagicalBattle.career.Player;
 import MagicalBattle.constants.Settings;
 
-public class MissLabel {
+public class MissLabel extends EffectObject {
     private final Label miss = new Label("MISS");
     private final double initialY;
 
     public MissLabel(Player player) {
+        super(player);
         this.miss.setFont(Font.font("Comic Sans MS", FontWeight.BOLD, Settings.MISS_SIZE));
         this.miss.setTextFill(Color.web("#00ff70"));
         this.miss.setAlignment(Pos.CENTER);
@@ -23,14 +25,6 @@ public class MissLabel {
         this.initialY = this.miss.getLayoutY();
     }
 
-    public boolean isFinished() {
-        return this.miss.getLayoutY() - this.initialY <= Settings.MISS_TOTAL_DISTANCE;
-    }
-
-    public Label getLabel() {
-        return this.miss;
-    }
-
     public double getY() {
         return this.miss.getLayoutY();
     }
@@ -39,4 +33,18 @@ public class MissLabel {
         this.miss.setLayoutY(value);
     }
 
+    @Override
+    public Node getEffect() {
+        return this.miss;
+    }
+
+    @Override
+    public void doByTime() {
+        this.setY(this.getY() - Settings.MISS_PER_DISTANCE);
+    }
+
+    @Override
+    public boolean isFinished() {
+        return this.miss.getLayoutY() - this.initialY <= Settings.MISS_TOTAL_DISTANCE;
+    }
 }

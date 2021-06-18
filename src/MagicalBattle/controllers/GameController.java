@@ -1,5 +1,6 @@
 package MagicalBattle.controllers;
 
+import MagicalBattle.effectObject.EffectObject;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 
@@ -26,7 +27,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import MagicalBattle.enums.HDirection;
 import MagicalBattle.career.Player;
-import MagicalBattle.models.MissLabel;
 import MagicalBattle.skillObject.SkillObject;
 import MagicalBattle.constants.Settings;
 import MagicalBattle.enums.VDirection;
@@ -37,13 +37,13 @@ public class GameController implements Initializable {
     @FXML
     private ImageView imageView1, imageView2;
     @FXML
-    private Pane skillPane, missPane;
+    private Pane skillPane, effectPane;
     @FXML
     private ProgressBar health1, health2, magic1, magic2;
 
     private static final Timeline timeline = new Timeline();
     private static final ArrayList<SkillObject> allSkillObjects = new ArrayList<>();
-    private static final ArrayList<MissLabel> allMissLabel = new ArrayList<>();
+    private static final ArrayList<EffectObject> allEffectObjects = new ArrayList<>();
 
     private static Player player1, player2;
 
@@ -73,7 +73,7 @@ public class GameController implements Initializable {
             player2.getTimer().countDown();
 
             updateSkillObjects();
-            updateMissLabels();
+            updateEffectObjects();
 
             playerAction(player1);
             playerAction(player2);
@@ -128,17 +128,17 @@ public class GameController implements Initializable {
         }
     }
 
-    public static void newMissLabel(MissLabel missLabel) {
-        allMissLabel.add(missLabel);
+    public static void newEffectObject(EffectObject effectObject) {
+        allEffectObjects.add(effectObject);
     }
 
-    private void updateMissLabels() {
-        missPane.getChildren().clear();
-        for (int i = 0; i < allMissLabel.size(); i++) {
-            MissLabel missLabel = allMissLabel.get(i);
-            missPane.getChildren().add(missLabel.getLabel());
-            missLabel.setY(missLabel.getY() - Settings.MISS_PER_DISTANCE);
-            if (missLabel.isFinished()) allMissLabel.remove(i--);
+    private void updateEffectObjects() {
+        effectPane.getChildren().clear();
+        for (int i = 0; i < allEffectObjects.size(); i++) {
+            EffectObject effectObject = allEffectObjects.get(i);
+            effectPane.getChildren().add(effectObject.getEffect());
+            effectObject.doByTime();
+            if (effectObject.isFinished()) allEffectObjects.remove(i--);
         }
     }
 
@@ -161,15 +161,15 @@ public class GameController implements Initializable {
         AtomicInteger deadCounter = new AtomicInteger(0);
         KeyFrame gameOver = new KeyFrame(Duration.millis(Settings.UPDATE_TIME), (event) -> {
             updateSkillObjects();
-            updateMissLabels();
+            updateEffectObjects();
             player1.doVerticalMotion();
             player2.doVerticalMotion();
 
-            if (player1.isDead()) player1.setLoserImage();
-            else player1.setWinnerImage((int) ((deadCounter.get() + 1) * Settings.UPDATE_TIME / Settings.WAIT_TIME));
+            if (player1.isDead()) player1.setGameOverImage(false, -1);
+            else player1.setGameOverImage(true, (int) ((deadCounter.get() + 1) * Settings.UPDATE_TIME / Settings.WAIT_TIME));
 
-            if (player2.isDead()) player2.setLoserImage();
-            else player2.setWinnerImage((int) ((deadCounter.get() + 1) * Settings.UPDATE_TIME / Settings.WAIT_TIME));
+            if (player2.isDead()) player2.setGameOverImage(false, -1);
+            else player2.setGameOverImage(true, (int) ((deadCounter.get() + 1) * Settings.UPDATE_TIME / Settings.WAIT_TIME));
 
             deadCounter.set((deadCounter.get() + 2) * Settings.UPDATE_TIME / Settings.WAIT_TIME == 3 ? 0 : deadCounter.incrementAndGet());
         });
@@ -220,6 +220,7 @@ public class GameController implements Initializable {
     public void switchToChoice() throws IOException {
         mediaPlayer.stop();
         AudioClip audioClip = new AudioClip(Objects.requireNonNull(getClass().getResource("../assets/media/other/cancel.mp3")).toExternalForm());
+        audioClip.setVolume(Settings.EFFECT_VOLUME);
         audioClip.play();
         ViewController.toChoiceScene();
     }
