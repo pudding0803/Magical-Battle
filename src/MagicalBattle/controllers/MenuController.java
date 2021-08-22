@@ -1,11 +1,13 @@
 package MagicalBattle.controllers;
 
+import MagicalBattle.config.ConfigProcessor;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
 import javafx.scene.media.AudioClip;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -14,6 +16,7 @@ import MagicalBattle.models.enums.Career;
 import MagicalBattle.constants.CareerSettings;
 import MagicalBattle.constants.Settings;
 import MagicalBattle.models.ImageSet;
+import org.json.simple.parser.ParseException;
 
 import java.io.IOException;
 import java.net.URL;
@@ -21,6 +24,8 @@ import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class MenuController implements Initializable {
+    @FXML
+    private Pane background;
     @FXML
     private ImageView image1, image2, image3, image4, image5, image6;
 
@@ -41,6 +46,13 @@ public class MenuController implements Initializable {
         mediaPlayer.setVolume(Settings.BGM_VOLUME);
         mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
         mediaPlayer.play();
+
+        try {
+            background.setBackground(ConfigProcessor.getBackgroundImage());
+        } catch (IOException | ParseException e) {
+            e.printStackTrace();
+        }
+
         ArrayList<ImageView> imageViews = new ArrayList<>() {
             {
                 add(image1);
@@ -109,5 +121,14 @@ public class MenuController implements Initializable {
         audioClip.setVolume(Settings.EFFECT_VOLUME);
         audioClip.play();
         ViewController.toChoiceScene();
+    }
+
+    @FXML
+    public void switchToBackground() throws IOException {
+        mediaPlayer.stop();
+        AudioClip audioClip = new AudioClip(Objects.requireNonNull(getClass().getResource("../assets/media/other/submit.mp3")).toExternalForm());
+        audioClip.setVolume(Settings.EFFECT_VOLUME);
+        audioClip.play();
+        ViewController.toBackgroundScene();
     }
 }

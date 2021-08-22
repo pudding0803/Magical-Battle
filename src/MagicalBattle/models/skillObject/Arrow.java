@@ -19,7 +19,7 @@ public class Arrow extends SkillObject {
         this.right = new Image(Objects.requireNonNull(getClass().getResource(assetsFilePath + "attack/right/arrow.png")).toExternalForm());
         this.fireMedia = new AudioClip(Objects.requireNonNull(getClass().getResource(assetsFilePath + "media/fire/arrow.mp3")).toExternalForm());
         this.hitMedia = new AudioClip(Objects.requireNonNull(getClass().getResource(assetsFilePath + "media/hit/arrow.mp3")).toExternalForm());
-        int fixedPositionY = new Random().nextInt(51) - 25;
+        int fixedPositionY = new Random().nextInt(41) - 20;
         int fixedVelocityX = new Random().nextInt(7) - 2;
         this.imageView = new ImageView();
         this.imageView.setImage(isLeft ? left : right);

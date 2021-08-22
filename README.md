@@ -1,5 +1,5 @@
 # Magical-Battle
 * JavaFX Final Project
 * developing with IntelleJ IDEA
-* Java JDK version: 15.0.2
+* Java JDK version: 16.0.1
 * JavaFX SDK version: 16

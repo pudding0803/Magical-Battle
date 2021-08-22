@@ -1,5 +1,6 @@
 package MagicalBattle.controllers;
 
+import MagicalBattle.config.ConfigProcessor;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 
@@ -29,8 +30,11 @@ import MagicalBattle.constants.Settings;
 import MagicalBattle.models.enums.Direction;
 import MagicalBattle.models.ImageSet;
 import MagicalBattle.models.ProgressBars;
+import org.json.simple.parser.ParseException;
 
 public class ChoiceController implements Initializable {
+    @FXML
+    private Pane background;
     @FXML
     private VBox warriorVBox, guardianVBox, mageVBox, archerVBox, assassinVBox, alchemistVBox;
     @FXML
@@ -56,6 +60,13 @@ public class ChoiceController implements Initializable {
         mediaPlayer.setVolume(Settings.BGM_VOLUME);
         mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
         mediaPlayer.play();
+
+        try {
+            background.setBackground(ConfigProcessor.getBackgroundImage());
+        } catch (IOException | ParseException e) {
+            e.printStackTrace();
+        }
+
         key1 = key2 = Direction.NULL;
         choice1 = Career.ARCHER; // Career.WARRIOR;
         choice2 = Career.MAGE; // Career.ALCHEMIST;

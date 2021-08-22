@@ -1,7 +1,7 @@
 package MagicalBattle.controllers;
 
 import MagicalBattle.constants.Settings;
-import MagicalBattle.config.AssetsNumProcessor;
+import MagicalBattle.config.ConfigProcessor;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
@@ -15,6 +15,7 @@ import javafx.scene.media.AudioClip;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
+import org.json.simple.parser.ParseException;
 
 import java.io.File;
 import java.io.IOException;
@@ -34,12 +35,12 @@ public class LoadingController implements Initializable {
     Button start;
 
     private static int fileCount = 0;
-    private static int maxFileCount;
+    private static long maxFileCount;
 
     static {
         try {
-            maxFileCount = AssetsNumProcessor.getAssetsNum();
-        } catch (IOException e) {
+            maxFileCount = ConfigProcessor.getAssetsNumber();
+        } catch (IOException | ParseException e) {
             e.printStackTrace();
         }
     }
@@ -64,8 +65,8 @@ public class LoadingController implements Initializable {
         start.setDisable(false);
 
         try {
-            AssetsNumProcessor.setAssetsNum(fileCount);
-        } catch (IOException e) {
+            ConfigProcessor.setAssetsNumber(fileCount);
+        } catch (IOException | ParseException e) {
             e.printStackTrace();
         }
     }

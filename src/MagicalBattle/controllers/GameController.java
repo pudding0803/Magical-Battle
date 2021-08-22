@@ -1,5 +1,6 @@
 package MagicalBattle.controllers;
 
+import MagicalBattle.config.ConfigProcessor;
 import MagicalBattle.models.effectObject.EffectObject;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -30,6 +31,7 @@ import MagicalBattle.models.career.Player;
 import MagicalBattle.models.skillObject.SkillObject;
 import MagicalBattle.constants.Settings;
 import MagicalBattle.models.enums.VDirection;
+import org.json.simple.parser.ParseException;
 
 public class GameController implements Initializable {
     @FXML
@@ -37,7 +39,7 @@ public class GameController implements Initializable {
     @FXML
     private ImageView imageView1, imageView2;
     @FXML
-    private Pane skillPane, effectPane;
+    private Pane background, skillPane, effectPane;
     @FXML
     private ProgressBar health1, health2, magic1, magic2;
 
@@ -55,6 +57,13 @@ public class GameController implements Initializable {
         mediaPlayer.setVolume(Settings.BGM_VOLUME);
         mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
         mediaPlayer.play();
+
+        try {
+            background.setBackground(ConfigProcessor.getBackgroundImage());
+        } catch (IOException | ParseException e) {
+            e.printStackTrace();
+        }
+
         health1.setProgress(0);
         health2.setProgress(0);
         magic1.setProgress(0);
@@ -123,7 +132,9 @@ public class GameController implements Initializable {
             skillObject.setX(skillObject.getX() + skillObject.getVelocityX());
             skillObject.setX(skillObject.getX() + skillObject.getVelocityY());
             skillObject.doByTime();
-            if (skillObject.getX() <= 0 || skillObject.getX() >= Settings.WIDTH || player1.isCollidedFromOther(skillObject) || player2.isCollidedFromOther(skillObject))
+            if (skillObject.getX() <= 0 || skillObject.getX() >= Settings.WIDTH - skillObject.getWidth() ||
+                    skillObject.getY() <= 0 || skillObject.getY() >= Settings.GROUND_HEIGHT ||
+                    player1.isCollidedFromOther(skillObject) || player2.isCollidedFromOther(skillObject))
                 allSkillObjects.remove(i--);
         }
     }
@@ -178,6 +189,8 @@ public class GameController implements Initializable {
         timeline.play();
         timeline.setOnFinished((event) -> {
             try {
+                allSkillObjects.clear();
+                allEffectObjects.clear();
                 switchToChoice();
             } catch (IOException e) {
                 e.printStackTrace();

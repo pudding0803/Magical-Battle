@@ -37,6 +37,14 @@ public class ViewController {
         currentStage.setScene(scene);
     }
 
+    public static void toBackgroundScene() throws IOException {
+        Parent root = FXMLLoader.load(Objects.requireNonNull(ViewController.class.getResource("../views/background.fxml")));
+        Scene scene = new Scene(root, Settings.WIDTH, Settings.HEIGHT);
+        scene.getRoot().requestFocus();
+        currentStage.setTitle("Background");
+        currentStage.setScene(scene);
+    }
+
     public static void toGameScene() throws IOException {
         Parent root = FXMLLoader.load(Objects.requireNonNull(ViewController.class.getResource("../views/game.fxml")));
         Scene scene = new Scene(root, Settings.WIDTH, Settings.HEIGHT);
