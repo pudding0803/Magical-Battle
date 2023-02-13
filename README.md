@@ -1,5 +1,7 @@
 # Magical-Battle
 * JavaFX Final Project
-* developing with IntelleJ IDEA
-* Java JDK version: 16.0.1
-* JavaFX SDK version: 16
+* developing with IntelliJ IDEA
+* Java JDK: 19
+* JavaFX SDK: 19.0.2
+* apache.poi.ooxml
+* googlecode.json.simple
