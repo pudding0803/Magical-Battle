@@ -1,4 +1,7 @@
 # Magical-Battle
+
+![](https://i.imgur.com/4Lb8ZWY.jpg)
+
 * JavaFX Final Project
 * developing with IntelliJ IDEA
 * Java JDK: 19
