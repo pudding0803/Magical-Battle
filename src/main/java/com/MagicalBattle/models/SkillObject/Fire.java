@@ -9,7 +9,7 @@ import java.util.List;
 
 public class Fire extends SkillObject {
     public Fire(Character character) {
-        super(character, "images/attack/skill/fire.png", "media/fire/fire.mp3", "media/hit/fire.mp3");
+        super(character, "fire", "fire", "fire");
         this.statusList = new ArrayList<>(List.of(Status.BURNED));
         this.damage = this.character.getAttack();
         this.attackBoth = false;

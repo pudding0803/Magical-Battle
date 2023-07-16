@@ -11,12 +11,12 @@ public class Arrow extends SkillObject {
     protected Image image;
 
     public Arrow(Character character) {
-        super(character, "images/attack/skill/arrow.png", "media/fire/arrow.mp3", "media/hit/arrow.mp3");
+        super(character, "arrow", "arrow", "arrow");
         this.arrowInitialize();
     }
 
     public Arrow(Character character, String image, String fireMedia) {
-        super(character, image, fireMedia, "media/hit/arrow.mp3");
+        super(character, image, fireMedia, "arrow");
         this.arrowInitialize();
     }
 

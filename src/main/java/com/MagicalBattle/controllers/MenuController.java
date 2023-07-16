@@ -1,9 +1,8 @@
 package com.MagicalBattle.controllers;
 
 import com.MagicalBattle.constants.Settings;
+import com.MagicalBattle.loaders.AssetLoader;
 import com.MagicalBattle.loaders.ConfigLoader;
-import com.MagicalBattle.loaders.ImagesLoader;
-import com.MagicalBattle.loaders.ResourceLoader;
 import com.MagicalBattle.models.Enums.CharacterClass;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -38,7 +37,7 @@ public class MenuController implements Initializable {
 
     private static final Timeline timeline = new Timeline();
 
-    private static final Media media = ResourceLoader.getMedia("media/bgm/menu.mp3");
+    private static final Media media = AssetLoader.getBackgroundMusic("menu");
     private static final MediaPlayer mediaPlayer = new MediaPlayer(media);
 
     @Override
@@ -66,8 +65,8 @@ public class MenuController implements Initializable {
             }
             for (int i = 0; i < imageViews.size(); i++) {
                 CharacterClass characterClass = CharacterClass.getCharacter(i);
-                if (isSelected.get(i)) imageViews.get(i).setImage(ImagesLoader.getCharacterImageSet(characterClass).getPreparingOrSelect(counter.get(), false));
-                else imageViews.get(i).setImage(ImagesLoader.getCharacterImageSet(characterClass).getPreparingOrSelect(counter.get(), true));
+                if (isSelected.get(i)) imageViews.get(i).setImage(AssetLoader.getCharacterImageSet(characterClass).getPreparingOrSelect(counter.get(), false));
+                else imageViews.get(i).setImage(AssetLoader.getCharacterImageSet(characterClass).getPreparingOrSelect(counter.get(), true));
             }
             counter.set(counter.get() == 2 ? 0 : counter.incrementAndGet());
         });
@@ -79,7 +78,7 @@ public class MenuController implements Initializable {
     @FXML
     public void switchToChoice() throws IOException {
         mediaPlayer.stop();
-        AudioClip audioClip = ResourceLoader.getAudioClip("media/other/submit.mp3");
+        AudioClip audioClip = AssetLoader.getOtherAudio("submit");
         audioClip.setVolume(Settings.EFFECT_VOLUME);
         audioClip.play();
         ViewController.toChoiceScene();
@@ -88,7 +87,7 @@ public class MenuController implements Initializable {
     @FXML
     public void switchToBackground() throws IOException {
         mediaPlayer.stop();
-        AudioClip audioClip = ResourceLoader.getAudioClip("media/other/submit.mp3");
+        AudioClip audioClip = AssetLoader.getOtherAudio("submit");
         audioClip.setVolume(Settings.EFFECT_VOLUME);
         audioClip.play();
         ViewController.toBackgroundScene();

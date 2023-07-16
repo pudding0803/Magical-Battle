@@ -1,8 +1,8 @@
 package com.MagicalBattle.controllers;
 
 import com.MagicalBattle.constants.Settings;
+import com.MagicalBattle.loaders.AssetLoader;
 import com.MagicalBattle.loaders.ConfigLoader;
-import com.MagicalBattle.loaders.ResourceLoader;
 import com.MagicalBattle.models.Character.Character;
 import com.MagicalBattle.models.EffectObject.EffectObject;
 import com.MagicalBattle.models.Enums.HDirection;
@@ -45,7 +45,7 @@ public class GameController implements Initializable {
 
     private static Character player1, player2;
 
-    private static final Media media = ResourceLoader.getMedia("media/bgm/8bits.mp3");
+    private static final Media media = AssetLoader.getBackgroundMusic("8bits");
     private static final MediaPlayer mediaPlayer = new MediaPlayer(media);
 
     @Override
@@ -228,7 +228,7 @@ public class GameController implements Initializable {
     @FXML
     public void switchToChoice() throws IOException {
         mediaPlayer.stop();
-        AudioClip audioClip = ResourceLoader.getAudioClip("media/other/cancel.mp3");
+        AudioClip audioClip = AssetLoader.getOtherAudio("cancel");
         audioClip.setVolume(Settings.EFFECT_VOLUME);
         audioClip.play();
         ViewController.toChoiceScene();

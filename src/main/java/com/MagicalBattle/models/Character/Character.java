@@ -4,8 +4,7 @@ import com.MagicalBattle.constants.Colors;
 import com.MagicalBattle.constants.Settings;
 import com.MagicalBattle.controllers.GameController;
 import com.MagicalBattle.loaders.AbilityLoader;
-import com.MagicalBattle.loaders.ImagesLoader;
-import com.MagicalBattle.loaders.ResourceLoader;
+import com.MagicalBattle.loaders.AssetLoader;
 import com.MagicalBattle.models.AbilitySet;
 import com.MagicalBattle.models.EffectObject.DizzyEffect;
 import com.MagicalBattle.models.EffectObject.MissLabel;
@@ -51,7 +50,7 @@ public abstract class Character {
 
     public Character(ImageView imageView, CharacterClass characterClass, boolean player1) {
         this.self = imageView;
-        this.self.setImage(ImagesLoader.getCharacterImageSet(characterClass).getIdle(0));
+        this.self.setImage(AssetLoader.getCharacterImageSet(characterClass).getIdle(0));
         this.facing = (player1 ? HDirection.RIGHT : HDirection.LEFT);
         this.characterClass = characterClass;
         this.currentValue = new AbilitySet(AbilityLoader.getAbilityValue(this.characterClass));
@@ -76,8 +75,8 @@ public abstract class Character {
 
     public void setGameOverImage(boolean winner, int counter) {
         Image image;
-        if (winner) image = ImagesLoader.getCharacterImageSet(this.characterClass).getPreparingOrSelect(counter, true);
-        else image = ImagesLoader.getCharacterImageSet(this.characterClass).getDead();
+        if (winner) image = AssetLoader.getCharacterImageSet(this.characterClass).getPreparingOrSelect(counter, true);
+        else image = AssetLoader.getCharacterImageSet(this.characterClass).getDead();
 
         this.self.setImage(image);
         this.self.setFitHeight(image.getHeight());
@@ -213,7 +212,7 @@ public abstract class Character {
 
     public void setVelocity() {
         if (this.isUp() && this.jumpCount++ < this.maxJumpCount) {
-            AudioClip audioClip = ResourceLoader.getAudioClip("media/other/jump.mp3");
+            AudioClip audioClip = AssetLoader.getOtherAudio("jump");
             audioClip.setVolume(Settings.EFFECT_VOLUME);
             audioClip.play();
             this.velocity = -(Settings.INITIAL_VELOCITY + Settings.BONUS_VELOCITY * this.getSpeed()) * (this.stunned || this.dizzy ? 0 : 1);
@@ -225,7 +224,7 @@ public abstract class Character {
 
     public void doHorizonMotion() {
         if (this.dizzy) return;
-        this.self.setImage(ImagesLoader.getCharacterImageSet(this.characterClass).getWalking(walkingIndex));
+        this.self.setImage(AssetLoader.getCharacterImageSet(this.characterClass).getWalking(walkingIndex));
         this.self.setNodeOrientation(this.isFacingLeft() ? NodeOrientation.RIGHT_TO_LEFT : NodeOrientation.LEFT_TO_RIGHT);
         walkingIndex = (++walkingIndex) % 2;
         this.moveDistance = Settings.STEP * this.currentValue.getSpeed() * this.hDirection.getValue() * (this.stunned || this.dizzy ? 0 : 1);
@@ -257,7 +256,7 @@ public abstract class Character {
             }
             if (this.getY() == Settings.GROUND_HEIGHT - this.getHeight()) {
                 if (this.jumpCount > 0) {
-                    AudioClip audioClip = ResourceLoader.getAudioClip("media/other/land.mp3");
+                    AudioClip audioClip = AssetLoader.getOtherAudio("land");
                     audioClip.setVolume(Settings.EFFECT_VOLUME);
                     audioClip.play();
                 }
@@ -269,7 +268,7 @@ public abstract class Character {
     }
 
     public void setStand() {
-        this.self.setImage(ImagesLoader.getCharacterImageSet(this.characterClass).getIdle(0));
+        this.self.setImage(AssetLoader.getCharacterImageSet(this.characterClass).getIdle(0));
         this.self.setNodeOrientation(this.isFacingLeft() ? NodeOrientation.RIGHT_TO_LEFT : NodeOrientation.LEFT_TO_RIGHT);
     }
 
@@ -285,7 +284,7 @@ public abstract class Character {
         if (skillObject.isFromOther(this.player1) && (inSelf(x, y) || inSelf(x + width, y) || inSelf(x, y + height) || inSelf(x + width, y + height))) {
             boolean miss = (new Random().nextInt(10) < (int) this.getAgility());
             if (miss) {
-                AudioClip audioClip = ResourceLoader.getAudioClip("media/other/miss.mp3");
+                AudioClip audioClip = AssetLoader.getOtherAudio("miss");
                 audioClip.setVolume(Settings.EFFECT_VOLUME);
                 audioClip.play();
                 GameController.newEffectObject(new MissLabel(this));
@@ -302,14 +301,14 @@ public abstract class Character {
                     this.timer.setFrozenTimer(0);
                 }
                 if (skillObject.containStunned()) {
-                    AudioClip audioClip = ResourceLoader.getAudioClip("media/effect/stunned.mp3");
+                    AudioClip audioClip = AssetLoader.getEffectAudio("stunned");
                     audioClip.setVolume(Settings.EFFECT_VOLUME);
                     audioClip.play();
                     this.timer.setStunnedTimer(Settings.STUNNED_TIME);
                     GameController.newEffectObject(new StunnedEffect(this));
                 }
                 if (skillObject.containDizzy()) {
-                    AudioClip audioClip = ResourceLoader.getAudioClip("media/effect/dizzy.mp3");
+                    AudioClip audioClip = AssetLoader.getEffectAudio("dizzy");
                     audioClip.setVolume(Settings.EFFECT_VOLUME);
                     audioClip.play();
                     this.timer.setDizzyTimer(Settings.DIZZY_TIME);
@@ -361,7 +360,7 @@ public abstract class Character {
         }
         if (!this.timer.isBurnedTimerEnd()) {
             if(this.timer.getBurnedTimer() % 50 == 0) {
-                AudioClip audioClip = ResourceLoader.getAudioClip("media/effect/burned.mp3");
+                AudioClip audioClip = AssetLoader.getEffectAudio("burned");
                 audioClip.setVolume(Settings.EFFECT_VOLUME);
                 audioClip.play();
                 this.setHealth(this.getHealth() - Settings.BURNED_DAMAGE);

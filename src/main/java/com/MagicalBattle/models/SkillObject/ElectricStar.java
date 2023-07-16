@@ -9,7 +9,7 @@ import java.util.List;
 
 public class ElectricStar extends SkillObject {
     public ElectricStar(Character character) {
-        super(character, "images/attack/skill/electric_star.png", "media/fire/electric_star.mp3", "media/hit/electric_star.mp3");
+        super(character, "electric_star", "electric_star", "electric_star");
         this.statusList = new ArrayList<>(List.of(Status.DIZZY));
         this.damage = this.character.getAttack() * 0.75;
         this.attackBoth = false;

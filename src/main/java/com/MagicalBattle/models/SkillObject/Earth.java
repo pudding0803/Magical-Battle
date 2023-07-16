@@ -9,7 +9,7 @@ import java.util.List;
 
 public class Earth extends SkillObject {
     public Earth(Character character) {
-        super(character,"images/attack/skill/earth.png","media/fire/earth.mp3", "media/hit/earth.mp3");
+        super(character,"earth","earth", "earth");
         this.statusList = new ArrayList<>(List.of(Status.KNOCKED_UP));
         this.damage = this.character.getAttack();
         this.attackBoth = false;

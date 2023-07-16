@@ -8,7 +8,7 @@ import java.util.List;
 
 public class FlameArrow extends Arrow {
     public FlameArrow(Character character) {
-        super(character, "images/attack/skill/flame_arrow.png", "media/fire/flame_arrow.mp3");
+        super(character, "flame_arrow", "flame_arrow");
         this.statusList = new ArrayList<>(List.of(Status.BURNED));
     }
 }

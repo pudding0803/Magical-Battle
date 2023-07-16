@@ -1,16 +1,14 @@
 package com.MagicalBattle.models.SkillObject;
 
 import com.MagicalBattle.constants.Settings;
-import com.MagicalBattle.loaders.ResourceLoader;
+import com.MagicalBattle.loaders.AssetLoader;
 import com.MagicalBattle.models.Character.Character;
 import com.MagicalBattle.models.Enums.Status;
 import javafx.geometry.NodeOrientation;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.media.AudioClip;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 public abstract class SkillObject {
     protected AudioClip fireMedia;
@@ -28,13 +26,13 @@ public abstract class SkillObject {
     public SkillObject(Character character, String image, String fireMedia, String hitMedia) {
         this.character = character;
 
-        this.imageView.setImage(new Image(Objects.requireNonNull(getClass().getResource(Settings.RESOURCE_PATH + image)).toExternalForm()));
+        this.imageView.setImage(AssetLoader.getSkillImage(image));
         if (this.character.isFacingLeft()) this.imageView.setNodeOrientation(NodeOrientation.RIGHT_TO_LEFT);
         this.setX(this.character.getX() + (this.character.isFacingLeft() ? -this.getWidth() : this.character.getWidth()));
         this.setY(this.character.getY() + (this.character.getHeight() - this.getHeight()) / 2);
 
-        this.fireMedia = ResourceLoader.getAudioClip(fireMedia);
-        this.hitMedia = ResourceLoader.getAudioClip(hitMedia);
+        this.fireMedia = AssetLoader.getFireAudio(fireMedia);
+        this.hitMedia = AssetLoader.getHitAudio(hitMedia);
     }
 
     public abstract void doByTime();

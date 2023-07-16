@@ -9,7 +9,7 @@ import java.util.List;
 
 public class StrongWind extends SkillObject {
     public StrongWind(Character character) {
-        super(character, "images/attack/skill/strong_wind.png", "media/fire/strong_wind.mp3", "media/hit/strong_wind.mp3");
+        super(character, "strong_wind", "strong_wind", "strong_wind");
         this.statusList = new ArrayList<>(List.of(Status.KNOCKED_BACK));
         this.damage = this.character.getAttack() * 1.4;
         this.attackBoth = false;

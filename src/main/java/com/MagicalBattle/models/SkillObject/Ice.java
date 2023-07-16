@@ -9,7 +9,7 @@ import java.util.List;
 
 public class Ice extends SkillObject {
     public Ice(Character character) {
-        super(character, "images/attack/skill/ice.png", "media/fire/ice.mp3", "media/hit/ice.mp3");
+        super(character, "ice", "ice", "ice");
         this.statusList = new ArrayList<>(List.of(Status.FROZEN));
         this.damage = this.character.getAttack();
         this.attackBoth = false;

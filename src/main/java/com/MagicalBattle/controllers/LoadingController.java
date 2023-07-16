@@ -15,7 +15,6 @@ import org.json.simple.parser.ParseException;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -43,10 +42,7 @@ public class LoadingController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         AbilityLoader.loadAbilities();
-        ImagesLoader.loadCharacterImages();
-        ImagesLoader.loadBackgroundImages();
-        ImagesLoader.loadSkillImages();
-        ImagesLoader.loadEffectImages();
+        AssetLoader.loadAll();
         ProgressBarsLoader.loadProgressBars();
 //        File assetsDir = new File("src\\main\\java\\com\\MagicalBattle");
 //        AtomicInteger dotCounter = new AtomicInteger(0);
@@ -80,7 +76,7 @@ public class LoadingController implements Initializable {
             String relativePath = currentFile.getPath();
             if (currentFile.getName().contains(".png")) {
                 image.setImage(ResourceLoader.getImage(relativePath));
-            } else if (currentFile.getName().contains(".mp3")) {
+            } else if (currentFile.getName().contains("")) {
                 if (currentFile.getParentFile().getName().equals("bgm")) {
                     Media media = ResourceLoader.getMedia(relativePath);
                     MediaPlayer mediaPlayer = new MediaPlayer(media);
@@ -104,7 +100,7 @@ public class LoadingController implements Initializable {
 
     @FXML
     public void switchToMenu() throws IOException {
-        AudioClip audioClip = ResourceLoader.getAudioClip("media/other/submit.mp3");
+        AudioClip audioClip = AssetLoader.getOtherAudio("submit");
         audioClip.setVolume(Settings.EFFECT_VOLUME);
         audioClip.play();
         ViewController.toMenuScene();

@@ -1,9 +1,8 @@
 package com.MagicalBattle.controllers;
 
 import com.MagicalBattle.constants.Settings;
+import com.MagicalBattle.loaders.AssetLoader;
 import com.MagicalBattle.loaders.ConfigLoader;
-import com.MagicalBattle.loaders.ImagesLoader;
-import com.MagicalBattle.loaders.ResourceLoader;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -28,7 +27,7 @@ public class BackgroundController implements Initializable {
     @FXML
     private GridPane backgroundList;
 
-    private static final Media media = ResourceLoader.getMedia("media/bgm/prepare.mp3");
+    private static final Media media = AssetLoader.getBackgroundMusic("prepare");
     private static final MediaPlayer mediaPlayer = new MediaPlayer(media);
 
     @Override
@@ -50,7 +49,7 @@ public class BackgroundController implements Initializable {
         }
 
         AtomicInteger index = new AtomicInteger(0);
-        ImagesLoader.getBackgroundImages().forEach((name, image) -> {
+        AssetLoader.getBackgroundImages().forEach((name, image) -> {
             ImageView imageView = new ImageView(image);
             imageView.setId(name);
             imageView.setFitHeight(160);
@@ -82,7 +81,7 @@ public class BackgroundController implements Initializable {
     @FXML
     public void switchToMenu() throws IOException {
         mediaPlayer.stop();
-        AudioClip audioClip = ResourceLoader.getAudioClip("media/other/cancel.mp3");
+        AudioClip audioClip = AssetLoader.getOtherAudio("cancel");
         audioClip.setVolume(Settings.EFFECT_VOLUME);
         audioClip.play();
         ViewController.toMenuScene();

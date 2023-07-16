@@ -1,9 +1,9 @@
 package com.MagicalBattle.controllers;
 
 import com.MagicalBattle.constants.Settings;
+import com.MagicalBattle.loaders.AssetLoader;
 import com.MagicalBattle.loaders.ConfigLoader;
 import com.MagicalBattle.loaders.ProgressBarsLoader;
-import com.MagicalBattle.loaders.ResourceLoader;
 import com.MagicalBattle.models.Enums.CharacterClass;
 import com.MagicalBattle.models.Enums.Direction;
 import javafx.animation.KeyFrame;
@@ -29,7 +29,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static com.MagicalBattle.loaders.ImagesLoader.getCharacterImageSet;
+import static com.MagicalBattle.loaders.AssetLoader.getCharacterImageSet;
 
 public class ChoiceController implements Initializable {
     @FXML
@@ -50,7 +50,7 @@ public class ChoiceController implements Initializable {
     private static CharacterClass selected1, selected2;
     private static boolean pressed1 = false, pressed2 = false;
 
-    private static final Media media = ResourceLoader.getMedia("media/bgm/prepare.mp3");
+    private static final Media media = AssetLoader.getBackgroundMusic("prepare");
     private static final MediaPlayer mediaPlayer = new MediaPlayer(media);
 
     @Override
@@ -121,25 +121,25 @@ public class ChoiceController implements Initializable {
     private CharacterClass updateChoice(Direction key, int choice) {
         switch (key) {
             case UP -> {
-                AudioClip audioClip = ResourceLoader.getAudioClip("media/other/choose.mp3");
+                AudioClip audioClip = AssetLoader.getOtherAudio("choose");
                 audioClip.setVolume(Settings.EFFECT_VOLUME);
                 audioClip.play();
                 return CharacterClass.getCharacter(choice + (choice < 3 ? 3 : -3));
             }
             case DOWN -> {
-                AudioClip audioClip = ResourceLoader.getAudioClip("media/other/choose.mp3");
+                AudioClip audioClip = AssetLoader.getOtherAudio("choose");
                 audioClip.setVolume(Settings.EFFECT_VOLUME);
                 audioClip.play();
                 return CharacterClass.getCharacter(choice + (choice >= 3 ? -3 : 3));
             }
             case LEFT -> {
-                AudioClip audioClip = ResourceLoader.getAudioClip("media/other/choose.mp3");
+                AudioClip audioClip = AssetLoader.getOtherAudio("choose");
                 audioClip.setVolume(Settings.EFFECT_VOLUME);
                 audioClip.play();
                 return CharacterClass.getCharacter(choice + (choice == 0 || choice == 3 ? 2 : -1));
             }
             case RIGHT -> {
-                AudioClip audioClip = ResourceLoader.getAudioClip("media/other/choose.mp3");
+                AudioClip audioClip = AssetLoader.getOtherAudio("choose");
                 audioClip.setVolume(Settings.EFFECT_VOLUME);
                 audioClip.play();
                 return CharacterClass.getCharacter(choice + (choice == 2 || choice == 5 ? -2 : 1));
@@ -163,7 +163,7 @@ public class ChoiceController implements Initializable {
     }
 
     private void playAudioClip(boolean isSelected) {
-        AudioClip audioClip = ResourceLoader.getAudioClip("media/other/" + (!isSelected ? "de" : "") + "select.mp3");
+        AudioClip audioClip = AssetLoader.getOtherAudio("" + (!isSelected ? "de" : "") + "select");
         audioClip.setVolume(Settings.EFFECT_VOLUME);
         audioClip.play();
     }
@@ -188,7 +188,7 @@ public class ChoiceController implements Initializable {
     @FXML
     public void switchToGame() throws IOException {
         mediaPlayer.stop();
-        AudioClip audioClip = ResourceLoader.getAudioClip("media/other/submit.mp3");
+        AudioClip audioClip = AssetLoader.getOtherAudio("submit");
         audioClip.setVolume(Settings.EFFECT_VOLUME);
         audioClip.play();
         ViewController.toGameScene();
@@ -197,7 +197,7 @@ public class ChoiceController implements Initializable {
     @FXML
     public void switchToMenu() throws IOException {
         mediaPlayer.stop();
-        AudioClip audioClip = ResourceLoader.getAudioClip("media/other/cancel.mp3");
+        AudioClip audioClip = AssetLoader.getOtherAudio("cancel");
         audioClip.setVolume(Settings.EFFECT_VOLUME);
         audioClip.play();
         ViewController.toMenuScene();

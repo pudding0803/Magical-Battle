@@ -1,15 +1,13 @@
 package com.MagicalBattle.models.EffectObject;
 
-import com.MagicalBattle.constants.Settings;
+import com.MagicalBattle.loaders.AssetLoader;
 import com.MagicalBattle.models.Character.Character;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
-import java.util.Objects;
-
 public class DizzyEffect extends EffectObject {
-    private final Image image = new Image(Objects.requireNonNull(getClass().getResource(Settings.RESOURCE_PATH + "images/attack/effect/dizzy.png")).toExternalForm());
+    private final Image image = AssetLoader.getEffectImage("dizzy");
     private final ImageView imageView = new ImageView(image);
 
     public DizzyEffect(Character character) {

@@ -8,7 +8,7 @@ import java.util.List;
 
 public class FlashArrow extends Arrow {
     public FlashArrow(Character character) {
-        super(character, "images/attack/skill/flash_arrow.png", "media/fire/flash_arrow.mp3");
+        super(character, "flash_arrow", "flash_arrow");
         this.statusList = new ArrayList<>(List.of(Status.STUNNED));
     }
 }
