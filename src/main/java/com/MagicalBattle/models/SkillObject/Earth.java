@@ -2,7 +2,7 @@ package com.MagicalBattle.models.SkillObject;
 
 import com.MagicalBattle.constants.Settings;
 import com.MagicalBattle.models.Character.Character;
-import com.MagicalBattle.models.Enums.Status;
+import com.MagicalBattle.models.Enums.StatusName;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +10,7 @@ import java.util.List;
 public class Earth extends SkillObject {
     public Earth(Character character) {
         super(character,"earth","earth", "earth");
-        this.statusList = new ArrayList<>(List.of(Status.KNOCKED_UP));
+        this.statusList = new ArrayList<>(List.of(StatusName.KNOCKED_UP));
         this.damage = this.character.getAttack();
         this.attackBoth = false;
         this.gravity = false;

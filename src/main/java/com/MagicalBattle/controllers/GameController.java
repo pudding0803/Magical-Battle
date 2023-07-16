@@ -5,6 +5,7 @@ import com.MagicalBattle.loaders.AssetLoader;
 import com.MagicalBattle.loaders.ConfigLoader;
 import com.MagicalBattle.models.Character.Character;
 import com.MagicalBattle.models.EffectObject.EffectObject;
+import com.MagicalBattle.models.Enums.Attack;
 import com.MagicalBattle.models.Enums.HDirection;
 import com.MagicalBattle.models.Enums.VDirection;
 import com.MagicalBattle.models.SkillObject.SkillObject;
@@ -74,8 +75,6 @@ public class GameController implements Initializable {
 
             player1.updateEffect();
             player2.updateEffect();
-            player1.getTimer().countDown();
-            player2.getTimer().countDown();
 
             updateSkillObjects();
             updateEffectObjects();
@@ -95,13 +94,13 @@ public class GameController implements Initializable {
         (isPlayer1 ? face1 : face2).getStyleClass().add("face");
         if (rate <= 0.2) {
             (isPlayer1 ? health1 : health2).getStyleClass().add("dangerous");
-            (isPlayer1 ? face1 : face2).getStyleClass().add((isPlayer1 ? player1 : player2).getCharacter().getName() + "0");
+            (isPlayer1 ? face1 : face2).getStyleClass().add((isPlayer1 ? player1 : player2).getCharacterClass().getName() + "0");
         } else if (rate <= 0.5) {
             (isPlayer1 ? health1 : health2).getStyleClass().add("warning");
-            (isPlayer1 ? face1 : face2).getStyleClass().add((isPlayer1 ? player1 : player2).getCharacter().getName() + "1");
+            (isPlayer1 ? face1 : face2).getStyleClass().add((isPlayer1 ? player1 : player2).getCharacterClass().getName() + "1");
         } else {
             (isPlayer1 ? health1 : health2).getStyleClass().add("healthy");
-            (isPlayer1 ? face1 : face2).getStyleClass().add((isPlayer1 ? player1 : player2).getCharacter().getName() + "2");
+            (isPlayer1 ? face1 : face2).getStyleClass().add((isPlayer1 ? player1 : player2).getCharacterClass().getName() + "2");
         }
     }
 
@@ -150,19 +149,19 @@ public class GameController implements Initializable {
     }
 
     private void playerAction(Character character) {
-        if (character.isUp() || character.isDown()) character.setVelocity();
+        if (character.isUp() || character.isDown()) character.updateVelocity();
         character.doVerticalMotion();
         if (character.isLeft() || character.isRight()) character.doHorizonMotion();
         else character.setStand();
-        if (character.isAttacking() && character.getTimer().isAttackTimerEnd()) character.attack();
+        if (character.getAttackTimers().isPressing(Attack.ATTACK) && character.getAttackTimers().isAttackValid(Attack.ATTACK)) character.attack();
     }
 
     private void gameOver() {
         mediaPlayer.stop();
         timeline.stop();
         timeline.getKeyFrames().clear();
-        player1.getTimer().zero();
-        player2.getTimer().zero();
+        player1.stopStatusTimers();
+        player2.stopStatusTimers();
         player1.updateEffect();
         player2.updateEffect();
         AtomicInteger deadCounter = new AtomicInteger(0);
@@ -201,12 +200,20 @@ public class GameController implements Initializable {
             case S -> player1.setVDirection(VDirection.DOWN);
             case A -> player1.setHDirection(HDirection.LEFT);
             case D -> player1.setHDirection(HDirection.RIGHT);
-            case SPACE -> player1.setAttacking(true);
+            case SPACE -> player1.getAttackTimers().restartPressed(Attack.ATTACK);
+            case Z -> player1.skill1();
+            case X -> player1.skill2();
+            case C -> player1.skill3();
+            case V -> player1.skill4();
             case UP -> player2.setVDirection(VDirection.UP);
             case DOWN -> player2.setVDirection(VDirection.DOWN);
             case LEFT -> player2.setHDirection(HDirection.LEFT);
             case RIGHT -> player2.setHDirection(HDirection.RIGHT);
-            case ENTER -> player2.setAttacking(true);
+            case ENTER -> player2.getAttackTimers().restartPressed(Attack.ATTACK);
+            case M -> player2.skill1();
+            case COMMA -> player2.skill2();
+            case PERIOD -> player2.skill3();
+            case SLASH -> player2.skill4();
             case ESCAPE -> switchToChoice();
         }
     }
@@ -216,12 +223,20 @@ public class GameController implements Initializable {
         switch (event.getCode()) {
             case A -> player1.setHDirection(player1.isRight() ? HDirection.RIGHT : HDirection.NULL);
             case D -> player1.setHDirection(player1.isLeft() ? HDirection.LEFT : HDirection.NULL);
-            case SPACE -> player1.setAttacking(false);
-            case Z -> player1.debug();
+            case SPACE -> player1.getAttackTimers().stopPressed(Attack.ATTACK);
+            case Z -> player1.skill1();
+            case X -> player1.skill2();
+            case C -> player1.skill3();
+            case V -> player1.skill4();
+            case Q -> player1.debug();
             case LEFT -> player2.setHDirection(player2.isRight() ? HDirection.RIGHT : HDirection.NULL);
             case RIGHT -> player2.setHDirection(player2.isLeft() ? HDirection.LEFT : HDirection.NULL);
-            case ENTER -> player2.setAttacking(false);
-            case SLASH -> player2.debug();
+            case ENTER -> player2.getAttackTimers().stopPressed(Attack.ATTACK);
+            case M -> player2.skill1();
+            case COMMA -> player2.skill2();
+            case PERIOD -> player2.skill3();
+            case SLASH -> player2.skill4();
+            case P -> player2.debug();
         }
     }
 

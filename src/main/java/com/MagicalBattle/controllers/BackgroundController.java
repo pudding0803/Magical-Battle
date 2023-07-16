@@ -70,9 +70,7 @@ public class BackgroundController implements Initializable {
     @FXML
     public void choose(MouseEvent event) throws IOException, ParseException {
         ImageView chosen = (ImageView) event.getSource();
-        for (Node node : backgroundList.getChildren()) {
-            node.getStyleClass().clear();
-        }
+        backgroundList.getChildren().forEach(node -> node.getStyleClass().clear());
         chosen.getStyleClass().add("chosen");
         ConfigLoader.setBackgroundImage(chosen.getId());
         background.setBackground(ConfigLoader.getBackgroundImage());

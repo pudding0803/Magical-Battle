@@ -1,6 +1,9 @@
 package com.MagicalBattle.models.Character;
 
+import com.MagicalBattle.constants.Time;
 import com.MagicalBattle.controllers.GameController;
+import com.MagicalBattle.models.AttackTimers;
+import com.MagicalBattle.models.Enums.Attack;
 import com.MagicalBattle.models.Enums.CharacterClass;
 import com.MagicalBattle.models.SkillObject.*;
 import javafx.scene.image.ImageView;
@@ -8,17 +11,19 @@ import javafx.scene.image.ImageView;
 import java.util.Random;
 
 public class Mage extends Character {
-    public final int DEFAULT_ATTACK_TIME = 40;
+    public static final int DEFAULT_ATTACK_TIME = Time.ms(800);
+    private static final int[] attackDurations = {DEFAULT_ATTACK_TIME, 0, 0, 0, 0};
+    private static final int[] chargedAttackDurations = {0, 0, 0, 0, 0};
 
     private int attackCounter = 0;
 
     public Mage(ImageView imageView, boolean isPlayer1) {
-        super(imageView, CharacterClass.MAGE, isPlayer1);
+        super(imageView, CharacterClass.MAGE, isPlayer1, new AttackTimers(attackDurations, chargedAttackDurations));
     }
 
     @Override
     public void attack() {
-        this.timer.setAttackTimer(DEFAULT_ATTACK_TIME);
+        this.attackTimers.restartAttack(Attack.ATTACK);
         SkillObject skillObject;
         switch (this.attackCounter) {
             case 0 -> {
@@ -54,6 +59,16 @@ public class Mage extends Character {
 
     @Override
     public void skill2() {
+
+    }
+
+    @Override
+    public void skill3() {
+
+    }
+
+    @Override
+    public void skill4() {
 
     }
 }

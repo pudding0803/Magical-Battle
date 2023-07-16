@@ -1,6 +1,7 @@
 package com.MagicalBattle.loaders;
 
 import com.MagicalBattle.constants.Settings;
+import com.MagicalBattle.controllers.ViewController;
 import com.MagicalBattle.models.CharacterImageSet;
 import com.MagicalBattle.models.Enums.CharacterClass;
 import javafx.scene.image.Image;
@@ -112,7 +113,13 @@ public class AssetLoader {
 
     private static void loadBackgroundMusics() {
         final String BACKGROUND_MUSIC_PATH = "media/background_music/";
-        loadMediaDirectory(BACKGROUND_MUSIC_PATH, backgroundMusics);
+        File directory = new File(Objects.requireNonNull(AssetLoader.class.getResource(Settings.RESOURCE_PATH + BACKGROUND_MUSIC_PATH)).getPath());
+        for (File file : Objects.requireNonNull(directory.listFiles())) {
+            if (file.isFile()) {
+                String fileName = file.getName();
+                AssetLoader.backgroundMusics.put(fileName.substring(0, fileName.indexOf(".")), ResourceLoader.getMedia(BACKGROUND_MUSIC_PATH + fileName));
+            }
+        }
     }
 
     private static void loadFireAudios() {
@@ -141,16 +148,6 @@ public class AssetLoader {
             if (file.isFile()) {
                 String fileName = file.getName();
                 imageMap.put(fileName.substring(0, fileName.indexOf(".")), ResourceLoader.getImage(DIRECTORY_PATH + fileName));
-            }
-        }
-    }
-
-    private static void loadMediaDirectory(String DIRECTORY_PATH, HashMap<String, Media> imageMap) {
-        File directory = new File(Objects.requireNonNull(AssetLoader.class.getResource(Settings.RESOURCE_PATH + DIRECTORY_PATH)).getPath());
-        for (File file : Objects.requireNonNull(directory.listFiles())) {
-            if (file.isFile()) {
-                String fileName = file.getName();
-                imageMap.put(fileName.substring(0, fileName.indexOf(".")), ResourceLoader.getMedia(DIRECTORY_PATH + fileName));
             }
         }
     }

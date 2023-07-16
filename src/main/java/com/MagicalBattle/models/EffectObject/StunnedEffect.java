@@ -2,6 +2,7 @@ package com.MagicalBattle.models.EffectObject;
 
 import com.MagicalBattle.loaders.AssetLoader;
 import com.MagicalBattle.models.Character.Character;
+import com.MagicalBattle.models.Enums.StatusName;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -37,6 +38,6 @@ public class StunnedEffect extends EffectObject {
 
     @Override
     public boolean isFinished() {
-        return this.character.getTimer().isStunnedTimerEnd();
+        return this.character.getStatusTimer(StatusName.STUNNED).isEnd();
     }
 }

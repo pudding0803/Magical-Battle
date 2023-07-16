@@ -102,9 +102,7 @@ public class ChoiceController implements Initializable {
             if (selected1 == CharacterClass.NULL) choice1 = updateChoice(key1, choice1.getValue());
             if (selected2 == CharacterClass.NULL) choice2 = updateChoice(key2, choice2.getValue());
             key1 = key2 = Direction.NULL;
-            for (VBox v : vBoxes) {
-                v.setId(null);
-            }
+            vBoxes.forEach(vBox -> vBox.setId(null));
             if (choice1 != choice2) {
                 vBoxes.get(choice1.getValue()).setId(selected1 != CharacterClass.NULL ? "selected1" : "prepare1");
                 vBoxes.get(choice2.getValue()).setId(selected2 != CharacterClass.NULL ? "selected2" : "prepare2");
@@ -163,7 +161,7 @@ public class ChoiceController implements Initializable {
     }
 
     private void playAudioClip(boolean isSelected) {
-        AudioClip audioClip = AssetLoader.getOtherAudio("" + (!isSelected ? "de" : "") + "select");
+        AudioClip audioClip = AssetLoader.getOtherAudio(isSelected ? "select" : "deselect");
         audioClip.setVolume(Settings.EFFECT_VOLUME);
         audioClip.play();
     }

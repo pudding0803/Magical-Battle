@@ -3,7 +3,7 @@ package com.MagicalBattle.models.SkillObject;
 import com.MagicalBattle.constants.Settings;
 import com.MagicalBattle.loaders.AssetLoader;
 import com.MagicalBattle.models.Character.Character;
-import com.MagicalBattle.models.Enums.Status;
+import com.MagicalBattle.models.Enums.StatusName;
 import javafx.geometry.NodeOrientation;
 import javafx.scene.image.ImageView;
 import javafx.scene.media.AudioClip;
@@ -15,7 +15,7 @@ public abstract class SkillObject {
     protected AudioClip hitMedia;
 
     protected ImageView imageView = new ImageView();
-    protected ArrayList<Status> statusList = new ArrayList<>();
+    protected ArrayList<StatusName> statusList = new ArrayList<>();
     protected double damage;
     protected Character character;
     protected boolean attackBoth;
@@ -85,28 +85,8 @@ public abstract class SkillObject {
         return this.velocityY;
     }
 
-    public boolean containFrozen() {
-        return this.statusList.contains(Status.FROZEN);
-    }
-
-    public boolean containBurned() {
-        return this.statusList.contains(Status.BURNED);
-    }
-
-    public boolean containStunned() {
-        return this.statusList.contains(Status.STUNNED);
-    }
-
-    public boolean containDizzy() {
-        return this.statusList.contains(Status.DIZZY);
-    }
-
-    public boolean containKnockBack() {
-        return this.statusList.contains(Status.KNOCKED_BACK);
-    }
-
-    public boolean containKnockUp() {
-        return this.statusList.contains(Status.KNOCKED_UP);
+    public ArrayList<StatusName> getStatusList() {
+        return this.statusList;
     }
 
     public void playFireMedia() {

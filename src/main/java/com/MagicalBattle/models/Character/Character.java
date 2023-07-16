@@ -1,39 +1,33 @@
 package com.MagicalBattle.models.Character;
 
-import com.MagicalBattle.constants.Colors;
 import com.MagicalBattle.constants.Settings;
 import com.MagicalBattle.controllers.GameController;
 import com.MagicalBattle.loaders.AbilityLoader;
 import com.MagicalBattle.loaders.AssetLoader;
 import com.MagicalBattle.models.AbilitySet;
-import com.MagicalBattle.models.EffectObject.DizzyEffect;
+import com.MagicalBattle.models.AttackTimers;
 import com.MagicalBattle.models.EffectObject.MissLabel;
-import com.MagicalBattle.models.EffectObject.StunnedEffect;
-import com.MagicalBattle.models.Enums.CharacterClass;
-import com.MagicalBattle.models.Enums.HDirection;
-import com.MagicalBattle.models.Enums.VDirection;
+import com.MagicalBattle.models.Enums.*;
 import com.MagicalBattle.models.SkillObject.SkillObject;
+import com.MagicalBattle.models.StatusTimers;
 import com.MagicalBattle.models.Timer;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.geometry.NodeOrientation;
-import javafx.scene.effect.Light;
-import javafx.scene.effect.Lighting;
+import javafx.scene.effect.Effect;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.media.AudioClip;
-import javafx.scene.paint.Color;
 import javafx.util.Duration;
 
 import java.util.Random;
 
 public abstract class Character {
-    protected ImageView self;
+    protected ImageView imageView;
     protected CharacterClass characterClass;
     protected boolean player1;
-    protected final Timer timer = new Timer();
 
-    protected AbilitySet currentValue;
+    protected AbilitySet currentAbility;
     protected double moveDistance;
     protected double velocity = 0.0;
     protected VDirection vDirection = VDirection.NULL;
@@ -41,23 +35,23 @@ public abstract class Character {
     protected HDirection facing;
     protected int walkingIndex = 0;
     protected int jumpCount = 0;
-    protected boolean attacking = false;
-    protected boolean stunned = false;
-    protected boolean dizzy = false;
-    protected HDirection knockBackFromRight = HDirection.NULL;
+
+    protected final AttackTimers attackTimers;
+    protected final StatusTimers statusTimers = new StatusTimers(this);
 
     protected int maxJumpCount = 1;
 
-    public Character(ImageView imageView, CharacterClass characterClass, boolean player1) {
-        this.self = imageView;
-        this.self.setImage(AssetLoader.getCharacterImageSet(characterClass).getIdle(0));
+    public Character(ImageView imageView, CharacterClass characterClass, boolean player1, AttackTimers attackTimers) {
+        this.imageView = imageView;
+        this.imageView.setImage(AssetLoader.getCharacterImageSet(characterClass).getIdle(0));
         this.facing = (player1 ? HDirection.RIGHT : HDirection.LEFT);
         this.characterClass = characterClass;
-        this.currentValue = new AbilitySet(AbilityLoader.getAbilityValue(this.characterClass));
+        this.currentAbility = new AbilitySet(AbilityLoader.getAbilityValue(characterClass));
         this.player1 = player1;
+        this.attackTimers = attackTimers;
     }
 
-    public CharacterClass getCharacter() {
+    public CharacterClass getCharacterClass() {
         return this.characterClass;
     }
 
@@ -65,12 +59,8 @@ public abstract class Character {
         return this.player1;
     }
 
-    public Timer getTimer() {
-        return this.timer;
-    }
-
     public boolean isDead() {
-        return this.currentValue.getHealth() == 0;
+        return this.currentAbility.getHealth() == 0;
     }
 
     public void setGameOverImage(boolean winner, int counter) {
@@ -78,9 +68,9 @@ public abstract class Character {
         if (winner) image = AssetLoader.getCharacterImageSet(this.characterClass).getPreparingOrSelect(counter, true);
         else image = AssetLoader.getCharacterImageSet(this.characterClass).getDead();
 
-        this.self.setImage(image);
-        this.self.setFitHeight(image.getHeight());
-        if (!this.isFacingLeft()) this.self.setNodeOrientation(NodeOrientation.RIGHT_TO_LEFT);
+        this.imageView.setImage(image);
+        this.imageView.setFitHeight(image.getHeight());
+        if (!this.isFacingLeft()) this.imageView.setNodeOrientation(NodeOrientation.RIGHT_TO_LEFT);
 
         if (this.getX() < 0) {
             this.setX(0);
@@ -90,59 +80,59 @@ public abstract class Character {
     }
 
     public double getWidth() {
-        return this.self.getImage().getWidth() * Settings.PLAYER_SIZE_RATE;
+        return this.imageView.getImage().getWidth() * Settings.PLAYER_SIZE_RATE;
     }
 
     public double getHeight() {
-        return this.self.getImage().getHeight() * Settings.PLAYER_SIZE_RATE;
+        return this.imageView.getImage().getHeight() * Settings.PLAYER_SIZE_RATE;
     }
 
     public double getX() {
-        return this.self.getLayoutX();
+        return this.imageView.getLayoutX();
     }
 
     public double getY() {
-        return this.self.getLayoutY();
+        return this.imageView.getLayoutY();
     }
 
     public void setX(double value) {
-        this.self.setLayoutX(value);
+        this.imageView.setLayoutX(value);
     }
 
     public void setY(double value) {
-        this.self.setLayoutY(value);
+        this.imageView.setLayoutY(value);
     }
 
     public double getHealthRate() {
-        return this.currentValue.getHealth() / AbilityLoader.getAbilityValue(this.characterClass).getHealth();
+        return this.currentAbility.getHealth() / AbilityLoader.getAbilityValue(this.characterClass).getHealth();
     }
 
     public double getMagicRate() {
-        return this.currentValue.getMagic() / AbilityLoader.getAbilityValue(this.characterClass).getMagic();
+        return this.currentAbility.getMagic() / AbilityLoader.getAbilityValue(this.characterClass).getMagic();
     }
 
     public double getHealth() {
-        return this.currentValue.getHealth();
+        return this.currentAbility.getHealth();
     }
 
     public double getMagic() {
-        return this.currentValue.getMagic();
+        return this.currentAbility.getMagic();
     }
 
     public double getAttack() {
-        return this.currentValue.getAttack();
+        return this.currentAbility.getAttack();
     }
 
     public double getDefense() {
-        return this.currentValue.getDefense();
+        return this.currentAbility.getDefense();
     }
 
     public double getSpeed() {
-        return this.currentValue.getSpeed();
+        return this.currentAbility.getSpeed();
     }
 
     public double getAgility() {
-        return this.currentValue.getAgility();
+        return this.currentAbility.getAgility();
     }
 
     public double getMaxHealth() {
@@ -170,15 +160,15 @@ public abstract class Character {
     }
 
     public void setHealth(double value) {
-        this.currentValue.setHealth(Math.max(0, value));
+        this.currentAbility.setHealth(Math.max(0, value));
     }
 
     public void setSpeed(double value) {
-        this.currentValue.setSpeed(Math.max(0, value));
+        this.currentAbility.setSpeed(Math.max(0, value));
     }
 
     public void setAgility(double value) {
-        this.currentValue.setAgility(Math.max(0, value));
+        this.currentAbility.setAgility(Math.max(0, value));
     }
 
     public boolean isUp() {
@@ -201,6 +191,10 @@ public abstract class Character {
         return this.facing == HDirection.LEFT;
     }
 
+    public boolean isOnGround() {
+        return this.getY() + this.velocity > Settings.GROUND_HEIGHT - this.getHeight();
+    }
+
     public void setVDirection(VDirection vDirection) {
         this.vDirection = vDirection;
     }
@@ -210,24 +204,27 @@ public abstract class Character {
         if (hDirection != HDirection.NULL) this.facing = hDirection;
     }
 
-    public void setVelocity() {
+    public void setVelocity(double velocity) {
+        this.velocity = velocity;
+    }
+
+    public void updateVelocity() {
         if (this.isUp() && this.jumpCount++ < this.maxJumpCount) {
             AudioClip audioClip = AssetLoader.getOtherAudio("jump");
             audioClip.setVolume(Settings.EFFECT_VOLUME);
             audioClip.play();
-            this.velocity = -(Settings.INITIAL_VELOCITY + Settings.BONUS_VELOCITY * this.getSpeed()) * (this.stunned || this.dizzy ? 0 : 1);
+            this.velocity = -(Settings.INITIAL_VELOCITY + Settings.BONUS_VELOCITY * this.getSpeed());
         } else if (this.isDown()) {
-            this.velocity = (Settings.INITIAL_VELOCITY + Settings.BONUS_VELOCITY * this.getSpeed()) * (this.stunned || this.dizzy ? 0 : 1);
+            this.velocity = Settings.INITIAL_VELOCITY + Settings.BONUS_VELOCITY * this.getSpeed();
         }
         this.vDirection = VDirection.NULL;
     }
 
     public void doHorizonMotion() {
-        if (this.dizzy) return;
-        this.self.setImage(AssetLoader.getCharacterImageSet(this.characterClass).getWalking(walkingIndex));
-        this.self.setNodeOrientation(this.isFacingLeft() ? NodeOrientation.RIGHT_TO_LEFT : NodeOrientation.LEFT_TO_RIGHT);
-        walkingIndex = (++walkingIndex) % 2;
-        this.moveDistance = Settings.STEP * this.currentValue.getSpeed() * this.hDirection.getValue() * (this.stunned || this.dizzy ? 0 : 1);
+        this.imageView.setImage(AssetLoader.getCharacterImageSet(this.characterClass).getWalking(walkingIndex));
+        this.imageView.setNodeOrientation(this.isFacingLeft() ? NodeOrientation.RIGHT_TO_LEFT : NodeOrientation.LEFT_TO_RIGHT);
+        this.walkingIndex = (++this.walkingIndex) % 2;
+        this.moveDistance = Settings.STEP * this.currentAbility.getSpeed() * this.hDirection.getValue();
         Timeline timeline = new Timeline();
         KeyFrame keyFrame = new KeyFrame(Duration.millis(Settings.UPDATE_TIME), (event) -> {
             this.setX(this.getX() + this.moveDistance);
@@ -245,9 +242,9 @@ public abstract class Character {
         Timeline timeline = new Timeline();
         KeyFrame keyFrame = new KeyFrame(Duration.millis(Settings.UPDATE_TIME), (event) -> {
             if (this.getY() + this.velocity <= Settings.GROUND_HEIGHT - this.getHeight()) {
-                this.setY(this.getY() + this.velocity * (this.getSpeed() + this.getMaxSpeed() * 3) / 4 );
+                this.setY(this.getY() + this.velocity * (this.getSpeed() + this.getMaxSpeed() * 3) / 4);
                 this.velocity += Settings.GRAVITY;
-            } else if (this.getY() + this.velocity > Settings.GROUND_HEIGHT - this.getHeight()) {
+            } else if (this.isOnGround()) {
                 this.setY(Settings.GROUND_HEIGHT - this.getHeight());
                 this.velocity = 0;
             } else if (this.getY() + this.velocity < 0) {
@@ -268,12 +265,28 @@ public abstract class Character {
     }
 
     public void setStand() {
-        this.self.setImage(AssetLoader.getCharacterImageSet(this.characterClass).getIdle(0));
-        this.self.setNodeOrientation(this.isFacingLeft() ? NodeOrientation.RIGHT_TO_LEFT : NodeOrientation.LEFT_TO_RIGHT);
+        this.imageView.setImage(AssetLoader.getCharacterImageSet(this.characterClass).getIdle(0));
+        this.imageView.setNodeOrientation(this.isFacingLeft() ? NodeOrientation.RIGHT_TO_LEFT : NodeOrientation.LEFT_TO_RIGHT);
     }
 
-    public boolean isAttacking() {
-        return !this.dizzy && this.attacking;
+    public void resetJumpCount() {
+        this.jumpCount = this.maxJumpCount;
+    }
+
+    public void setEffect(Effect effect) {
+        this.imageView.setEffect(effect);
+    }
+
+    public AttackTimers getAttackTimers() {
+        return this.attackTimers;
+    }
+
+    public Timer getStatusTimer(StatusName statusName) {
+        return this.statusTimers.getTimer(statusName);
+    }
+
+    public void stopStatusTimers() {
+        this.statusTimers.stopAll();
     }
 
     public boolean isCollidedFromOther(SkillObject skillObject) {
@@ -282,7 +295,7 @@ public abstract class Character {
         double width = skillObject.getWidth();
         double height = skillObject.getHeight();
         if (skillObject.isFromOther(this.player1) && (inSelf(x, y) || inSelf(x + width, y) || inSelf(x, y + height) || inSelf(x + width, y + height))) {
-            boolean miss = (new Random().nextInt(10) < (int) this.getAgility());
+            boolean miss = false;   // (new Random().nextInt(10) < (int) this.getAgility());
             if (miss) {
                 AudioClip audioClip = AssetLoader.getOtherAudio("miss");
                 audioClip.setVolume(Settings.EFFECT_VOLUME);
@@ -291,47 +304,12 @@ public abstract class Character {
             } else {
                 skillObject.playHitMedia();
                 this.setHealth(this.getHealth() + Math.min(this.getDefense() - skillObject.getDamage(), 0));
-                this.timer.setHurtTimer(Settings.HURT_TIME);
-                if (skillObject.containFrozen()) {
-                    this.timer.setFrozenTimer(Settings.FROZEN_TIME);
-                    this.timer.setBurnedTimer(0);
-                }
-                if (skillObject.containBurned()) {
-                    this.timer.setBurnedTimer(Settings.BURNED_TIME);
-                    this.timer.setFrozenTimer(0);
-                }
-                if (skillObject.containStunned()) {
-                    AudioClip audioClip = AssetLoader.getEffectAudio("stunned");
-                    audioClip.setVolume(Settings.EFFECT_VOLUME);
-                    audioClip.play();
-                    this.timer.setStunnedTimer(Settings.STUNNED_TIME);
-                    GameController.newEffectObject(new StunnedEffect(this));
-                }
-                if (skillObject.containDizzy()) {
-                    AudioClip audioClip = AssetLoader.getEffectAudio("dizzy");
-                    audioClip.setVolume(Settings.EFFECT_VOLUME);
-                    audioClip.play();
-                    this.timer.setDizzyTimer(Settings.DIZZY_TIME);
-                    GameController.newEffectObject(new DizzyEffect(this));
-                }
-                if (skillObject.containKnockBack()) {
-                    this.timer.setStunnedTimer(Settings.STUNNED_TIME);
-                    this.timer.setKnockBackTimer(Settings.KNOCK_BACK_TIME);
-                    this.knockBackFromRight = (skillObject.getVelocityX() > 0 ? HDirection.LEFT : HDirection.RIGHT);
-                }
-                if (skillObject.containKnockUp()) {
-                    this.timer.setStunnedTimer(Settings.STUNNED_TIME);
-                    this.velocity = -Settings.KNOCK_UP_VELOCITY;
-                    this.jumpCount = 0;
-                }
+                this.statusTimers.getTimer(StatusName.HURT).restart();
+                skillObject.getStatusList().forEach(statusName -> this.statusTimers.restart(statusName, skillObject));
             }
             return true;
         }
         return false;
-    }
-
-    public void setAttacking(boolean attacking) {
-        this.attacking = attacking;
     }
 
     private boolean inSelf(double x, double y) {
@@ -339,44 +317,11 @@ public abstract class Character {
     }
 
     public void updateEffect() {
-        this.self.setEffect(null);
+        this.imageView.setEffect(null);
         this.setSpeed(this.getMaxSpeed());
         this.setAgility(this.getMaxAgility());
-        this.stunned = !this.timer.isStunnedTimerEnd();
-        this.dizzy = !this.timer.isDizzyTimerEnd();
-        if (!this.timer.isHurtTimerEnd()) {
-            Lighting lighting = new Lighting();
-            lighting.setLight(new Light.Distant(0, 45, Color.RED));
-            this.self.setEffect(lighting);
-        }
-        if (!this.timer.isFrozenTimerEnd()) {
-            if (this.timer.isHurtTimerEnd()) {
-                Lighting lighting = new Lighting();
-                lighting.setLight(new Light.Distant(0, 45, Colors.frozenColor));
-                this.self.setEffect(lighting);
-            }
-            this.setSpeed(this.getMaxSpeed() * Settings.FROZEN_SPEED_EFFECT);
-            this.setAgility(Math.max(this.getMaxAgility() - Settings.FROZEN_AGILITY_EFFECT, 0));
-        }
-        if (!this.timer.isBurnedTimerEnd()) {
-            if(this.timer.getBurnedTimer() % 50 == 0) {
-                AudioClip audioClip = AssetLoader.getEffectAudio("burned");
-                audioClip.setVolume(Settings.EFFECT_VOLUME);
-                audioClip.play();
-                this.setHealth(this.getHealth() - Settings.BURNED_DAMAGE);
-                this.timer.setHurtTimer(Settings.HURT_TIME);
-            }
-            if (this.timer.isHurtTimerEnd()) {
-                Lighting lighting = new Lighting();
-                lighting.setLight(new Light.Distant(0, 45, Colors.burnedColor));
-                this.self.setEffect(lighting);
-            }
-        }
-        if (!this.timer.isKnockBackTimerEnd()) {
-            double knockBackMovement = (this.knockBackFromRight == HDirection.RIGHT ? -1 : 1) * Settings.KNOCK_BACK_PER_DISTANCE;
-            if (this.getX() + knockBackMovement <= 0 || this.getX() + knockBackMovement >= Settings.WIDTH - this.getWidth()) return;
-            this.setX(this.getX() + knockBackMovement);
-        }
+        this.attackTimers.timing();
+        this.statusTimers.doAllByTime();
     }
 
     public abstract void attack();
@@ -385,6 +330,11 @@ public abstract class Character {
 
     public abstract void skill2();
 
+    public abstract void skill3();
+
+    public abstract void skill4();
+
     public void debug() {
+
     }
 }

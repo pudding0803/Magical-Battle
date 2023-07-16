@@ -29,21 +29,4 @@ public final class Settings {
     public static final double MISS_SIZE = 20;
     public static final double MISS_WIDTH = 57;
     public static final double MISS_HEIGHT = 28;
-
-    public static final double FROZEN_SPEED_EFFECT = 0.4;
-    public static final double FROZEN_AGILITY_EFFECT = 2;
-    public static final double BURNED_DAMAGE = 8;
-    public static final double KNOCK_BACK_PER_DISTANCE = 10;
-    public static final double KNOCK_UP_VELOCITY = 12;
-
-    public static final int END_TIME = -1;
-    // 20ms * ?
-    // 50 -> 1s
-    // 100 -> 2s
-    public static final int HURT_TIME = 6;
-    public static final int FROZEN_TIME = 180;
-    public static final int BURNED_TIME = 150;
-    public static final int STUNNED_TIME = 60;
-    public static final int KNOCK_BACK_TIME = STUNNED_TIME / 2;
-    public static final int DIZZY_TIME = 50;
 }

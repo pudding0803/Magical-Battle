@@ -1,15 +1,15 @@
 .healthy {
-    -fx-accent: lime;
+    -fx-accent: #48c774;
 }
 
 .warning {
-     -fx-accent: orange;
+     -fx-accent: #ffdd57;
 }
 
 .dangerous {
-      -fx-accent: red;
+      -fx-accent: #ff3860;
 }
 
 .magic {
-    -fx-accent: blue;
+    -fx-accent: #209cee;
 }

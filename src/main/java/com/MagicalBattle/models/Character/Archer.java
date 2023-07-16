@@ -1,36 +1,31 @@
 package com.MagicalBattle.models.Character;
 
+import com.MagicalBattle.constants.Time;
 import com.MagicalBattle.controllers.GameController;
+import com.MagicalBattle.models.AttackTimers;
+import com.MagicalBattle.models.Enums.Attack;
 import com.MagicalBattle.models.Enums.CharacterClass;
 import com.MagicalBattle.models.SkillObject.Arrow;
-import com.MagicalBattle.models.SkillObject.FlameArrow;
-import com.MagicalBattle.models.SkillObject.FlashArrow;
 import com.MagicalBattle.models.SkillObject.SkillObject;
 import javafx.scene.image.ImageView;
 
 import java.util.Random;
 
 public class Archer extends Character {
-    public final int DEFAULT_ATTACK_TIME = 40;
+    public static final int DEFAULT_ATTACK_TIME = Time.ms(800);
+    private static final int[] attackDurations = {DEFAULT_ATTACK_TIME, 0, 0, 0, 0};
+    private static final int[] chargedAttackDurations = {0, 0, 0, 0, 0};
 
     public Archer(ImageView imageView, boolean isPlayer1) {
-        super(imageView, CharacterClass.ARCHER, isPlayer1);
+        super(imageView, CharacterClass.ARCHER, isPlayer1, new AttackTimers(attackDurations, chargedAttackDurations));
     }
 
     @Override
     public void attack() {
-        this.timer.setAttackTimer(DEFAULT_ATTACK_TIME);
+        this.attackTimers.restartAttack(Attack.ATTACK);
         int arrowsNumber = new Random().nextInt(4) + 3;
         for (int i = 0; i < arrowsNumber; i++) {
-            int attackIndex = new Random().nextInt(8);
-            SkillObject skillObject;
-            if (attackIndex == 0) {
-                skillObject = new FlameArrow(this);
-            } else if (attackIndex == 1) {
-                skillObject = new FlashArrow(this);
-            } else {
-                skillObject = new Arrow(this);
-            }
+            SkillObject skillObject = new Arrow(this);
             skillObject.playFireMedia();
             GameController.newSkillObject(skillObject);
         }
@@ -43,6 +38,16 @@ public class Archer extends Character {
 
     @Override
     public void skill2() {
+
+    }
+
+    @Override
+    public void skill3() {
+
+    }
+
+    @Override
+    public void skill4() {
 
     }
 }

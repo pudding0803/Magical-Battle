@@ -12,6 +12,7 @@ module com.example.magicalbattle {
     exports com.MagicalBattle.models.Character;
     exports com.MagicalBattle.models.SkillObject;
     exports com.MagicalBattle.models.EffectObject;
+    exports com.MagicalBattle.models.Status;
     exports com.MagicalBattle.loaders;
 
     opens com.MagicalBattle to javafx.fxml;

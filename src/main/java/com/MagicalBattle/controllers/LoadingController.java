@@ -68,35 +68,35 @@ public class LoadingController implements Initializable {
         }
     }
 
-    private void findFile(File currentFile) {
-        if (!currentFile.isDirectory()) {
-            fileCount++;
-            file.setText("Loading\t\"" + currentFile.getPath() + "\"");
-            progress.setProgress(Math.min(1, (double) fileCount / maxFileCount));
-            String relativePath = currentFile.getPath();
-            if (currentFile.getName().contains(".png")) {
-                image.setImage(ResourceLoader.getImage(relativePath));
-            } else if (currentFile.getName().contains("")) {
-                if (currentFile.getParentFile().getName().equals("bgm")) {
-                    Media media = ResourceLoader.getMedia(relativePath);
-                    MediaPlayer mediaPlayer = new MediaPlayer(media);
-                    mediaPlayer.setVolume(0);
-                    mediaPlayer.play();
-                    mediaPlayer.stop();
-                } else {
-                    AudioClip audioClip = ResourceLoader.getAudioClip(relativePath);
-                    audioClip.setVolume(0);
-                    audioClip.play();
-                }
-            }
-            return;
-        }
-        File[] fileList = currentFile.listFiles();
-        assert fileList != null;
-        for (File file : fileList) {
-            findFile(file);
-        }
-    }
+//    private void findFile(File currentFile) {
+//        if (!currentFile.isDirectory()) {
+//            fileCount++;
+//            file.setText("Loading\t\"" + currentFile.getPath() + "\"");
+//            progress.setProgress(Math.min(1, (double) fileCount / maxFileCount));
+//            String relativePath = currentFile.getPath();
+//            if (currentFile.getName().contains(".png")) {
+//                image.setImage(ResourceLoader.getImage(relativePath));
+//            } else if (currentFile.getName().contains("")) {
+//                if (currentFile.getParentFile().getName().equals("bgm")) {
+//                    Media media = ResourceLoader.getMedia(relativePath);
+//                    MediaPlayer mediaPlayer = new MediaPlayer(media);
+//                    mediaPlayer.setVolume(0);
+//                    mediaPlayer.play();
+//                    mediaPlayer.stop();
+//                } else {
+//                    AudioClip audioClip = ResourceLoader.getAudioClip(relativePath);
+//                    audioClip.setVolume(0);
+//                    audioClip.play();
+//                }
+//            }
+//            return;
+//        }
+//        File[] fileList = currentFile.listFiles();
+//        assert fileList != null;
+//        for (File file : fileList) {
+//            findFile(file);
+//        }
+//    }
 
     @FXML
     public void switchToMenu() throws IOException {
