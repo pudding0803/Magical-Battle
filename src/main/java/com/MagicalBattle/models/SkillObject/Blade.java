@@ -5,8 +5,8 @@ import com.MagicalBattle.models.Character.Character;
 
 import java.util.ArrayList;
 
-public class Shuriken extends SkillObject {
-    public Shuriken(Character character) {
+public class Blade extends SkillObject {
+    public Blade(Character character) {
         super(character, "images/attack/skill/shuriken.png", "media/fire/shuriken.mp3", "media/hit/shuriken.mp3");
         this.statusList = new ArrayList<>();
         this.damage = this.character.getAttack();

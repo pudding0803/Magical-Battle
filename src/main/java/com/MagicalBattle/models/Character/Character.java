@@ -81,7 +81,7 @@ public abstract class Character {
 
         this.self.setImage(image);
         this.self.setFitHeight(image.getHeight());
-        if (this.isFacingLeft()) this.self.setNodeOrientation(NodeOrientation.RIGHT_TO_LEFT);
+        if (!this.isFacingLeft()) this.self.setNodeOrientation(NodeOrientation.RIGHT_TO_LEFT);
 
         if (this.getX() < 0) {
             this.setX(0);

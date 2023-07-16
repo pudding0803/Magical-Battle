@@ -3,7 +3,7 @@ package com.MagicalBattle.models.Character;
 import com.MagicalBattle.controllers.GameController;
 import com.MagicalBattle.models.Enums.CharacterClass;
 import com.MagicalBattle.models.SkillObject.ElectricStar;
-import com.MagicalBattle.models.SkillObject.Shuriken;
+import com.MagicalBattle.models.SkillObject.Blade;
 import com.MagicalBattle.models.SkillObject.SkillObject;
 import javafx.scene.image.ImageView;
 
@@ -25,7 +25,7 @@ public class Assassin extends Character {
         if (attackIndex == 0) {
             skillObject = new ElectricStar(this);
         } else {
-            skillObject = new Shuriken(this);
+            skillObject = new Blade(this);
         }
         skillObject.playFireMedia();
         GameController.newSkillObject(skillObject);

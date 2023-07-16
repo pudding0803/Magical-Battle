@@ -2,6 +2,7 @@ package com.MagicalBattle.controllers;
 
 import com.MagicalBattle.constants.Settings;
 import com.MagicalBattle.loaders.ConfigLoader;
+import com.MagicalBattle.loaders.ImagesLoader;
 import com.MagicalBattle.loaders.ResourceLoader;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -19,6 +20,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Objects;
 import java.util.ResourceBundle;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class BackgroundController implements Initializable {
     @FXML
@@ -46,6 +48,24 @@ public class BackgroundController implements Initializable {
         } catch (IOException | ParseException e) {
             e.printStackTrace();
         }
+
+        AtomicInteger index = new AtomicInteger(0);
+        ImagesLoader.getBackgroundImages().forEach((name, image) -> {
+            ImageView imageView = new ImageView(image);
+            imageView.setId(name);
+            imageView.setFitHeight(160);
+            imageView.setFitWidth(240);
+            imageView.setOnMouseClicked(event -> {
+                try {
+                    choose(event);
+                } catch (IOException | ParseException e) {
+                    e.printStackTrace();
+                }
+            });
+            GridPane.setConstraints(imageView, index.get() % 3, index.get() / 3);
+            index.getAndIncrement();
+            backgroundList.getChildren().add(imageView);
+        });
     }
 
     @FXML

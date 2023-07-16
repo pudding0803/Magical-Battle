@@ -15,6 +15,7 @@ import org.json.simple.parser.ParseException;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -42,7 +43,10 @@ public class LoadingController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         AbilityLoader.loadAbilities();
-        ImagesLoader.loadImages();
+        ImagesLoader.loadCharacterImages();
+        ImagesLoader.loadBackgroundImages();
+        ImagesLoader.loadSkillImages();
+        ImagesLoader.loadEffectImages();
         ProgressBarsLoader.loadProgressBars();
 //        File assetsDir = new File("src\\main\\java\\com\\MagicalBattle");
 //        AtomicInteger dotCounter = new AtomicInteger(0);

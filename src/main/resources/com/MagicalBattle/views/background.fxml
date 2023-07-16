@@ -15,36 +15,18 @@
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="468.0" prefWidth="779.0">
                      <children>
-                        <GridPane fx:id="backgroundList" alignment="CENTER" layoutX="-42.0" layoutY="203.0" prefHeight="179.0" prefWidth="779.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                          <columnConstraints>
-                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                          </columnConstraints>
-                          <rowConstraints>
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                          </rowConstraints>
-                           <children>
-                              <ImageView id="barn" fitHeight="160.0" fitWidth="240.0" onMouseClicked="#choose" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
-                                 <image>
-                                    <Image url="@background/barn.png" />
-                                 </image>
-                                 <GridPane.margin>
-                                    <Insets />
-                                 </GridPane.margin>
-                              </ImageView>
-                              <ImageView id="park" fitHeight="160.0" fitWidth="240.0" onMouseClicked="#choose" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
-                                 <image>
-                                    <Image url="@background/park.png" />
-                                 </image>
-                              </ImageView>
-                              <ImageView id="great_wall" fitHeight="160.0" fitWidth="240.0" onMouseClicked="#choose" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
-                                 <image>
-                                    <Image url="@background/great_wall.png" />
-                                 </image>
-                              </ImageView>
-                           </children>
-                        </GridPane>
+                         <GridPane fx:id="backgroundList" alignment="CENTER" layoutX="-42.0" layoutY="203.0"
+                                   prefHeight="179.0" prefWidth="779.0" AnchorPane.leftAnchor="0.0"
+                                   AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                             <columnConstraints>
+                                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                             </columnConstraints>
+                             <rowConstraints>
+                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                             </rowConstraints>
+                         </GridPane>
                      </children>
                   </AnchorPane>
               </content>
