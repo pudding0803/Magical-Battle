@@ -1,0 +1,97 @@
+.face {
+    -fx-border-width: 4px;
+    -fx-border-radius: 8px 8px 0 0;
+    -fx-background-color: #ffffffbb;
+    -fx-background-radius: 10px 10px 0 0;
+    -fx-background-size: 100px 100px;
+}
+
+.Warrior0 {
+    -fx-background-iMage: url("../images/character/Warrior/face/0.png");
+    -fx-border-color: #5e7a2c;
+}
+
+.Warrior1 {
+    -fx-background-iMage: url("../images/character/Warrior/face/1.png");
+    -fx-border-color: #5e7a2c;
+}
+
+.Warrior2 {
+    -fx-background-iMage: url("../images/character/Warrior/face/2.png");
+    -fx-border-color: #5e7a2c;
+}
+
+.Guardian0 {
+    -fx-background-iMage: url("../images/character/Guardian/face/0.png");
+    -fx-border-color: #464646;
+}
+
+.Guardian1 {
+    -fx-background-iMage: url("../images/character/Guardian/face/1.png");
+    -fx-border-color: #464646;
+}
+
+.Guardian2 {
+    -fx-background-iMage: url("../images/character/Guardian/face/2.png");
+    -fx-border-color: #464646;
+}
+
+.Mage0 {
+    -fx-background-iMage: url("../images/character/Mage/face/0.png");
+    -fx-border-color: #967808;
+}
+
+.Mage1 {
+    -fx-background-iMage: url("../images/character/Mage/face/1.png");
+    -fx-border-color: #967808;
+}
+
+.Mage2 {
+    -fx-background-iMage: url("../images/character/Mage/face/2.png");
+    -fx-border-color: #967808;
+}
+
+.Archer0 {
+    -fx-background-iMage: url("../images/character/Archer/face/0.png");
+    -fx-border-color: #466462;
+}
+
+.Archer1 {
+    -fx-background-iMage: url("../images/character/Archer/face/1.png");
+    -fx-border-color: #466462;
+}
+
+.Archer2 {
+    -fx-background-iMage: url("../images/character/Archer/face/2.png");
+    -fx-border-color: #466462;
+}
+
+.Assassin0 {
+    -fx-background-iMage: url("../images/character/Assassin/face/0.png");
+    -fx-border-color: #0a2154;
+}
+
+.Assassin1 {
+    -fx-background-iMage: url("../images/character/Assassin/face/1.png");
+    -fx-border-color: #0a2154;
+}
+
+.Assassin2 {
+    -fx-background-iMage: url("../images/character/Assassin/face/2.png");
+    -fx-border-color: #0a2154;
+}
+
+.Alchemist0 {
+    -fx-background-iMage: url("../images/character/Alchemist/face/0.png");
+    -fx-border-color: #9b390d;
+}
+
+.Alchemist1 {
+    -fx-background-iMage: url("../images/character/Alchemist/face/1.png");
+    -fx-border-color: #9b390d;
+}
+
+.Alchemist2 {
+    -fx-background-iMage: url("../images/character/Alchemist/face/2.png");
+    -fx-border-color: #9b390d;
+}
