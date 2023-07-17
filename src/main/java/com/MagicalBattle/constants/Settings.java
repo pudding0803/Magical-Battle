@@ -12,7 +12,8 @@ public final class Settings {
     public static final double PLAYER_SIZE_RATE = (double) 54 / 48;
     public static final double STEP = 5;
 
-    public static final double WAIT_TIME = 260;
+    public static final double LOADING_TIME = 300;
+    public static final double WAIT_TIME = 240;
     public static final double UPDATE_TIME = 20;
 
     public static final double GROUND_HEIGHT = 560;

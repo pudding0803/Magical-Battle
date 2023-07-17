@@ -15,22 +15,23 @@ import java.io.IOException;
 import java.util.Objects;
 
 public class ConfigLoader {
-    private static final String FILE_PATH = Objects.requireNonNull(AbilityLoader.class.getResource(Settings.RESOURCE_PATH + "config/config.json")).getPath();
+    private static final String FILE_PATH = Objects.requireNonNull(ConfigLoader.class.getResource(Settings.RESOURCE_PATH + "config/config.json")).getPath();
 
-    public static long getAssetsNumber() throws IOException, ParseException {
+    public static long getAssetsCount() throws IOException, ParseException {
         FileReader reader = new FileReader(FILE_PATH);
         JSONParser parser = new JSONParser();
         JSONObject object = (JSONObject) parser.parse(reader);
         reader.close();
-        return (long) object.get("AssetsNumber");
+        return (long) object.get("AssetCount");
     }
 
-    public static void setAssetsNumber(int value) throws IOException, ParseException {
+    public static void setAssetsCount(long value) throws IOException, ParseException {
         FileReader reader = new FileReader(FILE_PATH);
         JSONParser parser = new JSONParser();
         JSONObject object = (JSONObject) parser.parse(reader);
         reader.close();
-        object.put("AssetsNumber", value);
+        object.put("AssetCount", value);
+        System.out.println(object);
         FileWriter writer = new FileWriter(FILE_PATH);
         BufferedWriter bufferedWriter = new BufferedWriter(writer);
         bufferedWriter.write(object.toString());

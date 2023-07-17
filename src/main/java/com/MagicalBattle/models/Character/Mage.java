@@ -2,10 +2,10 @@ package com.MagicalBattle.models.Character;
 
 import com.MagicalBattle.constants.Time;
 import com.MagicalBattle.controllers.GameController;
-import com.MagicalBattle.models.SkillTimers;
-import com.MagicalBattle.models.enums.SkillType;
-import com.MagicalBattle.models.enums.CharacterClass;
 import com.MagicalBattle.models.SkillObject.*;
+import com.MagicalBattle.models.SkillTimers;
+import com.MagicalBattle.models.enums.CharacterClass;
+import com.MagicalBattle.models.enums.SkillType;
 import javafx.scene.image.ImageView;
 
 public class Mage extends Character {

@@ -1,0 +1,43 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Magical-Battle:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/Magical_Battle_jar</output-path>
+    <root id="archive" name="Magical-Battle.jar">
+      <element id="module-output" name="Magical-Battle" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/zaxxer/SparseBitSet/1.2/SparseBitSet-1.2.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/apache/logging/log4j/log4j-core/2.20.0/log4j-core-2.20.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/openjfx/javafx-media/20/javafx-media-20.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/openjfx/javafx-graphics/20/javafx-graphics-20.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/openjfx/javafx-fxml/20/javafx-fxml-20-win.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/github/virtuald/curvesapi/1.07/curvesapi-1.07.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/apache/poi/poi/5.2.3/poi-5.2.3.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/commons-io/commons-io/2.11.0/commons-io-2.11.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/apache/poi/poi-ooxml/5.2.3/poi-ooxml-5.2.3.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/googlecode/json-simple/json-simple/1.1.1/json-simple-1.1.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/apache/commons/commons-collections4/4.4/commons-collections4-4.4.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/openjfx/javafx-media/20/javafx-media-20-win.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/openjfx/javafx-controls/20/javafx-controls-20-win.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/openjfx/javafx-base/20/javafx-base-20.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/junit/junit/4.10/junit-4.10.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/openjfx/javafx-graphics/20/javafx-graphics-20-win.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/openjfx/javafx-fxml/20/javafx-fxml-20.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/commons-codec/commons-codec/1.15/commons-codec-1.15.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/apache/xmlbeans/xmlbeans/5.1.1/xmlbeans-5.1.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/hamcrest/hamcrest-core/1.1/hamcrest-core-1.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/openjfx/javafx-base/20/javafx-base-20-win.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/openjfx/javafx-controls/20/javafx-controls-20.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/apache/commons/commons-compress/1.21/commons-compress-1.21.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/apache/logging/log4j/log4j-api/2.18.0/log4j-api-2.18.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/apache/commons/commons-math3/3.6.1/commons-math3-3.6.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/apache/poi/poi-ooxml-lite/5.2.3/poi-ooxml-lite-5.2.3.jar" path-in-jar="/" />
+      <element id="file-copy" path="$PROJECT_DIR$/../../../../../Program Files/Java/javafx-sdk-20.0.1/lib/javafx-swt.jar" />
+      <element id="file-copy" path="$PROJECT_DIR$/../../../../../Program Files/Java/javafx-sdk-20.0.1/lib/javafx.base.jar" />
+      <element id="file-copy" path="$PROJECT_DIR$/../../../../../Program Files/Java/javafx-sdk-20.0.1/lib/javafx.controls.jar" />
+      <element id="file-copy" path="$PROJECT_DIR$/../../../../../Program Files/Java/javafx-sdk-20.0.1/lib/javafx.fxml.jar" />
+      <element id="file-copy" path="$PROJECT_DIR$/../../../../../Program Files/Java/javafx-sdk-20.0.1/lib/javafx.graphics.jar" />
+      <element id="file-copy" path="$PROJECT_DIR$/../../../../../Program Files/Java/javafx-sdk-20.0.1/lib/javafx.media.jar" />
+      <element id="file-copy" path="$PROJECT_DIR$/../../../../../Program Files/Java/javafx-sdk-20.0.1/lib/javafx.properties" />
+      <element id="file-copy" path="$PROJECT_DIR$/../../../../../Program Files/Java/javafx-sdk-20.0.1/lib/javafx.swing.jar" />
+      <element id="file-copy" path="$PROJECT_DIR$/../../../../../Program Files/Java/javafx-sdk-20.0.1/lib/javafx.web.jar" />
+    </root>
+  </artifact>
+</component>
