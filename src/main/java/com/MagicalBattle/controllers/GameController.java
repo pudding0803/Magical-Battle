@@ -5,7 +5,7 @@ import com.MagicalBattle.loaders.AssetLoader;
 import com.MagicalBattle.loaders.ConfigLoader;
 import com.MagicalBattle.models.Character.Character;
 import com.MagicalBattle.models.EffectObject.EffectObject;
-import com.MagicalBattle.models.Enums.Attack;
+import com.MagicalBattle.models.Enums.SkillType;
 import com.MagicalBattle.models.Enums.HDirection;
 import com.MagicalBattle.models.Enums.VDirection;
 import com.MagicalBattle.models.SkillObject.SkillObject;
@@ -75,11 +75,11 @@ public class GameController implements Initializable {
             player1.updateEffect();
             player2.updateEffect();
 
-            updateSkillObjects();
-            updateEffectObjects();
-
             playerAction(player1);
             playerAction(player2);
+
+            updateSkillObjects();
+            updateEffectObjects();
         });
         timeline.getKeyFrames().add(keyFrame);
         timeline.setCycleCount(Timeline.INDEFINITE);
@@ -148,11 +148,20 @@ public class GameController implements Initializable {
     }
 
     private void playerAction(Character character) {
-        if (character.isUp() || character.isDown()) character.updateVelocity();
+        if (character.canJump() && (character.isUp() || character.isDown())) character.updateVelocity();
         character.doVerticalMotion();
         if (character.isLeft() || character.isRight()) character.doHorizonMotion();
         else character.setStand();
-        if (character.getAttackTimers().isPressing(Attack.ATTACK) && character.getAttackTimers().isAttackValid(Attack.ATTACK)) character.attack();
+//        for (Attack attack : Attack.values()) {
+//            if (character.getSkillTimers().isPressing(attack) && character.getSkillTimers().isAttackValid(attack)) {
+//                character.attack();
+//            }
+//        }
+        if (character.getSkillTimers().isPressing(SkillType.ATTACK) && character.getSkillTimers().isSkillValid(SkillType.ATTACK)) character.attack();
+        if (character.getSkillTimers().isPressing(SkillType.SKILL1) && character.getSkillTimers().isSkillValid(SkillType.SKILL1)) character.skill1();
+        if (character.getSkillTimers().isPressing(SkillType.SKILL2) && character.getSkillTimers().isSkillValid(SkillType.SKILL2)) character.skill2();
+        if (character.getSkillTimers().isPressing(SkillType.SKILL3) && character.getSkillTimers().isSkillValid(SkillType.SKILL3)) character.skill3();
+        if (character.getSkillTimers().isPressing(SkillType.SKILL4) && character.getSkillTimers().isSkillValid(SkillType.SKILL4)) character.skill4();
     }
 
     private void gameOver() {
@@ -199,20 +208,20 @@ public class GameController implements Initializable {
             case S -> player1.setVDirection(VDirection.DOWN);
             case A -> player1.setHDirection(HDirection.LEFT);
             case D -> player1.setHDirection(HDirection.RIGHT);
-            case SPACE -> player1.getAttackTimers().restartPressed(Attack.ATTACK);
-            case Z -> player1.skill1();
-            case X -> player1.skill2();
-            case C -> player1.skill3();
-            case V -> player1.skill4();
+            case SPACE -> player1.getSkillTimers().restartPressed(SkillType.ATTACK);
+            case Z -> player1.getSkillTimers().restartPressed(SkillType.SKILL1);
+            case X -> player1.getSkillTimers().restartPressed(SkillType.SKILL2);
+            case C -> player1.getSkillTimers().restartPressed(SkillType.SKILL3);
+            case V -> player1.getSkillTimers().restartPressed(SkillType.SKILL4);
             case UP -> player2.setVDirection(VDirection.UP);
             case DOWN -> player2.setVDirection(VDirection.DOWN);
             case LEFT -> player2.setHDirection(HDirection.LEFT);
             case RIGHT -> player2.setHDirection(HDirection.RIGHT);
-            case ENTER -> player2.getAttackTimers().restartPressed(Attack.ATTACK);
-            case M -> player2.skill1();
-            case COMMA -> player2.skill2();
-            case PERIOD -> player2.skill3();
-            case SLASH -> player2.skill4();
+            case ENTER -> player2.getSkillTimers().restartPressed(SkillType.ATTACK);
+            case M -> player2.getSkillTimers().restartPressed(SkillType.SKILL1);
+            case COMMA -> player2.getSkillTimers().restartPressed(SkillType.SKILL2);
+            case PERIOD -> player2.getSkillTimers().restartPressed(SkillType.SKILL3);
+            case SLASH -> player2.getSkillTimers().restartPressed(SkillType.SKILL4);
             case ESCAPE -> switchToChoice();
         }
     }
@@ -222,19 +231,19 @@ public class GameController implements Initializable {
         switch (event.getCode()) {
             case A -> player1.setHDirection(player1.isRight() ? HDirection.RIGHT : HDirection.NULL);
             case D -> player1.setHDirection(player1.isLeft() ? HDirection.LEFT : HDirection.NULL);
-            case SPACE -> player1.getAttackTimers().stopPressed(Attack.ATTACK);
-            case Z -> player1.skill1();
-            case X -> player1.skill2();
-            case C -> player1.skill3();
-            case V -> player1.skill4();
+            case SPACE -> player1.getSkillTimers().stopPressed(SkillType.ATTACK);
+            case Z -> player1.getSkillTimers().stopPressed(SkillType.SKILL1);
+            case X -> player1.getSkillTimers().stopPressed(SkillType.SKILL2);
+            case C -> player1.getSkillTimers().stopPressed(SkillType.SKILL3);
+            case V -> player1.getSkillTimers().stopPressed(SkillType.SKILL4);
             case Q -> player1.debug();
             case LEFT -> player2.setHDirection(player2.isRight() ? HDirection.RIGHT : HDirection.NULL);
             case RIGHT -> player2.setHDirection(player2.isLeft() ? HDirection.LEFT : HDirection.NULL);
-            case ENTER -> player2.getAttackTimers().stopPressed(Attack.ATTACK);
-            case M -> player2.skill1();
-            case COMMA -> player2.skill2();
-            case PERIOD -> player2.skill3();
-            case SLASH -> player2.skill4();
+            case ENTER -> player2.getSkillTimers().stopPressed(SkillType.ATTACK);
+            case M -> player2.getSkillTimers().stopPressed(SkillType.SKILL1);
+            case COMMA -> player2.getSkillTimers().stopPressed(SkillType.SKILL2);
+            case PERIOD -> player2.getSkillTimers().stopPressed(SkillType.SKILL3);
+            case SLASH -> player2.getSkillTimers().stopPressed(SkillType.SKILL4);
             case P -> player2.debug();
         }
     }

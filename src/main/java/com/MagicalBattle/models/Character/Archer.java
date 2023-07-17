@@ -2,8 +2,8 @@ package com.MagicalBattle.models.Character;
 
 import com.MagicalBattle.constants.Time;
 import com.MagicalBattle.controllers.GameController;
-import com.MagicalBattle.models.AttackTimers;
-import com.MagicalBattle.models.Enums.Attack;
+import com.MagicalBattle.models.SkillTimers;
+import com.MagicalBattle.models.Enums.SkillType;
 import com.MagicalBattle.models.Enums.CharacterClass;
 import com.MagicalBattle.models.SkillObject.Arrow;
 import com.MagicalBattle.models.SkillObject.SkillObject;
@@ -13,17 +13,17 @@ import java.util.Random;
 
 public class Archer extends Character {
     public static final int DEFAULT_ATTACK_TIME = Time.ms(800);
-    private static final int[] attackDurations = {DEFAULT_ATTACK_TIME, 0, 0, 0, 0};
-    private static final int[] chargedAttackDurations = {0, 0, 0, 0, 0};
+    private static final int[] skillDurations = {DEFAULT_ATTACK_TIME, 0, 0, 0, 0};
+    private static final int[] chargedSkillDurations = {0, 0, 0, 0, 0};
 
     public Archer(ImageView imageView, boolean isPlayer1) {
-        super(imageView, CharacterClass.ARCHER, isPlayer1, new AttackTimers(attackDurations, chargedAttackDurations));
+        super(imageView, CharacterClass.ARCHER, isPlayer1, new SkillTimers(skillDurations, chargedSkillDurations));
     }
 
     @Override
     public void attack() {
-        attackTimers.restartAttack(Attack.ATTACK);
-        int arrowsNumber = new Random().nextInt(4) + 3;
+        skillTimers.restartSkill(SkillType.ATTACK);
+        int arrowsNumber = new Random().nextInt(3) + 5;
         for (int i = 0; i < arrowsNumber; i++) {
             SkillObject skillObject = new Arrow(this);
             skillObject.playFireMedia();

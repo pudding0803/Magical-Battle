@@ -21,11 +21,11 @@ public class Arrow extends SkillObject {
     }
 
     public void arrowInitialize() {
-        int fixedPositionY = new Random().nextInt(61) - 30;
+        int fixedPositionY = new Random().nextInt(71) - 30;
         int fixedVelocityX = new Random().nextInt(7) - 2;
         setY(getY() + fixedPositionY);
         statusList = new ArrayList<>();
-        damage = character.getAttack() * 0.12;
+        damage = character.getAttack() * 0.11;
         attackBoth = false;
         gravity = false;
         velocityX = (Settings.ARCHER_ATTACK_VELOCITY + fixedVelocityX) * (character.isFacingLeft() ? -1 : 1);
@@ -34,6 +34,6 @@ public class Arrow extends SkillObject {
 
     @Override
     public void doByTime() {
-        damage += 0.48;
+        damage += 0.39;
     }
 }

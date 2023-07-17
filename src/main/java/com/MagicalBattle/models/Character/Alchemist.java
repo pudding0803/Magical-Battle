@@ -1,17 +1,17 @@
 package com.MagicalBattle.models.Character;
 
 import com.MagicalBattle.constants.Time;
-import com.MagicalBattle.models.AttackTimers;
+import com.MagicalBattle.models.SkillTimers;
 import com.MagicalBattle.models.Enums.CharacterClass;
 import javafx.scene.image.ImageView;
 
 public class Alchemist extends Character {
     private static final int DEFAULT_ATTACK_TIME = Time.ms(-1);
-    private static final int[] attackDurations = {DEFAULT_ATTACK_TIME, 0, 0, 0, 0};
-    private static final int[] chargedAttackDurations = {0, 0, 0, 0, 0};
+    private static final int[] skillDurations = {DEFAULT_ATTACK_TIME, 0, 0, 0, 0};
+    private static final int[] chargedSkillDurations = {0, 0, 0, 0, 0};
 
     public Alchemist(ImageView imageView, boolean isPlayer1) {
-        super(imageView, CharacterClass.ALCHEMIST, isPlayer1, new AttackTimers(attackDurations, chargedAttackDurations));
+        super(imageView, CharacterClass.ALCHEMIST, isPlayer1, new SkillTimers(skillDurations, chargedSkillDurations));
     }
 
     @Override

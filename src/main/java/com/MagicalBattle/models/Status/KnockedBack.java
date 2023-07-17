@@ -36,7 +36,7 @@ public class KnockedBack extends Status {
         }
         if (hard) {
             character.setSpeed(0);
-            character.resetJumpCount();
+            character.disableJump();
         }
     }
 }

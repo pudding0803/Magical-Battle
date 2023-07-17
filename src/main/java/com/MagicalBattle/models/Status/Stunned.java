@@ -7,7 +7,7 @@ import com.MagicalBattle.models.Character.Character;
 import com.MagicalBattle.models.EffectObject.StunnedEffect;
 
 public class Stunned extends Status {
-    private static final int DURATION = Time.ms(1600);
+    private static final int DURATION = Time.ms(800);
 
     public Stunned(Character character) {
         super(character, DURATION);
@@ -22,6 +22,6 @@ public class Stunned extends Status {
     @Override
     protected void doPerTime() {
         character.setSpeed(0);
-        character.resetJumpCount();
+        character.disableJump();
     }
 }

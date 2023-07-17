@@ -5,7 +5,7 @@ import com.MagicalBattle.controllers.GameController;
 import com.MagicalBattle.loaders.AbilityLoader;
 import com.MagicalBattle.loaders.AssetLoader;
 import com.MagicalBattle.models.AbilitySet;
-import com.MagicalBattle.models.AttackTimers;
+import com.MagicalBattle.models.SkillTimers;
 import com.MagicalBattle.models.EffectObject.MissLabel;
 import com.MagicalBattle.models.Enums.CharacterClass;
 import com.MagicalBattle.models.Enums.HDirection;
@@ -27,7 +27,7 @@ import java.util.Random;
 public abstract class Character {
     protected ImageView imageView;
     protected CharacterClass characterClass;
-    protected boolean player1;
+    protected boolean isPlayer1;
 
     protected AbilitySet currentAbility;
     protected double moveDistance;
@@ -37,20 +37,21 @@ public abstract class Character {
     protected HDirection facing;
     protected int walkingIndex = 0;
     protected int jumpCount = 0;
+    protected boolean canJump = true;
 
-    protected final AttackTimers attackTimers;
+    protected final SkillTimers skillTimers;
     protected final StatusTimers statusTimers = new StatusTimers(this);
 
     protected int maxJumpCount = 1;
 
-    public Character(ImageView imageView, CharacterClass characterClass, boolean player1, AttackTimers attackTimers) {
+    public Character(ImageView imageView, CharacterClass characterClass, boolean isPlayer1, SkillTimers skillTimers) {
         this.imageView = imageView;
         this.imageView.setImage(AssetLoader.getCharacterImageSet(characterClass).getIdle(0));
-        this.facing = (player1 ? HDirection.RIGHT : HDirection.LEFT);
+        this.facing = (isPlayer1 ? HDirection.RIGHT : HDirection.LEFT);
         this.characterClass = characterClass;
         this.currentAbility = new AbilitySet(AbilityLoader.getAbilityValue(characterClass));
-        this.player1 = player1;
-        this.attackTimers = attackTimers;
+        this.isPlayer1 = isPlayer1;
+        this.skillTimers = skillTimers;
     }
 
     public CharacterClass getCharacterClass() {
@@ -58,7 +59,7 @@ public abstract class Character {
     }
 
     public boolean isPlayer1() {
-        return player1;
+        return isPlayer1;
     }
 
     public boolean isDead() {
@@ -72,7 +73,7 @@ public abstract class Character {
 
         imageView.setImage(image);
         imageView.setFitHeight(image.getHeight());
-        if (!isFacingLeft()) imageView.setNodeOrientation(NodeOrientation.LEFT_TO_RIGHT);
+        imageView.setNodeOrientation(isFacingLeft() ? NodeOrientation.LEFT_TO_RIGHT : NodeOrientation.RIGHT_TO_LEFT);
 
         if (getX() < 0) {
             setX(0);
@@ -194,7 +195,7 @@ public abstract class Character {
     }
 
     public boolean isOnGround() {
-        return getY() + velocity > Settings.GROUND_HEIGHT - getHeight();
+        return getY() == Settings.GROUND_HEIGHT - getHeight();
     }
 
     public void setVDirection(VDirection vDirection) {
@@ -242,19 +243,17 @@ public abstract class Character {
         Timeline timeline = new Timeline();
         KeyFrame keyFrame = new KeyFrame(Duration.millis(Settings.UPDATE_TIME), (event) -> {
             if (getY() + velocity <= Settings.GROUND_HEIGHT - getHeight()) {
-                setY(getY() + velocity * (getSpeed() + getMaxSpeed() * 3) / 4);
+                setY(getY() + velocity);
                 velocity += Settings.GRAVITY;
-            } else if (isOnGround()) {
+            } else if (getY() + velocity > Settings.GROUND_HEIGHT - getHeight()) {
                 setY(Settings.GROUND_HEIGHT - getHeight());
                 velocity = 0;
             } else if (getY() + velocity < 0) {
                 setY(0);
                 velocity = 0;
             }
-            if (getY() == Settings.GROUND_HEIGHT - getHeight()) {
-                if (jumpCount > 0) {
-                    AssetLoader.playOtherAudio("land");
-                }
+            if (isOnGround()) {
+                if (jumpCount > 0) AssetLoader.playOtherAudio("land");
                 jumpCount = 0;
             }
         });
@@ -267,16 +266,20 @@ public abstract class Character {
         imageView.setNodeOrientation(isFacingLeft() ? NodeOrientation.RIGHT_TO_LEFT : NodeOrientation.LEFT_TO_RIGHT);
     }
 
-    public void resetJumpCount() {
-        jumpCount = maxJumpCount;
+    public boolean canJump() {
+        return canJump;
+    }
+
+    public void disableJump() {
+        canJump = false;
     }
 
     public void setEffect(Effect effect) {
         imageView.setEffect(effect);
     }
 
-    public AttackTimers getAttackTimers() {
-        return attackTimers;
+    public SkillTimers getSkillTimers() {
+        return skillTimers;
     }
 
     public Timer getStatusTimer(StatusName statusName) {
@@ -292,7 +295,7 @@ public abstract class Character {
         double y = skillObject.getY();
         double width = skillObject.getWidth();
         double height = skillObject.getHeight();
-        if (skillObject.isFromOther(player1) && (inSelf(x, y) || inSelf(x + width, y) || inSelf(x, y + height) || inSelf(x + width, y + height))) {
+        if (skillObject.isFromOther(isPlayer1) && (inSelf(x, y) || inSelf(x + width, y) || inSelf(x, y + height) || inSelf(x + width, y + height))) {
             boolean miss = new Random().nextInt(20) < (int) getAgility();
             if (miss) {
                 AssetLoader.playOtherAudio("miss");
@@ -316,7 +319,8 @@ public abstract class Character {
         imageView.setEffect(null);
         setSpeed(getMaxSpeed());
         setAgility(getMaxAgility());
-        attackTimers.timing();
+        canJump = true;
+        skillTimers.timing();
         statusTimers.doAllByTime();
     }
 

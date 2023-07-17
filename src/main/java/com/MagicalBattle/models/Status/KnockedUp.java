@@ -13,13 +13,15 @@ public class KnockedUp extends Status {
 
     @Override
     protected void initialize() {
+        character.setSpeed(0);
+        character.disableJump();
         character.setVelocity(-KNOCK_UP_VELOCITY);
-        character.resetJumpCount();
     }
 
     @Override
     protected void doPerTime() {
         character.setSpeed(0);
+        character.disableJump();
         if (character.isOnGround()) {
             timer.stop();
         }
