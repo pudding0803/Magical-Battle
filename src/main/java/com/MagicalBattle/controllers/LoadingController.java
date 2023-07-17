@@ -1,19 +1,17 @@
 package com.MagicalBattle.controllers;
 
-import com.MagicalBattle.constants.Settings;
-import com.MagicalBattle.loaders.*;
+import com.MagicalBattle.loaders.AbilityLoader;
+import com.MagicalBattle.loaders.AssetLoader;
+import com.MagicalBattle.loaders.ConfigLoader;
+import com.MagicalBattle.loaders.ProgressBarsLoader;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.image.ImageView;
-import javafx.scene.media.AudioClip;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 import org.json.simple.parser.ParseException;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -100,9 +98,7 @@ public class LoadingController implements Initializable {
 
     @FXML
     public void switchToMenu() throws IOException {
-        AudioClip audioClip = AssetLoader.getOtherAudio("submit");
-        audioClip.setVolume(Settings.EFFECT_VOLUME);
-        audioClip.play();
+        AssetLoader.playOtherAudio("submit");
         ViewController.toMenuScene();
     }
 }

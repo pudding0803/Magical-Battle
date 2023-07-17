@@ -7,7 +7,10 @@ import com.MagicalBattle.loaders.AssetLoader;
 import com.MagicalBattle.models.AbilitySet;
 import com.MagicalBattle.models.AttackTimers;
 import com.MagicalBattle.models.EffectObject.MissLabel;
-import com.MagicalBattle.models.Enums.*;
+import com.MagicalBattle.models.Enums.CharacterClass;
+import com.MagicalBattle.models.Enums.HDirection;
+import com.MagicalBattle.models.Enums.StatusName;
+import com.MagicalBattle.models.Enums.VDirection;
 import com.MagicalBattle.models.SkillObject.SkillObject;
 import com.MagicalBattle.models.StatusTimers;
 import com.MagicalBattle.models.Timer;
@@ -17,7 +20,6 @@ import javafx.geometry.NodeOrientation;
 import javafx.scene.effect.Effect;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.media.AudioClip;
 import javafx.util.Duration;
 
 import java.util.Random;
@@ -210,9 +212,7 @@ public abstract class Character {
 
     public void updateVelocity() {
         if (this.isUp() && this.jumpCount++ < this.maxJumpCount) {
-            AudioClip audioClip = AssetLoader.getOtherAudio("jump");
-            audioClip.setVolume(Settings.EFFECT_VOLUME);
-            audioClip.play();
+            AssetLoader.playOtherAudio("jump");
             this.velocity = -(Settings.INITIAL_VELOCITY + Settings.BONUS_VELOCITY * this.getSpeed());
         } else if (this.isDown()) {
             this.velocity = Settings.INITIAL_VELOCITY + Settings.BONUS_VELOCITY * this.getSpeed();
@@ -253,9 +253,7 @@ public abstract class Character {
             }
             if (this.getY() == Settings.GROUND_HEIGHT - this.getHeight()) {
                 if (this.jumpCount > 0) {
-                    AudioClip audioClip = AssetLoader.getOtherAudio("land");
-                    audioClip.setVolume(Settings.EFFECT_VOLUME);
-                    audioClip.play();
+                    AssetLoader.playOtherAudio("land");
                 }
                 this.jumpCount = 0;
             }
@@ -295,11 +293,9 @@ public abstract class Character {
         double width = skillObject.getWidth();
         double height = skillObject.getHeight();
         if (skillObject.isFromOther(this.player1) && (inSelf(x, y) || inSelf(x + width, y) || inSelf(x, y + height) || inSelf(x + width, y + height))) {
-            boolean miss = false;   // (new Random().nextInt(10) < (int) this.getAgility());
+            boolean miss = (new Random().nextInt(10) < (int) this.getAgility());
             if (miss) {
-                AudioClip audioClip = AssetLoader.getOtherAudio("miss");
-                audioClip.setVolume(Settings.EFFECT_VOLUME);
-                audioClip.play();
+                AssetLoader.playOtherAudio("miss");
                 GameController.newEffectObject(new MissLabel(this));
             } else {
                 skillObject.playHitMedia();

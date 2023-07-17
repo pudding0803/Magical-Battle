@@ -10,7 +10,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
-import javafx.scene.media.AudioClip;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
@@ -78,18 +77,14 @@ public class MenuController implements Initializable {
     @FXML
     public void switchToChoice() throws IOException {
         mediaPlayer.stop();
-        AudioClip audioClip = AssetLoader.getOtherAudio("submit");
-        audioClip.setVolume(Settings.EFFECT_VOLUME);
-        audioClip.play();
+        AssetLoader.playOtherAudio("submit");
         ViewController.toChoiceScene();
     }
 
     @FXML
     public void switchToBackground() throws IOException {
         mediaPlayer.stop();
-        AudioClip audioClip = AssetLoader.getOtherAudio("submit");
-        audioClip.setVolume(Settings.EFFECT_VOLUME);
-        audioClip.play();
+        AssetLoader.playOtherAudio("submit");
         ViewController.toBackgroundScene();
     }
 }

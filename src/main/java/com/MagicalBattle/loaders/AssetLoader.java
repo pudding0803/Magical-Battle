@@ -1,7 +1,6 @@
 package com.MagicalBattle.loaders;
 
 import com.MagicalBattle.constants.Settings;
-import com.MagicalBattle.controllers.ViewController;
 import com.MagicalBattle.models.CharacterImageSet;
 import com.MagicalBattle.models.Enums.CharacterClass;
 import javafx.scene.image.Image;
@@ -56,20 +55,20 @@ public class AssetLoader {
         return backgroundMusics.get(name);
     }
 
-    public static AudioClip getFireAudio(String name) {
-        return fireAudios.get(name);
+    public static void playFireAudio(String name) {
+        playAudio(fireAudios.get(name));
     }
 
-    public static AudioClip getHitAudio(String name) {
-        return hitAudios.get(name);
+    public static void playHitAudio(String name) {
+        playAudio(hitAudios.get(name));
     }
 
-    public static AudioClip getEffectAudio(String name) {
-        return effectAudios.get(name);
+    public static void playEffectAudio(String name) {
+        playAudio(effectAudios.get(name));
     }
 
-    public static AudioClip getOtherAudio(String name) {
-        return otherAudios.get(name);
+    public static void playOtherAudio(String name) {
+        playAudio(otherAudios.get(name));
     }
 
     private static void loadCharacterImages() {
@@ -160,5 +159,10 @@ public class AssetLoader {
                 imageMap.put(fileName.substring(0, fileName.indexOf(".")), ResourceLoader.getAudioClip(DIRECTORY_PATH + fileName));
             }
         }
+    }
+
+    private static void playAudio(AudioClip audioClip) {
+        audioClip.setVolume(Settings.EFFECT_VOLUME);
+        audioClip.play();
     }
 }

@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public class Blade extends SkillObject {
     public Blade(Character character) {
-        super(character, "shuriken", "shuriken", "shuriken");
+        super(character, "blade", "blade", "blade");
         this.statusList = new ArrayList<>();
         this.damage = this.character.getAttack();
         this.attackBoth = false;

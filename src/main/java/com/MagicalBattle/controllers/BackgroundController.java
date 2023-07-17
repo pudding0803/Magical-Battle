@@ -10,7 +10,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.media.AudioClip;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import org.json.simple.parser.ParseException;
@@ -79,9 +78,7 @@ public class BackgroundController implements Initializable {
     @FXML
     public void switchToMenu() throws IOException {
         mediaPlayer.stop();
-        AudioClip audioClip = AssetLoader.getOtherAudio("cancel");
-        audioClip.setVolume(Settings.EFFECT_VOLUME);
-        audioClip.play();
+        AssetLoader.playOtherAudio("cancel");
         ViewController.toMenuScene();
     }
 }

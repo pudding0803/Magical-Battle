@@ -16,7 +16,6 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.scene.media.AudioClip;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
@@ -119,27 +118,19 @@ public class ChoiceController implements Initializable {
     private CharacterClass updateChoice(Direction key, int choice) {
         switch (key) {
             case UP -> {
-                AudioClip audioClip = AssetLoader.getOtherAudio("choose");
-                audioClip.setVolume(Settings.EFFECT_VOLUME);
-                audioClip.play();
+                AssetLoader.playOtherAudio("choose");
                 return CharacterClass.getCharacter(choice + (choice < 3 ? 3 : -3));
             }
             case DOWN -> {
-                AudioClip audioClip = AssetLoader.getOtherAudio("choose");
-                audioClip.setVolume(Settings.EFFECT_VOLUME);
-                audioClip.play();
+                AssetLoader.playOtherAudio("choose");
                 return CharacterClass.getCharacter(choice + (choice >= 3 ? -3 : 3));
             }
             case LEFT -> {
-                AudioClip audioClip = AssetLoader.getOtherAudio("choose");
-                audioClip.setVolume(Settings.EFFECT_VOLUME);
-                audioClip.play();
+                AssetLoader.playOtherAudio("choose");
                 return CharacterClass.getCharacter(choice + (choice == 0 || choice == 3 ? 2 : -1));
             }
             case RIGHT -> {
-                AudioClip audioClip = AssetLoader.getOtherAudio("choose");
-                audioClip.setVolume(Settings.EFFECT_VOLUME);
-                audioClip.play();
+                AssetLoader.playOtherAudio("choose");
                 return CharacterClass.getCharacter(choice + (choice == 2 || choice == 5 ? -2 : 1));
             }
             default -> {
@@ -161,9 +152,7 @@ public class ChoiceController implements Initializable {
     }
 
     private void playAudioClip(boolean isSelected) {
-        AudioClip audioClip = AssetLoader.getOtherAudio(isSelected ? "select" : "deselect");
-        audioClip.setVolume(Settings.EFFECT_VOLUME);
-        audioClip.play();
+        AssetLoader.playOtherAudio(isSelected ? "select" : "deselect");
     }
 
     @FXML
@@ -186,18 +175,14 @@ public class ChoiceController implements Initializable {
     @FXML
     public void switchToGame() throws IOException {
         mediaPlayer.stop();
-        AudioClip audioClip = AssetLoader.getOtherAudio("submit");
-        audioClip.setVolume(Settings.EFFECT_VOLUME);
-        audioClip.play();
+        AssetLoader.playOtherAudio("submit");
         ViewController.toGameScene();
     }
 
     @FXML
     public void switchToMenu() throws IOException {
         mediaPlayer.stop();
-        AudioClip audioClip = AssetLoader.getOtherAudio("cancel");
-        audioClip.setVolume(Settings.EFFECT_VOLUME);
-        audioClip.play();
+        AssetLoader.playOtherAudio("cancel");
         ViewController.toMenuScene();
     }
 }

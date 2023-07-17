@@ -18,7 +18,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.media.AudioClip;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
@@ -243,9 +242,7 @@ public class GameController implements Initializable {
     @FXML
     public void switchToChoice() throws IOException {
         mediaPlayer.stop();
-        AudioClip audioClip = AssetLoader.getOtherAudio("cancel");
-        audioClip.setVolume(Settings.EFFECT_VOLUME);
-        audioClip.play();
+        AssetLoader.playOtherAudio("cancel");
         ViewController.toChoiceScene();
     }
 }

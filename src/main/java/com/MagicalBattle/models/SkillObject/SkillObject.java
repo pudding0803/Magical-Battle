@@ -1,20 +1,18 @@
 package com.MagicalBattle.models.SkillObject;
 
-import com.MagicalBattle.constants.Settings;
 import com.MagicalBattle.loaders.AssetLoader;
 import com.MagicalBattle.models.Character.Character;
 import com.MagicalBattle.models.Enums.StatusName;
 import javafx.geometry.NodeOrientation;
 import javafx.scene.image.ImageView;
-import javafx.scene.media.AudioClip;
 
 import java.util.ArrayList;
 
 public abstract class SkillObject {
-    protected AudioClip fireMedia;
-    protected AudioClip hitMedia;
-
     protected ImageView imageView = new ImageView();
+    protected String fireAudio;
+    protected String hitAudio;
+
     protected ArrayList<StatusName> statusList = new ArrayList<>();
     protected double damage;
     protected Character character;
@@ -23,16 +21,14 @@ public abstract class SkillObject {
     protected double velocityX;
     protected double velocityY;
 
-    public SkillObject(Character character, String image, String fireMedia, String hitMedia) {
+    public SkillObject(Character character, String image, String fireAudio, String hitAudio) {
         this.character = character;
-
         this.imageView.setImage(AssetLoader.getSkillImage(image));
         if (this.character.isFacingLeft()) this.imageView.setNodeOrientation(NodeOrientation.RIGHT_TO_LEFT);
         this.setX(this.character.getX() + (this.character.isFacingLeft() ? -this.getWidth() : this.character.getWidth()));
         this.setY(this.character.getY() + (this.character.getHeight() - this.getHeight()) / 2);
-
-        this.fireMedia = AssetLoader.getFireAudio(fireMedia);
-        this.hitMedia = AssetLoader.getHitAudio(hitMedia);
+        this.fireAudio = fireAudio;
+        this.hitAudio = hitAudio;
     }
 
     public abstract void doByTime();
@@ -90,12 +86,10 @@ public abstract class SkillObject {
     }
 
     public void playFireMedia() {
-        this.fireMedia.setVolume(Settings.EFFECT_VOLUME);
-        this.fireMedia.play();
+        AssetLoader.playFireAudio(this.fireAudio);
     }
 
     public void playHitMedia() {
-        this.hitMedia.setVolume(Settings.EFFECT_VOLUME);
-        this.hitMedia.play();
+        AssetLoader.playHitAudio(this.hitAudio);
     }
 }
