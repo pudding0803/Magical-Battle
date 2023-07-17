@@ -1,7 +1,7 @@
 package com.MagicalBattle.models.SkillObject;
 
 import com.MagicalBattle.models.Character.Character;
-import com.MagicalBattle.models.Enums.StatusName;
+import com.MagicalBattle.models.enums.StatusName;
 
 import java.util.ArrayList;
 import java.util.List;

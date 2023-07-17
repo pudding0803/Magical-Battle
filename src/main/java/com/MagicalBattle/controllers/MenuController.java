@@ -3,7 +3,7 @@ package com.MagicalBattle.controllers;
 import com.MagicalBattle.constants.Settings;
 import com.MagicalBattle.loaders.AssetLoader;
 import com.MagicalBattle.loaders.ConfigLoader;
-import com.MagicalBattle.models.Enums.CharacterClass;
+import com.MagicalBattle.models.enums.CharacterClass;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;

@@ -1,4 +1,4 @@
-package com.MagicalBattle.models.Enums;
+package com.MagicalBattle.models.enums;
 
 public enum HDirection {
     NULL(0), LEFT(-1), RIGHT(1);

@@ -4,10 +4,10 @@ import com.MagicalBattle.constants.Settings;
 import com.MagicalBattle.loaders.AssetLoader;
 import com.MagicalBattle.loaders.ConfigLoader;
 import com.MagicalBattle.models.Character.Character;
-import com.MagicalBattle.models.EffectObject.EffectObject;
-import com.MagicalBattle.models.Enums.SkillType;
-import com.MagicalBattle.models.Enums.HDirection;
-import com.MagicalBattle.models.Enums.VDirection;
+import com.MagicalBattle.models.DisplayObject.DisplayObject;
+import com.MagicalBattle.models.enums.SkillType;
+import com.MagicalBattle.models.enums.HDirection;
+import com.MagicalBattle.models.enums.VDirection;
 import com.MagicalBattle.models.SkillObject.SkillObject;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -35,13 +35,13 @@ public class GameController implements Initializable {
     @FXML
     private ImageView imageView1, imageView2;
     @FXML
-    private Pane background, skillPane, effectPane;
+    private Pane background, skillPane, displayPane;
     @FXML
     private ProgressBar health1, health2, magic1, magic2;
 
     private static final Timeline timeline = new Timeline();
     private static final ArrayList<SkillObject> allSkillObjects = new ArrayList<>();
-    private static final ArrayList<EffectObject> allEffectObjects = new ArrayList<>();
+    private static final ArrayList<DisplayObject> allDisplayObjects = new ArrayList<>();
 
     private static Character player1, player2;
 
@@ -79,7 +79,7 @@ public class GameController implements Initializable {
             playerAction(player2);
 
             updateSkillObjects();
-            updateEffectObjects();
+            updateDisplayObjects();
         });
         timeline.getKeyFrames().add(keyFrame);
         timeline.setCycleCount(Timeline.INDEFINITE);
@@ -123,27 +123,25 @@ public class GameController implements Initializable {
         for (int i = 0; i < allSkillObjects.size(); i++) {
             SkillObject skillObject = allSkillObjects.get(i);
             skillPane.getChildren().add(skillObject.getImageView());
-            skillObject.setX(skillObject.getX() + skillObject.getVelocityX());
-            skillObject.setX(skillObject.getX() + skillObject.getVelocityY());
             skillObject.doByTime();
             if (skillObject.getX() <= 0 || skillObject.getX() >= Settings.WIDTH - skillObject.getWidth() ||
-                    skillObject.getY() <= 0 || skillObject.getY() >= Settings.GROUND_HEIGHT ||
+                    skillObject.getY() <= 0 || skillObject.getY() >= Settings.GROUND_HEIGHT - skillObject.getHeight() ||
                     player1.isCollidedFromOther(skillObject) || player2.isCollidedFromOther(skillObject))
                 allSkillObjects.remove(i--);
         }
     }
 
-    public static void newEffectObject(EffectObject effectObject) {
-        allEffectObjects.add(effectObject);
+    public static void newDisplayObject(DisplayObject displayObject) {
+        allDisplayObjects.add(displayObject);
     }
 
-    private void updateEffectObjects() {
-        effectPane.getChildren().clear();
-        for (int i = 0; i < allEffectObjects.size(); i++) {
-            EffectObject effectObject = allEffectObjects.get(i);
-            effectPane.getChildren().add(effectObject.getEffect());
-            effectObject.doByTime();
-            if (effectObject.isFinished()) allEffectObjects.remove(i--);
+    private void updateDisplayObjects() {
+        displayPane.getChildren().clear();
+        for (int i = 0; i < allDisplayObjects.size(); i++) {
+            DisplayObject displayObject = allDisplayObjects.get(i);
+            displayPane.getChildren().add(displayObject.getDisplay());
+            displayObject.doByTime();
+            if (displayObject.isFinished()) allDisplayObjects.remove(i--);
         }
     }
 
@@ -174,8 +172,9 @@ public class GameController implements Initializable {
         player2.updateEffect();
         AtomicInteger deadCounter = new AtomicInteger(0);
         KeyFrame gameOver = new KeyFrame(Duration.millis(Settings.UPDATE_TIME), (event) -> {
+            updateProgressBars();
             updateSkillObjects();
-            updateEffectObjects();
+            updateDisplayObjects();
             player1.doVerticalMotion();
             player2.doVerticalMotion();
 
@@ -193,7 +192,7 @@ public class GameController implements Initializable {
         timeline.setOnFinished((event) -> {
             try {
                 allSkillObjects.clear();
-                allEffectObjects.clear();
+                allDisplayObjects.clear();
                 switchToChoice();
             } catch (IOException e) {
                 e.printStackTrace();

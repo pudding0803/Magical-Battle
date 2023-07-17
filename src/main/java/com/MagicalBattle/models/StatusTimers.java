@@ -1,7 +1,7 @@
 package com.MagicalBattle.models;
 
 import com.MagicalBattle.models.Character.Character;
-import com.MagicalBattle.models.Enums.StatusName;
+import com.MagicalBattle.models.enums.StatusName;
 import com.MagicalBattle.models.SkillObject.SkillObject;
 import com.MagicalBattle.models.Status.Status;
 

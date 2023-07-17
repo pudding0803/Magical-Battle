@@ -2,7 +2,7 @@ package com.MagicalBattle.loaders;
 
 import com.MagicalBattle.constants.Settings;
 import com.MagicalBattle.models.CharacterImageSet;
-import com.MagicalBattle.models.Enums.CharacterClass;
+import com.MagicalBattle.models.enums.CharacterClass;
 import javafx.scene.image.Image;
 import javafx.scene.media.AudioClip;
 import javafx.scene.media.Media;

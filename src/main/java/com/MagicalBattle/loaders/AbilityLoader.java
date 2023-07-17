@@ -2,7 +2,7 @@ package com.MagicalBattle.loaders;
 
 import com.MagicalBattle.constants.Settings;
 import com.MagicalBattle.models.AbilitySet;
-import com.MagicalBattle.models.Enums.CharacterClass;
+import com.MagicalBattle.models.enums.CharacterClass;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;

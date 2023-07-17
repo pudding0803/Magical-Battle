@@ -21,7 +21,7 @@ public class Arrow extends SkillObject {
     }
 
     public void arrowInitialize() {
-        int fixedPositionY = new Random().nextInt(71) - 30;
+        int fixedPositionY = new Random().nextInt(61) - 35;
         int fixedVelocityX = new Random().nextInt(7) - 2;
         setY(getY() + fixedPositionY);
         statusList = new ArrayList<>();
@@ -33,7 +33,7 @@ public class Arrow extends SkillObject {
     }
 
     @Override
-    public void doByTime() {
+    public void doPerTime() {
         damage += 0.39;
     }
 }

@@ -8,10 +8,12 @@ module com.example.magicalbattle {
     exports com.MagicalBattle;
     exports com.MagicalBattle.controllers;
     exports com.MagicalBattle.models;
-    exports com.MagicalBattle.models.Enums;
+    exports com.MagicalBattle.models.enums;
     exports com.MagicalBattle.models.Character;
     exports com.MagicalBattle.models.SkillObject;
-    exports com.MagicalBattle.models.EffectObject;
+    exports com.MagicalBattle.models.DisplayObject;
+    exports com.MagicalBattle.models.DisplayObject.EffectObject;
+    exports com.MagicalBattle.models.DisplayObject.LabelObject;
     exports com.MagicalBattle.models.Status;
     exports com.MagicalBattle.loaders;
 

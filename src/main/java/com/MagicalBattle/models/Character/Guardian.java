@@ -2,7 +2,7 @@ package com.MagicalBattle.models.Character;
 
 import com.MagicalBattle.constants.Time;
 import com.MagicalBattle.models.SkillTimers;
-import com.MagicalBattle.models.Enums.CharacterClass;
+import com.MagicalBattle.models.enums.CharacterClass;
 import javafx.scene.image.ImageView;
 
 public class Guardian extends Character {

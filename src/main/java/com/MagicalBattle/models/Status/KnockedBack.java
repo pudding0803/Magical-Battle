@@ -3,8 +3,8 @@ package com.MagicalBattle.models.Status;
 import com.MagicalBattle.constants.Settings;
 import com.MagicalBattle.constants.Time;
 import com.MagicalBattle.models.Character.Character;
-import com.MagicalBattle.models.Enums.HDirection;
-import com.MagicalBattle.models.Enums.StatusName;
+import com.MagicalBattle.models.enums.HDirection;
+import com.MagicalBattle.models.enums.StatusName;
 
 public class KnockedBack extends Status {
     private static final int HARD_DURATION = Time.ms(600);

@@ -23,10 +23,4 @@ public final class Settings {
     public static final double MAGE_ATTACK_VELOCITY = 14;
     public static final double ARCHER_ATTACK_VELOCITY = 12;
     public static final double ASSASSIN_ATTACK_VELOCITY = 22;
-
-    public static final double MISS_TOTAL_DISTANCE = -60;
-    public static final double MISS_PER_DISTANCE = 2;
-    public static final double MISS_SIZE = 20;
-    public static final double MISS_WIDTH = 57;
-    public static final double MISS_HEIGHT = 28;
 }

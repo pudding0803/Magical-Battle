@@ -17,7 +17,7 @@ public class Blade extends SkillObject {
     }
 
     @Override
-    public void doByTime() {
+    public void doPerTime() {
 
     }
 }

@@ -3,7 +3,7 @@ package com.MagicalBattle.models.Status;
 import com.MagicalBattle.constants.Colors;
 import com.MagicalBattle.constants.Time;
 import com.MagicalBattle.models.Character.Character;
-import com.MagicalBattle.models.Enums.StatusName;
+import com.MagicalBattle.models.enums.StatusName;
 import javafx.scene.effect.Light;
 import javafx.scene.effect.Lighting;
 

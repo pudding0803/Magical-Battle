@@ -4,7 +4,7 @@ import com.MagicalBattle.constants.Time;
 import com.MagicalBattle.controllers.GameController;
 import com.MagicalBattle.loaders.AssetLoader;
 import com.MagicalBattle.models.Character.Character;
-import com.MagicalBattle.models.EffectObject.StunnedEffect;
+import com.MagicalBattle.models.DisplayObject.EffectObject.StunnedEffect;
 
 public class Stunned extends Status {
     private static final int DURATION = Time.ms(800);
@@ -16,7 +16,7 @@ public class Stunned extends Status {
     @Override
     protected void initialize() {
         AssetLoader.playEffectAudio("stunned");
-        GameController.newEffectObject(new StunnedEffect(character));
+        GameController.newDisplayObject(new StunnedEffect(character));
     }
 
     @Override

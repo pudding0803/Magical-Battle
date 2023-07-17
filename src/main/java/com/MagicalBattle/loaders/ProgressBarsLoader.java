@@ -1,6 +1,6 @@
 package com.MagicalBattle.loaders;
 
-import com.MagicalBattle.models.Enums.CharacterClass;
+import com.MagicalBattle.models.enums.CharacterClass;
 import javafx.scene.control.ProgressBar;
 
 import java.util.ArrayList;

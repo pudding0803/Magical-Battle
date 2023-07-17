@@ -1,4 +1,4 @@
-package com.MagicalBattle.models.Enums;
+package com.MagicalBattle.models.enums;
 
 import com.MagicalBattle.models.Character.Character;
 import com.MagicalBattle.models.Status.*;

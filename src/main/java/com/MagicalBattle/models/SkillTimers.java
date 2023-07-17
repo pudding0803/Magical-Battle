@@ -1,7 +1,7 @@
 package com.MagicalBattle.models;
 
 import com.MagicalBattle.constants.Time;
-import com.MagicalBattle.models.Enums.SkillType;
+import com.MagicalBattle.models.enums.SkillType;
 
 import java.util.HashMap;
 

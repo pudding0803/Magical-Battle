@@ -2,20 +2,20 @@ package com.MagicalBattle.models.SkillObject;
 
 import com.MagicalBattle.loaders.AssetLoader;
 import com.MagicalBattle.models.Character.Character;
-import com.MagicalBattle.models.Enums.StatusName;
+import com.MagicalBattle.models.enums.StatusName;
 import javafx.geometry.NodeOrientation;
 import javafx.scene.image.ImageView;
 
 import java.util.ArrayList;
 
 public abstract class SkillObject {
-    protected ImageView imageView = new ImageView();
-    protected String fireAudio;
-    protected String hitAudio;
+    protected final ImageView imageView = new ImageView();
+    protected final String fireAudio;
+    protected final String hitAudio;
 
     protected ArrayList<StatusName> statusList = new ArrayList<>();
     protected double damage;
-    protected Character character;
+    protected final Character character;
     protected boolean attackBoth;
     protected boolean gravity;
     protected double velocityX;
@@ -31,7 +31,13 @@ public abstract class SkillObject {
         this.hitAudio = hitAudio;
     }
 
-    public abstract void doByTime();
+    public void doByTime() {
+        setX(getX() + getVelocityX());
+        setX(getX() + getVelocityY());
+        doPerTime();
+    }
+
+    protected abstract void doPerTime();
 
     public ImageView getImageView() {
         return imageView;

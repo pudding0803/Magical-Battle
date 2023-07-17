@@ -5,12 +5,13 @@ import com.MagicalBattle.controllers.GameController;
 import com.MagicalBattle.loaders.AbilityLoader;
 import com.MagicalBattle.loaders.AssetLoader;
 import com.MagicalBattle.models.AbilitySet;
+import com.MagicalBattle.models.DisplayObject.LabelObject.DamageLabel;
 import com.MagicalBattle.models.SkillTimers;
-import com.MagicalBattle.models.EffectObject.MissLabel;
-import com.MagicalBattle.models.Enums.CharacterClass;
-import com.MagicalBattle.models.Enums.HDirection;
-import com.MagicalBattle.models.Enums.StatusName;
-import com.MagicalBattle.models.Enums.VDirection;
+import com.MagicalBattle.models.DisplayObject.LabelObject.MissLabel;
+import com.MagicalBattle.models.enums.CharacterClass;
+import com.MagicalBattle.models.enums.HDirection;
+import com.MagicalBattle.models.enums.StatusName;
+import com.MagicalBattle.models.enums.VDirection;
 import com.MagicalBattle.models.SkillObject.SkillObject;
 import com.MagicalBattle.models.StatusTimers;
 import com.MagicalBattle.models.Timer;
@@ -25,11 +26,11 @@ import javafx.util.Duration;
 import java.util.Random;
 
 public abstract class Character {
-    protected ImageView imageView;
-    protected CharacterClass characterClass;
-    protected boolean isPlayer1;
+    protected final ImageView imageView;
+    protected final CharacterClass characterClass;
+    protected final boolean isPlayer1;
 
-    protected AbilitySet currentAbility;
+    protected final AbilitySet currentAbility;
     protected double moveDistance;
     protected double velocity = 0.0;
     protected VDirection vDirection = VDirection.NULL;
@@ -75,11 +76,8 @@ public abstract class Character {
         imageView.setFitHeight(image.getHeight());
         imageView.setNodeOrientation(isFacingLeft() ? NodeOrientation.LEFT_TO_RIGHT : NodeOrientation.RIGHT_TO_LEFT);
 
-        if (getX() < 0) {
-            setX(0);
-        } else if (getX() > Settings.WIDTH - getWidth()) {
-            setX(Settings.WIDTH - getWidth());
-        }
+        if (getX() < 0) setX(0);
+        else if (getX() > Settings.WIDTH - getWidth()) setX(Settings.WIDTH - getWidth());
     }
 
     public double getWidth() {
@@ -163,6 +161,7 @@ public abstract class Character {
     }
 
     public void setHealth(double value) {
+        GameController.newDisplayObject(new DamageLabel(this, getHealth() - value));
         currentAbility.setHealth(Math.max(0, value));
     }
 
@@ -299,7 +298,7 @@ public abstract class Character {
             boolean miss = new Random().nextInt(20) < (int) getAgility();
             if (miss) {
                 AssetLoader.playOtherAudio("miss");
-                GameController.newEffectObject(new MissLabel(this));
+                GameController.newDisplayObject(new MissLabel(this));
             } else {
                 skillObject.playHitMedia();
                 setHealth(getHealth() + Math.min(getDefense() - skillObject.getDamage(), 0));
