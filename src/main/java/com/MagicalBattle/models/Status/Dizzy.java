@@ -16,11 +16,11 @@ public class Dizzy extends Status {
     @Override
     protected void initialize() {
         AssetLoader.playEffectAudio("dizzy");
-        GameController.newEffectObject(new DizzyEffect(this.character));
+        GameController.newEffectObject(new DizzyEffect(character));
     }
 
     @Override
     protected void doPerTime() {
-        this.character.setSpeed(0);
+        character.setSpeed(0);
     }
 }

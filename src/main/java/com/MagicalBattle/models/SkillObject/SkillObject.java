@@ -23,10 +23,10 @@ public abstract class SkillObject {
 
     public SkillObject(Character character, String image, String fireAudio, String hitAudio) {
         this.character = character;
-        this.imageView.setImage(AssetLoader.getSkillImage(image));
-        if (this.character.isFacingLeft()) this.imageView.setNodeOrientation(NodeOrientation.RIGHT_TO_LEFT);
-        this.setX(this.character.getX() + (this.character.isFacingLeft() ? -this.getWidth() : this.character.getWidth()));
-        this.setY(this.character.getY() + (this.character.getHeight() - this.getHeight()) / 2);
+        imageView.setImage(AssetLoader.getSkillImage(image));
+        if (character.isFacingLeft()) imageView.setNodeOrientation(NodeOrientation.RIGHT_TO_LEFT);
+        setX(character.getX() + (character.isFacingLeft() ? -getWidth() : character.getWidth()));
+        setY(character.getY() + (character.getHeight() - getHeight()) / 2);
         this.fireAudio = fireAudio;
         this.hitAudio = hitAudio;
     }
@@ -34,62 +34,62 @@ public abstract class SkillObject {
     public abstract void doByTime();
 
     public ImageView getImageView() {
-        return this.imageView;
+        return imageView;
     }
 
     public double getDamage() {
-        return this.damage;
+        return damage;
     }
 
     public double getWidth() {
-        return this.imageView.getImage().getWidth();
+        return imageView.getImage().getWidth();
     }
 
     public double getHeight() {
-        return this.imageView.getImage().getHeight();
+        return imageView.getImage().getHeight();
     }
 
     public double getX() {
-        return this.imageView.getLayoutX();
+        return imageView.getLayoutX();
     }
 
     public double getY() {
-        return this.imageView.getLayoutY();
+        return imageView.getLayoutY();
     }
 
     public void setX(double value) {
-        this.imageView.setLayoutX(value);
+        imageView.setLayoutX(value);
     }
 
     public void setY(double value) {
-        this.imageView.setLayoutY(value);
+        imageView.setLayoutY(value);
     }
 
     public boolean isFromOther(boolean isPlayer1) {
-        return this.character.isPlayer1() != isPlayer1;
+        return character.isPlayer1() != isPlayer1;
     }
 
     public boolean isAttackBoth() {
-        return this.attackBoth;
+        return attackBoth;
     }
 
     public double getVelocityX() {
-        return this.velocityX;
+        return velocityX;
     }
 
     public double getVelocityY() {
-        return this.velocityY;
+        return velocityY;
     }
 
     public ArrayList<StatusName> getStatusList() {
-        return this.statusList;
+        return statusList;
     }
 
     public void playFireMedia() {
-        AssetLoader.playFireAudio(this.fireAudio);
+        AssetLoader.playFireAudio(fireAudio);
     }
 
     public void playHitMedia() {
-        AssetLoader.playHitAudio(this.hitAudio);
+        AssetLoader.playHitAudio(hitAudio);
     }
 }

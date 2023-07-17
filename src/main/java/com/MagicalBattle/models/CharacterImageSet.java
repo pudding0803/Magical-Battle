@@ -5,34 +5,34 @@ import javafx.scene.image.Image;
 import java.util.ArrayList;
 
 public class CharacterImageSet {
-    private final ArrayList<Image> idle;
-    private final ArrayList<Image> walking;
-    private final ArrayList<Image> preparing;
-    private final ArrayList<Image> selected;
-    private final Image dead;
+    private final ArrayList<Image> idleImages;
+    private final ArrayList<Image> walkingImages;
+    private final ArrayList<Image> preparingImages;
+    private final ArrayList<Image> selectedImages;
+    private final Image deadImage;
 
-    public CharacterImageSet(ArrayList<Image> idle, ArrayList<Image> walking, ArrayList<Image> preparing, ArrayList<Image> selected, Image dead) {
-        this.idle = idle;
-        this.walking = walking;
-        this.preparing = preparing;
-        this.selected = selected;
-        this.dead = dead;
+    public CharacterImageSet(ArrayList<Image> idleImages, ArrayList<Image> walkingImages, ArrayList<Image> preparingImages, ArrayList<Image> selectedImages, Image deadImage) {
+        this.idleImages = idleImages;
+        this.walkingImages = walkingImages;
+        this.preparingImages = preparingImages;
+        this.selectedImages = selectedImages;
+        this.deadImage = deadImage;
     }
 
     public Image getIdle(int index) {
-        return this.idle.get(index);
+        return idleImages.get(index);
     }
 
     public Image getWalking(int index) {
-        return this.walking.get(index);
+        return walkingImages.get(index);
     }
 
     public Image getPreparingOrSelect(int index, boolean selected) {
-        if (selected) return this.selected.get(index);
-        else return this.preparing.get(index);
+        if (selected) return selectedImages.get(index);
+        else return preparingImages.get(index);
     }
 
     public Image getDead() {
-        return this.dead;
+        return deadImage;
     }
 }

@@ -13,31 +13,31 @@ public class StunnedEffect extends EffectObject {
 
     public StunnedEffect(Character character) {
         super(character);
-        this.imageView.setLayoutX(this.character.getX() + (this.character.getWidth() - this.getWidth()) / 2);
-        this.imageView.setLayoutY(this.character.getY() + this.character.getHeight() - this.getHeight());
+        imageView.setLayoutX(character.getX() + (character.getWidth() - getWidth()) / 2);
+        imageView.setLayoutY(character.getY() + character.getHeight() - getHeight());
     }
 
     public double getWidth() {
-        return this.imageView.getImage().getWidth();
+        return imageView.getImage().getWidth();
     }
 
     public double getHeight() {
-        return this.imageView.getImage().getHeight();
+        return imageView.getImage().getHeight();
     }
 
     @Override
     public Node getEffect() {
-        return this.imageView;
+        return imageView;
     }
 
     @Override
     public void doByTime() {
-        this.imageView.setLayoutX(this.character.getX() + (this.character.getWidth() - this.getWidth()) / 2);
-        this.imageView.setLayoutY(this.character.getY() + this.character.getHeight() - this.getHeight());
+        imageView.setLayoutX(character.getX() + (character.getWidth() - getWidth()) / 2);
+        imageView.setLayoutY(character.getY() + character.getHeight() - getHeight());
     }
 
     @Override
     public boolean isFinished() {
-        return this.character.getStatusTimer(StatusName.STUNNED).isEnd();
+        return character.getStatusTimer(StatusName.STUNNED).isEnd();
     }
 }

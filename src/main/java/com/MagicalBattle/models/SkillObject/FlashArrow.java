@@ -9,6 +9,6 @@ import java.util.List;
 public class FlashArrow extends Arrow {
     public FlashArrow(Character character) {
         super(character, "flash_arrow", "flash_arrow");
-        this.statusList = new ArrayList<>(List.of(StatusName.STUNNED));
+        statusList = new ArrayList<>(List.of(StatusName.STUNNED));
     }
 }

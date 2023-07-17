@@ -12,23 +12,23 @@ public class StatusTimers {
 
     public StatusTimers(Character character) {
         for (StatusName statusName : StatusName.values()) {
-            this.timers.put(statusName, statusName.createStatus(character));
+            timers.put(statusName, statusName.createStatus(character));
         }
     }
 
     public void restart(StatusName statusName, SkillObject skillObject) {
-        this.timers.get(statusName).doInitialize(skillObject);
+        timers.get(statusName).doInitialize(skillObject);
     }
 
     public void stopAll() {
-        this.timers.values().forEach(status -> status.getTimer().stop());
+        timers.values().forEach(status -> status.getTimer().stop());
     }
 
     public void doAllByTime() {
-        this.timers.values().forEach(Status::doByTime);
+        timers.values().forEach(Status::doByTime);
     }
 
     public Timer getTimer(StatusName statusName) {
-        return this.timers.get(statusName).getTimer();
+        return timers.get(statusName).getTimer();
     }
 }

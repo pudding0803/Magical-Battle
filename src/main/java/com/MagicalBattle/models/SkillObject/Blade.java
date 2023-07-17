@@ -8,12 +8,12 @@ import java.util.ArrayList;
 public class Blade extends SkillObject {
     public Blade(Character character) {
         super(character, "blade", "blade", "blade");
-        this.statusList = new ArrayList<>();
-        this.damage = this.character.getAttack();
-        this.attackBoth = false;
-        this.gravity = false;
-        this.velocityX = Settings.ASSASSIN_ATTACK_VELOCITY * (this.character.isFacingLeft() ? -1 : 1);
-        this.velocityY = 0;
+        statusList = new ArrayList<>();
+        damage = character.getAttack();
+        attackBoth = false;
+        gravity = false;
+        velocityX = Settings.ASSASSIN_ATTACK_VELOCITY * (character.isFacingLeft() ? -1 : 1);
+        velocityY = 0;
     }
 
     @Override

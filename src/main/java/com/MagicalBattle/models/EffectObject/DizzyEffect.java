@@ -13,31 +13,31 @@ public class DizzyEffect extends EffectObject {
 
     public DizzyEffect(Character character) {
         super(character);
-        this.imageView.setLayoutX(this.character.getX() + (this.character.getWidth() - this.getWidth()) / 2);
-        this.imageView.setLayoutY(this.character.getY() - this.getHeight());
+        imageView.setLayoutX(character.getX() + (character.getWidth() - getWidth()) / 2);
+        imageView.setLayoutY(character.getY() - getHeight());
     }
 
     public double getWidth() {
-        return this.imageView.getImage().getWidth();
+        return imageView.getImage().getWidth();
     }
 
     public double getHeight() {
-        return this.imageView.getImage().getHeight();
+        return imageView.getImage().getHeight();
     }
 
     @Override
     public Node getEffect() {
-        return this.imageView;
+        return imageView;
     }
 
     @Override
     public void doByTime() {
-        this.imageView.setLayoutX(this.character.getX() + (this.character.getWidth() - this.getWidth()) / 2);
-        this.imageView.setLayoutY(this.character.getY() - this.getHeight());
+        imageView.setLayoutX(character.getX() + (character.getWidth() - getWidth()) / 2);
+        imageView.setLayoutY(character.getY() - getHeight());
     }
 
     @Override
     public boolean isFinished() {
-        return this.character.getStatusTimer(StatusName.DIZZY).isEnd();
+        return character.getStatusTimer(StatusName.DIZZY).isEnd();
     }
 }

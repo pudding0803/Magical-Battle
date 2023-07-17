@@ -9,68 +9,68 @@ public class AbilitySet {
     private double agility;
 
     public AbilitySet(double[] values) {
-        this.health = values[0];
-        this.magic = values[1];
-        this.attack = values[2];
-        this.defense = values[3];
-        this.speed = values[4];
-        this.agility = values[5];
+        health = values[0];
+        magic = values[1];
+        attack = values[2];
+        defense = values[3];
+        speed = values[4];
+        agility = values[5];
     }
 
     public AbilitySet(AbilitySet abilitySet) {
-        this.health = abilitySet.health;
-        this.magic = abilitySet.magic;
-        this.attack = abilitySet.attack;
-        this.defense = abilitySet.defense;
-        this.speed = abilitySet.speed;
-        this.agility = abilitySet.agility;
+        health = abilitySet.health;
+        magic = abilitySet.magic;
+        attack = abilitySet.attack;
+        defense = abilitySet.defense;
+        speed = abilitySet.speed;
+        agility = abilitySet.agility;
     }
 
     public double getHealth() {
-        return this.health;
+        return health;
     }
 
     public double getMagic() {
-        return this.magic;
+        return magic;
     }
 
     public double getAttack() {
-        return this.attack;
+        return attack;
     }
 
     public double getDefense() {
-        return this.defense;
+        return defense;
     }
 
     public double getSpeed() {
-        return this.speed;
+        return speed;
     }
 
     public double getAgility() {
-        return this.agility;
+        return agility;
     }
 
     public void setHealth(double value) {
-         this.health = value;
+         health = value;
     }
 
     public void setMagic(double value) {
-         this.magic = value;
+         magic = value;
     }
 
     public void setAttack(double value) {
-         this.attack = value;
+         attack = value;
     }
 
     public void setDefense(double value) {
-         this.defense = value;
+         defense = value;
     }
 
     public void setSpeed(double value) {
-         this.speed = value;
+         speed = value;
     }
 
     public void setAgility(double value) {
-         this.agility = value;
+         agility = value;
     }
 }

@@ -10,12 +10,12 @@ import java.util.List;
 public class ElectricStar extends SkillObject {
     public ElectricStar(Character character) {
         super(character, "electric_star", "electric_star", "electric_star");
-        this.statusList = new ArrayList<>(List.of(StatusName.DIZZY));
-        this.damage = this.character.getAttack() * 0.75;
-        this.attackBoth = false;
-        this.gravity = false;
-        this.velocityX = Settings.ASSASSIN_ATTACK_VELOCITY * (this.character.isFacingLeft() ? -1 : 1);
-        this.velocityY = 0;
+        statusList = new ArrayList<>(List.of(StatusName.DIZZY));
+        damage = character.getAttack() * 0.75;
+        attackBoth = false;
+        gravity = false;
+        velocityX = Settings.ASSASSIN_ATTACK_VELOCITY * (character.isFacingLeft() ? -1 : 1);
+        velocityY = 0;
     }
 
     @Override

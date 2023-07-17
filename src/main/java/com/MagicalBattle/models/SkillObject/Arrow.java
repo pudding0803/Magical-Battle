@@ -12,28 +12,28 @@ public class Arrow extends SkillObject {
 
     public Arrow(Character character) {
         super(character, "arrow", "arrow", "arrow");
-        this.arrowInitialize();
+        arrowInitialize();
     }
 
     public Arrow(Character character, String image, String fireMedia) {
         super(character, image, fireMedia, "arrow");
-        this.arrowInitialize();
+        arrowInitialize();
     }
 
     public void arrowInitialize() {
         int fixedPositionY = new Random().nextInt(61) - 30;
         int fixedVelocityX = new Random().nextInt(7) - 2;
-        this.setY(this.getY() + fixedPositionY);
-        this.statusList = new ArrayList<>();
-        this.damage = this.character.getAttack() * 0.12;
-        this.attackBoth = false;
-        this.gravity = false;
-        this.velocityX = (Settings.ARCHER_ATTACK_VELOCITY + fixedVelocityX) * (this.character.isFacingLeft() ? -1 : 1);
-        this.velocityY = 0;
+        setY(getY() + fixedPositionY);
+        statusList = new ArrayList<>();
+        damage = character.getAttack() * 0.12;
+        attackBoth = false;
+        gravity = false;
+        velocityX = (Settings.ARCHER_ATTACK_VELOCITY + fixedVelocityX) * (character.isFacingLeft() ? -1 : 1);
+        velocityY = 0;
     }
 
     @Override
     public void doByTime() {
-        this.damage += 0.48;
+        damage += 0.48;
     }
 }

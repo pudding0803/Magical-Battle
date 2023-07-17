@@ -18,17 +18,17 @@ public class Chilled extends Status {
 
     @Override
     protected void initialize() {
-        this.character.getStatusTimer(StatusName.BURNED).stop();
+        character.getStatusTimer(StatusName.BURNED).stop();
     }
 
     @Override
     protected void doPerTime() {
-        if (this.character.getStatusTimer(StatusName.HURT).isEnd()) {
+        if (character.getStatusTimer(StatusName.HURT).isEnd()) {
             Lighting lighting = new Lighting();
             lighting.setLight(new Light.Distant(0, 45, Colors.chilledColor));
-            this.character.setEffect(lighting);
+            character.setEffect(lighting);
         }
-        this.character.setSpeed(this.character.getMaxSpeed() * SPEED_EFFECT);
-        this.character.setAgility(this.character.getMaxAgility() - AGILITY_EFFECT);
+        character.setSpeed(character.getMaxSpeed() * SPEED_EFFECT);
+        character.setAgility(character.getMaxAgility() - AGILITY_EFFECT);
     }
 }

@@ -8,7 +8,7 @@ import com.MagicalBattle.models.Enums.StatusName;
 
 public class KnockedBack extends Status {
     private static final int HARD_DURATION = Time.ms(600);
-    private static final int SOFT_DURATION = Time.ms(1200);
+    private static final int SOFT_DURATION = Time.ms(1400);
     private static final double HARD_DISTANCE_PER_TIME = 10;
     private static final double SOFT_DISTANCE_PER_TIME = 8;
 
@@ -19,24 +19,24 @@ public class KnockedBack extends Status {
     public KnockedBack(Character character, boolean hard) {
         super(character, hard ? HARD_DURATION : SOFT_DURATION);
         this.hard = hard;
-        this.distancePerTime = hard ? HARD_DISTANCE_PER_TIME : SOFT_DISTANCE_PER_TIME;
+        distancePerTime = hard ? HARD_DISTANCE_PER_TIME : SOFT_DISTANCE_PER_TIME;
     }
 
     @Override
     protected void initialize() {
-        this.character.getStatusTimer(StatusName.STUNNED).stop();
-        this.from = (this.skillObject.getVelocityX() > 0 ? HDirection.RIGHT : HDirection.LEFT);
+        character.getStatusTimer(StatusName.STUNNED).stop();
+        from = (skillObject.getVelocityX() > 0 ? HDirection.RIGHT : HDirection.LEFT);
     }
 
     @Override
     protected void doPerTime() {
-        double distance = (this.from == HDirection.RIGHT ? 1 : -1) * distancePerTime;
-        if (this.character.getX() + distance > 0 && this.character.getX() + distance < Settings.WIDTH - this.character.getWidth()) {
-            this.character.setX(this.character.getX() + distance);
+        double distance = (from == HDirection.RIGHT ? 1 : -1) * distancePerTime;
+        if (character.getX() + distance > 0 && character.getX() + distance < Settings.WIDTH - character.getWidth()) {
+            character.setX(character.getX() + distance);
         }
-        if (this.hard) {
-            this.character.setSpeed(0);
-            this.character.resetJumpCount();
+        if (hard) {
+            character.setSpeed(0);
+            character.resetJumpCount();
         }
     }
 }

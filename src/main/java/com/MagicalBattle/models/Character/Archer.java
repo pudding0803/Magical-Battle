@@ -22,7 +22,7 @@ public class Archer extends Character {
 
     @Override
     public void attack() {
-        this.attackTimers.restartAttack(Attack.ATTACK);
+        attackTimers.restartAttack(Attack.ATTACK);
         int arrowsNumber = new Random().nextInt(4) + 3;
         for (int i = 0; i < arrowsNumber; i++) {
             SkillObject skillObject = new Arrow(this);

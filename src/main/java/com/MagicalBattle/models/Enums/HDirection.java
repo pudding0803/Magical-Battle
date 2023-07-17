@@ -10,6 +10,6 @@ public enum HDirection {
     }
 
     public int getValue() {
-        return this.value;
+        return value;
     }
 }

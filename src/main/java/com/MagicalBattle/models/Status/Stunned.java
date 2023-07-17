@@ -16,12 +16,12 @@ public class Stunned extends Status {
     @Override
     protected void initialize() {
         AssetLoader.playEffectAudio("stunned");
-        GameController.newEffectObject(new StunnedEffect(this.character));
+        GameController.newEffectObject(new StunnedEffect(character));
     }
 
     @Override
     protected void doPerTime() {
-        this.character.setSpeed(0);
-        this.character.resetJumpCount();
+        character.setSpeed(0);
+        character.resetJumpCount();
     }
 }

@@ -23,30 +23,30 @@ public class Mage extends Character {
 
     @Override
     public void attack() {
-        this.attackTimers.restartAttack(Attack.ATTACK);
+        attackTimers.restartAttack(Attack.ATTACK);
         SkillObject skillObject;
-        switch (this.attackCounter) {
+        switch (attackCounter) {
             case 0 -> {
                 skillObject = new Ice(this);
-                this.attackCounter += (new Random().nextInt(2) == 0 ? 1 : 2);
+                attackCounter += (new Random().nextInt(2) == 0 ? 1 : 2);
             }
             case 1 -> {
               skillObject = new WeakWind(this);
-              this.attackCounter += 2;
+              attackCounter += 2;
             }
             case 2 -> {
                 skillObject = new StrongWind(this);
-                this.attackCounter++;
+                attackCounter++;
             }
             case 3 -> {
                 skillObject = new Fire(this);
-                this.attackCounter++;
+                attackCounter++;
             }
             case 4 -> {
                 skillObject = new Earth(this);
-                this.attackCounter = 0;
+                attackCounter = 0;
             }
-            default -> throw new IllegalStateException("Unexpected value: " + this.attackCounter);
+            default -> throw new IllegalStateException("Unexpected value: " + attackCounter);
         }
         skillObject.playFireMedia();
         GameController.newSkillObject(skillObject);

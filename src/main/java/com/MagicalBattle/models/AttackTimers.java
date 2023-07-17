@@ -17,50 +17,50 @@ public class AttackTimers {
             int index = attack.ordinal();
             Timer pressedTimer = new Timer(CHARGE_TIME);
             pressedTimer.setActive(false);
-            this.pressedTimers.put(attack, pressedTimer);
-            this.attackTimers.put(attack, new Timer(attackDurations[index]));
-            this.chargedAttackTimers.put(attack, new Timer(chargedAttackDurations[index]));
+            pressedTimers.put(attack, pressedTimer);
+            attackTimers.put(attack, new Timer(attackDurations[index]));
+            chargedAttackTimers.put(attack, new Timer(chargedAttackDurations[index]));
         }
     }
 
     public void timing() {
         for (Attack attack : Attack.values()) {
-            this.pressedTimers.get(attack).timing();
-            this.attackTimers.get(attack).timing();
-            this.chargedAttackTimers.get(attack).timing();
+            pressedTimers.get(attack).timing();
+            attackTimers.get(attack).timing();
+            chargedAttackTimers.get(attack).timing();
         }
     }
     
     public void restartPressed(Attack attack) {
-        this.pressedTimers.get(attack).setActive(true);
-        this.pressedTimers.get(attack).restart();
+        pressedTimers.get(attack).setActive(true);
+        pressedTimers.get(attack).restart();
     }
 
     public void stopPressed(Attack attack) {
-        this.pressedTimers.get(attack).setActive(false);
+        pressedTimers.get(attack).setActive(false);
     }
 
     public void restartAttack(Attack attack) {
-        this.attackTimers.get(attack).restart();
+        attackTimers.get(attack).restart();
     }
 
     public void restartChargedAttack(Attack attack) {
-        this.chargedAttackTimers.get(attack).restart();
+        chargedAttackTimers.get(attack).restart();
     }
 
     public boolean isPressing(Attack attack) {
-        return this.pressedTimers.get(attack).isActive();
+        return pressedTimers.get(attack).isActive();
     }
 
     public boolean isCharged(Attack attack) {
-        return this.pressedTimers.get(attack).isActive() && this.pressedTimers.get(attack).isEnd();
+        return pressedTimers.get(attack).isActive() && pressedTimers.get(attack).isEnd();
     }
 
     public boolean isAttackValid(Attack attack) {
-        return this.attackTimers.get(attack).isEnd();
+        return attackTimers.get(attack).isEnd();
     }
 
     public boolean isChargedAttackValid(Attack attack) {
-        return this.chargedAttackTimers.get(attack).isEnd();
+        return chargedAttackTimers.get(attack).isEnd();
     }
 }

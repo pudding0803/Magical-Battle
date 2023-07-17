@@ -3,8 +3,8 @@ package com.MagicalBattle.constants;
 public final class Settings {
     public static final double WIDTH = 900;
     public static final double HEIGHT = 600;
-    public static final double BGM_VOLUME = 0;
-    public static final double EFFECT_VOLUME = 0;
+    public static final double BGM_VOLUME = 0.1;
+    public static final double EFFECT_VOLUME = 0.1;
     public static final String RESOURCE_PATH = "/com/MagicalBattle/";
 
     public static final int CHOOSE_IMAGES_COUNT = 3;

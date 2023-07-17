@@ -9,6 +9,6 @@ import java.util.List;
 public class FlameArrow extends Arrow {
     public FlameArrow(Character character) {
         super(character, "flame_arrow", "flame_arrow");
-        this.statusList = new ArrayList<>(List.of(StatusName.BURNED));
+        statusList = new ArrayList<>(List.of(StatusName.BURNED));
     }
 }

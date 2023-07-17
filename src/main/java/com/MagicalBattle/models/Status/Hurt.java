@@ -22,6 +22,6 @@ public class Hurt extends Status {
     protected void doPerTime() {
         Lighting lighting = new Lighting();
         lighting.setLight(new Light.Distant(0, 45, Color.RED));
-        this.character.setEffect(lighting);
+        character.setEffect(lighting);
     }
 }

@@ -13,23 +13,23 @@ public class Timer {
     }
 
     public int getTime() {
-        return this.time;
+        return time;
     }
 
     public void restart() {
-        this.time = startTime;
+        time = startTime;
     }
 
     public void stop() {
-        this.time = END_TIME;
+        time = END_TIME;
     }
 
     public void timing() {
-        if (active && this.time > END_TIME) this.time--;
+        if (active && time > END_TIME) time--;
     }
 
     public boolean isEnd() {
-        return this.time == END_TIME;
+        return time == END_TIME;
     }
     
     public void setActive(boolean active) {
@@ -37,7 +37,7 @@ public class Timer {
     }
     
     public boolean isActive() {
-        return this.active;
+        return active;
     }
 
     public void setStartTime(int startTime) {

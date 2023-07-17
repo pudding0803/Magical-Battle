@@ -16,12 +16,12 @@ public class Assassin extends Character {
 
     public Assassin(ImageView imageView, boolean isPlayer1) {
         super(imageView, CharacterClass.ASSASSIN, isPlayer1, new AttackTimers(attackDurations, chargedAttackDurations));
-        this.maxJumpCount = 2;
+        maxJumpCount = 2;
     }
 
     @Override
     public void attack() {
-        this.attackTimers.restartAttack(Attack.ATTACK);
+        attackTimers.restartAttack(Attack.ATTACK);
         SkillObject skillObject = new Blade(this);
         skillObject.playFireMedia();
         GameController.newSkillObject(skillObject);

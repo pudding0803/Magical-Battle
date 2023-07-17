@@ -10,12 +10,12 @@ import java.util.List;
 public class StrongWind extends SkillObject {
     public StrongWind(Character character) {
         super(character, "strong_wind", "strong_wind", "strong_wind");
-        this.statusList = new ArrayList<>(List.of(StatusName.KNOCKED_BACK));
-        this.damage = this.character.getAttack() * 1.4;
-        this.attackBoth = false;
-        this.gravity = false;
-        this.velocityX = Settings.MAGE_ATTACK_VELOCITY * (this.character.isFacingLeft() ? -1 : 1);
-        this.velocityY = 0;
+        statusList = new ArrayList<>(List.of(StatusName.KNOCKED_BACK_SOFT));
+        damage = character.getAttack() * 1.4;
+        attackBoth = false;
+        gravity = false;
+        velocityX = Settings.MAGE_ATTACK_VELOCITY * (character.isFacingLeft() ? -1 : 1);
+        velocityY = 0;
     }
 
     @Override

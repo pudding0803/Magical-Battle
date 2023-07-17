@@ -35,11 +35,11 @@ public enum CharacterClass {
     }
 
     public int getValue() {
-        return this.value;
+        return value;
     }
 
     public String getName() {
-        return this.name;
+        return name;
     }
 
     public Character createPlayer(ImageView imageView, boolean isPlayer1) {

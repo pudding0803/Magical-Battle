@@ -13,15 +13,15 @@ public class KnockedUp extends Status {
 
     @Override
     protected void initialize() {
-        this.character.setVelocity(-KNOCK_UP_VELOCITY);
-        this.character.resetJumpCount();
+        character.setVelocity(-KNOCK_UP_VELOCITY);
+        character.resetJumpCount();
     }
 
     @Override
     protected void doPerTime() {
-        this.character.setSpeed(0);
-        if (this.character.isOnGround()) {
-            this.timer.stop();
+        character.setSpeed(0);
+        if (character.isOnGround()) {
+            timer.stop();
         }
     }
 }

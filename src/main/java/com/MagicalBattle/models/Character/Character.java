@@ -54,147 +54,147 @@ public abstract class Character {
     }
 
     public CharacterClass getCharacterClass() {
-        return this.characterClass;
+        return characterClass;
     }
 
     public boolean isPlayer1() {
-        return this.player1;
+        return player1;
     }
 
     public boolean isDead() {
-        return this.currentAbility.getHealth() == 0;
+        return currentAbility.getHealth() == 0;
     }
 
     public void setGameOverImage(boolean winner, int counter) {
         Image image;
-        if (winner) image = AssetLoader.getCharacterImageSet(this.characterClass).getPreparingOrSelect(counter, true);
-        else image = AssetLoader.getCharacterImageSet(this.characterClass).getDead();
+        if (winner) image = AssetLoader.getCharacterImageSet(characterClass).getPreparingOrSelect(counter, true);
+        else image = AssetLoader.getCharacterImageSet(characterClass).getDead();
 
-        this.imageView.setImage(image);
-        this.imageView.setFitHeight(image.getHeight());
-        if (!this.isFacingLeft()) this.imageView.setNodeOrientation(NodeOrientation.RIGHT_TO_LEFT);
+        imageView.setImage(image);
+        imageView.setFitHeight(image.getHeight());
+        if (!isFacingLeft()) imageView.setNodeOrientation(NodeOrientation.LEFT_TO_RIGHT);
 
-        if (this.getX() < 0) {
-            this.setX(0);
-        } else if (this.getX() > Settings.WIDTH - this.getWidth()) {
-            this.setX(Settings.WIDTH - this.getWidth());
+        if (getX() < 0) {
+            setX(0);
+        } else if (getX() > Settings.WIDTH - getWidth()) {
+            setX(Settings.WIDTH - getWidth());
         }
     }
 
     public double getWidth() {
-        return this.imageView.getImage().getWidth() * Settings.PLAYER_SIZE_RATE;
+        return imageView.getImage().getWidth() * Settings.PLAYER_SIZE_RATE;
     }
 
     public double getHeight() {
-        return this.imageView.getImage().getHeight() * Settings.PLAYER_SIZE_RATE;
+        return imageView.getImage().getHeight() * Settings.PLAYER_SIZE_RATE;
     }
 
     public double getX() {
-        return this.imageView.getLayoutX();
+        return imageView.getLayoutX();
     }
 
     public double getY() {
-        return this.imageView.getLayoutY();
+        return imageView.getLayoutY();
     }
 
     public void setX(double value) {
-        this.imageView.setLayoutX(value);
+        imageView.setLayoutX(value);
     }
 
     public void setY(double value) {
-        this.imageView.setLayoutY(value);
+        imageView.setLayoutY(value);
     }
 
     public double getHealthRate() {
-        return this.currentAbility.getHealth() / AbilityLoader.getAbilityValue(this.characterClass).getHealth();
+        return currentAbility.getHealth() / AbilityLoader.getAbilityValue(characterClass).getHealth();
     }
 
     public double getMagicRate() {
-        return this.currentAbility.getMagic() / AbilityLoader.getAbilityValue(this.characterClass).getMagic();
+        return currentAbility.getMagic() / AbilityLoader.getAbilityValue(characterClass).getMagic();
     }
 
     public double getHealth() {
-        return this.currentAbility.getHealth();
+        return currentAbility.getHealth();
     }
 
     public double getMagic() {
-        return this.currentAbility.getMagic();
+        return currentAbility.getMagic();
     }
 
     public double getAttack() {
-        return this.currentAbility.getAttack();
+        return currentAbility.getAttack();
     }
 
     public double getDefense() {
-        return this.currentAbility.getDefense();
+        return currentAbility.getDefense();
     }
 
     public double getSpeed() {
-        return this.currentAbility.getSpeed();
+        return currentAbility.getSpeed();
     }
 
     public double getAgility() {
-        return this.currentAbility.getAgility();
+        return currentAbility.getAgility();
     }
 
     public double getMaxHealth() {
-        return AbilityLoader.getAbilityValue(this.characterClass).getHealth();
+        return AbilityLoader.getAbilityValue(characterClass).getHealth();
     }
 
     public double getMaxMagic() {
-        return AbilityLoader.getAbilityValue(this.characterClass).getMagic();
+        return AbilityLoader.getAbilityValue(characterClass).getMagic();
     }
 
     public double getMaxAttack() {
-        return AbilityLoader.getAbilityValue(this.characterClass).getAttack();
+        return AbilityLoader.getAbilityValue(characterClass).getAttack();
     }
 
     public double getMaxDefense() {
-        return AbilityLoader.getAbilityValue(this.characterClass).getDefense();
+        return AbilityLoader.getAbilityValue(characterClass).getDefense();
     }
 
     public double getMaxSpeed() {
-        return AbilityLoader.getAbilityValue(this.characterClass).getSpeed();
+        return AbilityLoader.getAbilityValue(characterClass).getSpeed();
     }
 
     public double getMaxAgility() {
-        return AbilityLoader.getAbilityValue(this.characterClass).getAgility();
+        return AbilityLoader.getAbilityValue(characterClass).getAgility();
     }
 
     public void setHealth(double value) {
-        this.currentAbility.setHealth(Math.max(0, value));
+        currentAbility.setHealth(Math.max(0, value));
     }
 
     public void setSpeed(double value) {
-        this.currentAbility.setSpeed(Math.max(0, value));
+        currentAbility.setSpeed(Math.max(0, value));
     }
 
     public void setAgility(double value) {
-        this.currentAbility.setAgility(Math.max(0, value));
+        currentAbility.setAgility(Math.max(0, value));
     }
 
     public boolean isUp() {
-        return this.vDirection == VDirection.UP;
+        return vDirection == VDirection.UP;
     }
 
     public boolean isDown() {
-        return this.vDirection == VDirection.DOWN;
+        return vDirection == VDirection.DOWN;
     }
 
     public boolean isLeft() {
-        return this.hDirection == HDirection.LEFT;
+        return hDirection == HDirection.LEFT;
     }
 
     public boolean isRight() {
-        return this.hDirection == HDirection.RIGHT;
+        return hDirection == HDirection.RIGHT;
     }
 
     public boolean isFacingLeft() {
-        return this.facing == HDirection.LEFT;
+        return facing == HDirection.LEFT;
     }
 
     public boolean isOnGround() {
-        return this.getY() + this.velocity > Settings.GROUND_HEIGHT - this.getHeight();
+        return getY() + velocity > Settings.GROUND_HEIGHT - getHeight();
     }
 
     public void setVDirection(VDirection vDirection) {
@@ -203,7 +203,7 @@ public abstract class Character {
 
     public void setHDirection(HDirection hDirection) {
         this.hDirection = hDirection;
-        if (hDirection != HDirection.NULL) this.facing = hDirection;
+        if (hDirection != HDirection.NULL) facing = hDirection;
     }
 
     public void setVelocity(double velocity) {
@@ -211,27 +211,27 @@ public abstract class Character {
     }
 
     public void updateVelocity() {
-        if (this.isUp() && this.jumpCount++ < this.maxJumpCount) {
+        if (isUp() && jumpCount++ < maxJumpCount) {
             AssetLoader.playOtherAudio("jump");
-            this.velocity = -(Settings.INITIAL_VELOCITY + Settings.BONUS_VELOCITY * this.getSpeed());
-        } else if (this.isDown()) {
-            this.velocity = Settings.INITIAL_VELOCITY + Settings.BONUS_VELOCITY * this.getSpeed();
+            velocity = -(Settings.INITIAL_VELOCITY + Settings.BONUS_VELOCITY * getSpeed());
+        } else if (isDown()) {
+            velocity = Settings.INITIAL_VELOCITY + Settings.BONUS_VELOCITY * getSpeed();
         }
-        this.vDirection = VDirection.NULL;
+        vDirection = VDirection.NULL;
     }
 
     public void doHorizonMotion() {
-        this.imageView.setImage(AssetLoader.getCharacterImageSet(this.characterClass).getWalking(walkingIndex));
-        this.imageView.setNodeOrientation(this.isFacingLeft() ? NodeOrientation.RIGHT_TO_LEFT : NodeOrientation.LEFT_TO_RIGHT);
-        this.walkingIndex = (++this.walkingIndex) % 2;
-        this.moveDistance = Settings.STEP * this.currentAbility.getSpeed() * this.hDirection.getValue();
+        imageView.setImage(AssetLoader.getCharacterImageSet(characterClass).getWalking(walkingIndex));
+        imageView.setNodeOrientation(isFacingLeft() ? NodeOrientation.RIGHT_TO_LEFT : NodeOrientation.LEFT_TO_RIGHT);
+        walkingIndex = (++walkingIndex) % 2;
+        moveDistance = Settings.STEP * currentAbility.getSpeed() * hDirection.getValue();
         Timeline timeline = new Timeline();
         KeyFrame keyFrame = new KeyFrame(Duration.millis(Settings.UPDATE_TIME), (event) -> {
-            this.setX(this.getX() + this.moveDistance);
-            if (this.getX() < 0) {
-                this.setX(0);
-            } else if (this.getX() > Settings.WIDTH - this.getWidth()) {
-                this.setX(Settings.WIDTH - this.getWidth());
+            setX(getX() + moveDistance);
+            if (getX() < 0) {
+                setX(0);
+            } else if (getX() > Settings.WIDTH - getWidth()) {
+                setX(Settings.WIDTH - getWidth());
             }
         });
         timeline.getKeyFrames().add(keyFrame);
@@ -241,21 +241,21 @@ public abstract class Character {
     public void doVerticalMotion() {
         Timeline timeline = new Timeline();
         KeyFrame keyFrame = new KeyFrame(Duration.millis(Settings.UPDATE_TIME), (event) -> {
-            if (this.getY() + this.velocity <= Settings.GROUND_HEIGHT - this.getHeight()) {
-                this.setY(this.getY() + this.velocity * (this.getSpeed() + this.getMaxSpeed() * 3) / 4);
-                this.velocity += Settings.GRAVITY;
-            } else if (this.isOnGround()) {
-                this.setY(Settings.GROUND_HEIGHT - this.getHeight());
-                this.velocity = 0;
-            } else if (this.getY() + this.velocity < 0) {
-                this.setY(0);
-                this.velocity = 0;
+            if (getY() + velocity <= Settings.GROUND_HEIGHT - getHeight()) {
+                setY(getY() + velocity * (getSpeed() + getMaxSpeed() * 3) / 4);
+                velocity += Settings.GRAVITY;
+            } else if (isOnGround()) {
+                setY(Settings.GROUND_HEIGHT - getHeight());
+                velocity = 0;
+            } else if (getY() + velocity < 0) {
+                setY(0);
+                velocity = 0;
             }
-            if (this.getY() == Settings.GROUND_HEIGHT - this.getHeight()) {
-                if (this.jumpCount > 0) {
+            if (getY() == Settings.GROUND_HEIGHT - getHeight()) {
+                if (jumpCount > 0) {
                     AssetLoader.playOtherAudio("land");
                 }
-                this.jumpCount = 0;
+                jumpCount = 0;
             }
         });
         timeline.getKeyFrames().add(keyFrame);
@@ -263,28 +263,28 @@ public abstract class Character {
     }
 
     public void setStand() {
-        this.imageView.setImage(AssetLoader.getCharacterImageSet(this.characterClass).getIdle(0));
-        this.imageView.setNodeOrientation(this.isFacingLeft() ? NodeOrientation.RIGHT_TO_LEFT : NodeOrientation.LEFT_TO_RIGHT);
+        imageView.setImage(AssetLoader.getCharacterImageSet(characterClass).getIdle(0));
+        imageView.setNodeOrientation(isFacingLeft() ? NodeOrientation.RIGHT_TO_LEFT : NodeOrientation.LEFT_TO_RIGHT);
     }
 
     public void resetJumpCount() {
-        this.jumpCount = this.maxJumpCount;
+        jumpCount = maxJumpCount;
     }
 
     public void setEffect(Effect effect) {
-        this.imageView.setEffect(effect);
+        imageView.setEffect(effect);
     }
 
     public AttackTimers getAttackTimers() {
-        return this.attackTimers;
+        return attackTimers;
     }
 
     public Timer getStatusTimer(StatusName statusName) {
-        return this.statusTimers.getTimer(statusName);
+        return statusTimers.getTimer(statusName);
     }
 
     public void stopStatusTimers() {
-        this.statusTimers.stopAll();
+        statusTimers.stopAll();
     }
 
     public boolean isCollidedFromOther(SkillObject skillObject) {
@@ -292,16 +292,16 @@ public abstract class Character {
         double y = skillObject.getY();
         double width = skillObject.getWidth();
         double height = skillObject.getHeight();
-        if (skillObject.isFromOther(this.player1) && (inSelf(x, y) || inSelf(x + width, y) || inSelf(x, y + height) || inSelf(x + width, y + height))) {
-            boolean miss = (new Random().nextInt(10) < (int) this.getAgility());
+        if (skillObject.isFromOther(player1) && (inSelf(x, y) || inSelf(x + width, y) || inSelf(x, y + height) || inSelf(x + width, y + height))) {
+            boolean miss = new Random().nextInt(20) < (int) getAgility();
             if (miss) {
                 AssetLoader.playOtherAudio("miss");
                 GameController.newEffectObject(new MissLabel(this));
             } else {
                 skillObject.playHitMedia();
-                this.setHealth(this.getHealth() + Math.min(this.getDefense() - skillObject.getDamage(), 0));
-                this.statusTimers.getTimer(StatusName.HURT).restart();
-                skillObject.getStatusList().forEach(statusName -> this.statusTimers.restart(statusName, skillObject));
+                setHealth(getHealth() + Math.min(getDefense() - skillObject.getDamage(), 0));
+                statusTimers.getTimer(StatusName.HURT).restart();
+                skillObject.getStatusList().forEach(statusName -> statusTimers.restart(statusName, skillObject));
             }
             return true;
         }
@@ -309,15 +309,15 @@ public abstract class Character {
     }
 
     private boolean inSelf(double x, double y) {
-        return (x >= this.getX() && x <= this.getX() + this.getWidth() && y >= this.getY() && y <= this.getY() + this.getHeight());
+        return (x >= getX() && x <= getX() + getWidth() && y >= getY() && y <= getY() + getHeight());
     }
 
     public void updateEffect() {
-        this.imageView.setEffect(null);
-        this.setSpeed(this.getMaxSpeed());
-        this.setAgility(this.getMaxAgility());
-        this.attackTimers.timing();
-        this.statusTimers.doAllByTime();
+        imageView.setEffect(null);
+        setSpeed(getMaxSpeed());
+        setAgility(getMaxAgility());
+        attackTimers.timing();
+        statusTimers.doAllByTime();
     }
 
     public abstract void attack();

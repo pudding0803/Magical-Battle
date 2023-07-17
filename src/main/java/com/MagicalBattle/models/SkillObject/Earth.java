@@ -10,12 +10,12 @@ import java.util.List;
 public class Earth extends SkillObject {
     public Earth(Character character) {
         super(character,"earth","earth", "earth");
-        this.statusList = new ArrayList<>(List.of(StatusName.KNOCKED_UP));
-        this.damage = this.character.getAttack();
-        this.attackBoth = false;
-        this.gravity = false;
-        this.velocityX = Settings.MAGE_ATTACK_VELOCITY * (this.character.isFacingLeft() ? -1 : 1);
-        this.velocityY = 0;
+        statusList = new ArrayList<>(List.of(StatusName.KNOCKED_UP));
+        damage = character.getAttack();
+        attackBoth = false;
+        gravity = false;
+        velocityX = Settings.MAGE_ATTACK_VELOCITY * (character.isFacingLeft() ? -1 : 1);
+        velocityY = 0;
     }
 
     @Override

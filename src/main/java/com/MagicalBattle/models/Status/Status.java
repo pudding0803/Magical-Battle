@@ -15,19 +15,19 @@ public abstract class Status {
     }
 
     public Timer getTimer() {
-        return this.timer;
+        return timer;
     }
 
     public void doInitialize(SkillObject skillObject) {
         this.skillObject = skillObject;
-        this.timer.restart();
-        this.initialize();
+        timer.restart();
+        initialize();
     }
 
     public void doByTime() {
-        if (!this.timer.isEnd()) {
-            this.doPerTime();
-            this.timer.timing();
+        if (!timer.isEnd()) {
+            doPerTime();
+            timer.timing();
         }
     }
 
