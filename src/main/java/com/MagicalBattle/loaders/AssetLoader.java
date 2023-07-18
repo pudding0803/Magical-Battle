@@ -7,19 +7,20 @@ import javafx.scene.image.Image;
 import javafx.scene.media.AudioClip;
 import javafx.scene.media.Media;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class AssetLoader {
     public static final HashMap<CharacterClass, CharacterImageSet> characters = new HashMap<>();
     public static final HashMap<String, Image> backgroundImages = new HashMap<>();
-    public static final HashMap<String, Image> skillImages = new HashMap<>();
-    public static final HashMap<String, Image> effectImages = new HashMap<>();
+    public static final HashMap<String, ArrayList<Image>> skillImages = new HashMap<>();
+    public static final HashMap<String, ArrayList<Image>> effectImages = new HashMap<>();
     public static final HashMap<String, Media> backgroundMusics = new HashMap<>();
     public static final HashMap<String, AudioClip> fireAudios = new HashMap<>();
     public static final HashMap<String, AudioClip> hitAudios = new HashMap<>();
     public static final HashMap<String, AudioClip> effectAudios = new HashMap<>();
     public static final HashMap<String, AudioClip> otherAudios = new HashMap<>();
-    
+
     public static CharacterImageSet getCharacterImageSet(CharacterClass character) {
         return characters.get(character);
     }
@@ -28,11 +29,11 @@ public class AssetLoader {
         return backgroundImages;
     }
 
-    public static Image getSkillImage(String name) {
+    public static ArrayList<Image> getSkillImages(String name) {
         return skillImages.get(name);
     }
 
-    public static Image getEffectImage(String name) {
+    public static ArrayList<Image> getEffectImages(String name) {
         return effectImages.get(name);
     }
 

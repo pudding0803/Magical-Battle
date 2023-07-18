@@ -25,7 +25,7 @@ public class Chilled extends Status {
     protected void doPerTime() {
         if (character.getStatusTimer(StatusName.HURT).isEnd()) {
             Lighting lighting = new Lighting();
-            lighting.setLight(new Light.Distant(0, 45, Colors.chilledColor));
+            lighting.setLight(new Light.Distant(0, 45, Colors.CHILLED));
             character.setEffect(lighting);
         }
         character.setSpeed(character.getMaxSpeed() * SPEED_EFFECT);

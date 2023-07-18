@@ -21,6 +21,7 @@ import javafx.geometry.NodeOrientation;
 import javafx.scene.effect.Effect;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.paint.Color;
 import javafx.util.Duration;
 
 import java.util.Random;
@@ -161,7 +162,6 @@ public abstract class Character {
     }
 
     public void setHealth(double value) {
-        GameController.newDisplayObject(new DamageLabel(this, getHealth() - value));
         currentAbility.setHealth(Math.max(0, value));
     }
 
@@ -301,7 +301,9 @@ public abstract class Character {
                 GameController.newDisplayObject(new MissLabel(this));
             } else {
                 skillObject.playHitMedia();
-                setHealth(getHealth() + Math.min(getDefense() - skillObject.getDamage(), 0));
+                double damage = Math.min(getDefense() - skillObject.getDamage(), 0);
+                setHealth(getHealth() + damage);
+                GameController.newDisplayObject(new DamageLabel(this, damage, Color.RED));
                 statusTimers.getTimer(StatusName.HURT).restart();
                 skillObject.getStatusList().forEach(statusName -> statusTimers.restart(statusName, skillObject));
             }

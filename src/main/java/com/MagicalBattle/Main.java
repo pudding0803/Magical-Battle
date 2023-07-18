@@ -11,7 +11,7 @@ import java.io.IOException;
 public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
-        Image icon = ResourceLoader.getImage( "images/favicon.png");
+        Image icon = ResourceLoader.getImage("images/favicon.png");
         primaryStage.getIcons().add(icon);
         primaryStage.setResizable(false);
         ViewController.currentStage = primaryStage;

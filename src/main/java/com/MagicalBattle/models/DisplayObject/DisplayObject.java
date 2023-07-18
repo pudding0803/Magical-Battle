@@ -5,7 +5,7 @@ import javafx.scene.Node;
 
 public abstract class DisplayObject {
     protected final Character character;
-    
+
     public DisplayObject(Character character) {
         this.character = character;
     }

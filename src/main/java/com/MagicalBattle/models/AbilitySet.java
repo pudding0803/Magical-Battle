@@ -51,26 +51,26 @@ public class AbilitySet {
     }
 
     public void setHealth(double value) {
-         health = value;
+        health = value;
     }
 
     public void setMagic(double value) {
-         magic = value;
+        magic = value;
     }
 
     public void setAttack(double value) {
-         attack = value;
+        attack = value;
     }
 
     public void setDefense(double value) {
-         defense = value;
+        defense = value;
     }
 
     public void setSpeed(double value) {
-         speed = value;
+        speed = value;
     }
 
     public void setAgility(double value) {
-         agility = value;
+        agility = value;
     }
 }

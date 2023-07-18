@@ -31,7 +31,6 @@ public class ConfigLoader {
         JSONObject object = (JSONObject) parser.parse(reader);
         reader.close();
         object.put("AssetCount", value);
-        System.out.println(object);
         FileWriter writer = new FileWriter(FILE_PATH);
         BufferedWriter bufferedWriter = new BufferedWriter(writer);
         bufferedWriter.write(object.toString());

@@ -1,21 +1,27 @@
 package com.MagicalBattle.models.SkillObject;
 
-import com.MagicalBattle.constants.Settings;
+import com.MagicalBattle.loaders.AssetLoader;
 import com.MagicalBattle.models.Character.Character;
 import com.MagicalBattle.models.enums.StatusName;
+import javafx.scene.image.Image;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Earth extends SkillObject {
+    private static final String NAME = "earth";
+    private static final ArrayList<Image> IMAGES = AssetLoader.getSkillImages(NAME);
+    private static final double BASE_VELOCITY_X = 14;
+    private static final double BASE_VELOCITY_Y = 0;
+
     public Earth(Character character) {
-        super(character,"earth","earth", "earth");
+        super(character, IMAGES.get(0), NAME, NAME);
         statusList = new ArrayList<>(List.of(StatusName.KNOCKED_UP));
         damage = character.getAttack();
         attackBoth = false;
         gravity = false;
-        velocityX = Settings.MAGE_ATTACK_VELOCITY * (character.isFacingLeft() ? -1 : 1);
-        velocityY = 0;
+        velocityX = BASE_VELOCITY_X * (character.isFacingLeft() ? -1 : 1);
+        velocityY = BASE_VELOCITY_Y;
     }
 
     @Override

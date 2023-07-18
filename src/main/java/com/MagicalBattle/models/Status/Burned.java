@@ -2,8 +2,10 @@ package com.MagicalBattle.models.Status;
 
 import com.MagicalBattle.constants.Colors;
 import com.MagicalBattle.constants.Time;
+import com.MagicalBattle.controllers.GameController;
 import com.MagicalBattle.loaders.AssetLoader;
 import com.MagicalBattle.models.Character.Character;
+import com.MagicalBattle.models.DisplayObject.LabelObject.DamageLabel;
 import com.MagicalBattle.models.enums.StatusName;
 import javafx.scene.effect.Light;
 import javafx.scene.effect.Lighting;
@@ -23,15 +25,16 @@ public class Burned extends Status {
 
     @Override
     protected void doPerTime() {
-       if(timer.getTime() % Time.ms(1000) == 0) {
+        if (timer.getTime() % Time.ms(1000) == 0) {
             AssetLoader.playEffectAudio("burned");
             character.setHealth(character.getHealth() - DAMAGE);
             character.getStatusTimer(StatusName.HURT).restart();
-       }
-       if (character.getStatusTimer(StatusName.HURT).isEnd()) {
+            GameController.newDisplayObject(new DamageLabel(character, DAMAGE, Colors.BURNED));
+        }
+        if (character.getStatusTimer(StatusName.HURT).isEnd()) {
             Lighting lighting = new Lighting();
-            lighting.setLight(new Light.Distant(0, 45, Colors.burnedColor));
+            lighting.setLight(new Light.Distant(0, 45, Colors.BURNED));
             character.setEffect(lighting);
-       }
+        }
     }
 }

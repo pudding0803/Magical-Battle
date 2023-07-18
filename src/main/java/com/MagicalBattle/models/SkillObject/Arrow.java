@@ -1,6 +1,6 @@
 package com.MagicalBattle.models.SkillObject;
 
-import com.MagicalBattle.constants.Settings;
+import com.MagicalBattle.loaders.AssetLoader;
 import com.MagicalBattle.models.Character.Character;
 import javafx.scene.image.Image;
 
@@ -8,15 +8,18 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Arrow extends SkillObject {
-    protected Image image;
+    private static final String NAME = "arrow";
+    private static final ArrayList<Image> IMAGES = AssetLoader.getSkillImages(NAME);
+    private static final double BASE_VELOCITY_X = 12;
+    private static final double BASE_VELOCITY_Y = 0;
 
     public Arrow(Character character) {
-        super(character, "arrow", "arrow", "arrow");
+        super(character, IMAGES.get(0), NAME, NAME);
         arrowInitialize();
     }
 
-    public Arrow(Character character, String image, String fireMedia) {
-        super(character, image, fireMedia, "arrow");
+    public Arrow(Character character, Image image, String fireMedia) {
+        super(character, image, fireMedia, NAME);
         arrowInitialize();
     }
 
@@ -28,8 +31,8 @@ public class Arrow extends SkillObject {
         damage = character.getAttack() * 0.11;
         attackBoth = false;
         gravity = false;
-        velocityX = (Settings.ARCHER_ATTACK_VELOCITY + fixedVelocityX) * (character.isFacingLeft() ? -1 : 1);
-        velocityY = 0;
+        velocityX = (BASE_VELOCITY_X + fixedVelocityX) * (character.isFacingLeft() ? -1 : 1);
+        velocityY = BASE_VELOCITY_Y;
     }
 
     @Override

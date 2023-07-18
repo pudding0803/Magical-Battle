@@ -30,7 +30,7 @@ public class SkillTimers {
             chargedSkillTimers.get(skill).timing();
         }
     }
-    
+
     public void restartPressed(SkillType skill) {
         pressedTimers.get(skill).setActive(true);
         pressedTimers.get(skill).restart();

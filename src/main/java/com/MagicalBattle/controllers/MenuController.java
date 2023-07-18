@@ -64,8 +64,10 @@ public class MenuController implements Initializable {
             }
             for (int i = 0; i < imageViews.size(); i++) {
                 CharacterClass characterClass = CharacterClass.getCharacter(i);
-                if (isSelected.get(i)) imageViews.get(i).setImage(AssetLoader.getCharacterImageSet(characterClass).getPreparingOrSelect(counter.get(), false));
-                else imageViews.get(i).setImage(AssetLoader.getCharacterImageSet(characterClass).getPreparingOrSelect(counter.get(), true));
+                if (isSelected.get(i))
+                    imageViews.get(i).setImage(AssetLoader.getCharacterImageSet(characterClass).getPreparingOrSelect(counter.get(), false));
+                else
+                    imageViews.get(i).setImage(AssetLoader.getCharacterImageSet(characterClass).getPreparingOrSelect(counter.get(), true));
             }
             counter.set(counter.get() == 2 ? 0 : counter.incrementAndGet());
         });

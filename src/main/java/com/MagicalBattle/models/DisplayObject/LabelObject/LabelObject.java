@@ -19,7 +19,7 @@ public abstract class LabelObject extends DisplayObject {
     static {
         TEXT.setFont(Font.font("Comic Sans MS", FontWeight.BOLD, SIZE));
         TEXT.setStroke(Color.WHITE);
-        TEXT.setStrokeWidth(1.5);
+        TEXT.setStrokeWidth(1);
     }
 
     private final Label label = new Label();

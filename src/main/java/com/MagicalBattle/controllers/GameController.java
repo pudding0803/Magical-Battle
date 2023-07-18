@@ -124,10 +124,9 @@ public class GameController implements Initializable {
             SkillObject skillObject = allSkillObjects.get(i);
             skillPane.getChildren().add(skillObject.getImageView());
             skillObject.doByTime();
-            if (skillObject.getX() <= 0 || skillObject.getX() >= Settings.WIDTH - skillObject.getWidth() ||
-                    skillObject.getY() <= 0 || skillObject.getY() >= Settings.GROUND_HEIGHT - skillObject.getHeight() ||
-                    player1.isCollidedFromOther(skillObject) || player2.isCollidedFromOther(skillObject))
+            if (skillObject.isFinished() || skillObject.isOutOfBound() || player1.isCollidedFromOther(skillObject) || player2.isCollidedFromOther(skillObject)) {
                 allSkillObjects.remove(i--);
+            }
         }
     }
 
@@ -155,11 +154,16 @@ public class GameController implements Initializable {
 //                character.attack();
 //            }
 //        }
-        if (character.getSkillTimers().isPressing(SkillType.ATTACK) && character.getSkillTimers().isSkillValid(SkillType.ATTACK)) character.attack();
-        if (character.getSkillTimers().isPressing(SkillType.SKILL1) && character.getSkillTimers().isSkillValid(SkillType.SKILL1)) character.skill1();
-        if (character.getSkillTimers().isPressing(SkillType.SKILL2) && character.getSkillTimers().isSkillValid(SkillType.SKILL2)) character.skill2();
-        if (character.getSkillTimers().isPressing(SkillType.SKILL3) && character.getSkillTimers().isSkillValid(SkillType.SKILL3)) character.skill3();
-        if (character.getSkillTimers().isPressing(SkillType.SKILL4) && character.getSkillTimers().isSkillValid(SkillType.SKILL4)) character.skill4();
+        if (character.getSkillTimers().isPressing(SkillType.ATTACK) && character.getSkillTimers().isSkillValid(SkillType.ATTACK))
+            character.attack();
+        if (character.getSkillTimers().isPressing(SkillType.SKILL1) && character.getSkillTimers().isSkillValid(SkillType.SKILL1))
+            character.skill1();
+        if (character.getSkillTimers().isPressing(SkillType.SKILL2) && character.getSkillTimers().isSkillValid(SkillType.SKILL2))
+            character.skill2();
+        if (character.getSkillTimers().isPressing(SkillType.SKILL3) && character.getSkillTimers().isSkillValid(SkillType.SKILL3))
+            character.skill3();
+        if (character.getSkillTimers().isPressing(SkillType.SKILL4) && character.getSkillTimers().isSkillValid(SkillType.SKILL4))
+            character.skill4();
     }
 
     private void gameOver() {
@@ -179,10 +183,12 @@ public class GameController implements Initializable {
             player2.doVerticalMotion();
 
             if (player1.isDead()) player1.setGameOverImage(false, -1);
-            else player1.setGameOverImage(true, (int) ((deadCounter.get() + 1) * Settings.UPDATE_TIME / Settings.WAIT_TIME));
+            else
+                player1.setGameOverImage(true, (int) ((deadCounter.get() + 1) * Settings.UPDATE_TIME / Settings.WAIT_TIME));
 
             if (player2.isDead()) player2.setGameOverImage(false, -1);
-            else player2.setGameOverImage(true, (int) ((deadCounter.get() + 1) * Settings.UPDATE_TIME / Settings.WAIT_TIME));
+            else
+                player2.setGameOverImage(true, (int) ((deadCounter.get() + 1) * Settings.UPDATE_TIME / Settings.WAIT_TIME));
 
             deadCounter.set((deadCounter.get() + 2) * Settings.UPDATE_TIME / Settings.WAIT_TIME == 3 ? 0 : deadCounter.incrementAndGet());
         });

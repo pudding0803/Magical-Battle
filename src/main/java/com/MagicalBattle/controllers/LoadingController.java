@@ -128,13 +128,13 @@ public class LoadingController implements Initializable {
     }
 
     private void loadSkillImages() {
-        final String SKILL_IMAGE_PATH = "images/attack/skill/";
-        loadDirectory(SKILL_IMAGE_PATH, AssetLoader.skillImages, ResourceLoader::getImage);
+        final String SKILL_IMAGE_PATH = "images/skill/";
+        loadSubDirectory(SKILL_IMAGE_PATH, AssetLoader.skillImages, ResourceLoader::getImage);
     }
 
     private void loadEffectImages() {
-        final String EFFECT_IMAGE_PATH = "images/attack/effect/";
-        loadDirectory(EFFECT_IMAGE_PATH, AssetLoader.effectImages, ResourceLoader::getImage);
+        final String EFFECT_IMAGE_PATH = "images/effect/";
+        loadSubDirectory(EFFECT_IMAGE_PATH, AssetLoader.effectImages, ResourceLoader::getImage);
     }
 
     private void loadBackgroundMusics() {
@@ -165,11 +165,24 @@ public class LoadingController implements Initializable {
     private <T> void loadDirectory(String DIRECTORY_PATH, HashMap<String, T> resourceMap, Function<String, T> resourceLoader) {
         File directory = new File(Objects.requireNonNull(LoadingController.class.getResource(Settings.RESOURCE_PATH + DIRECTORY_PATH)).getPath());
         for (File file : Objects.requireNonNull(directory.listFiles())) {
-            if (file.isFile()) {
+            String fileName = file.getName();
+            updateFileName(Settings.RESOURCE_PATH + DIRECTORY_PATH + file.getName());
+            resourceMap.put(fileName.substring(0, fileName.indexOf(".")), resourceLoader.apply(DIRECTORY_PATH + fileName));
+        }
+    }
+
+    private void loadSubDirectory(String DIRECTORY_PATH, HashMap<String, ArrayList<Image>> resourceMap, Function<String, Image> resourceLoader) {
+        File directory = new File(Objects.requireNonNull(LoadingController.class.getResource(Settings.RESOURCE_PATH + DIRECTORY_PATH)).getPath());
+        for (File subDirectory : Objects.requireNonNull(directory.listFiles())) {
+            String attackName = subDirectory.getName();
+            ArrayList<Image> images = new ArrayList<>();
+            for (File file : Objects.requireNonNull(subDirectory.listFiles())) {
                 String fileName = file.getName();
-                updateFileName(Settings.RESOURCE_PATH + DIRECTORY_PATH + file.getName());
-                resourceMap.put(fileName.substring(0, fileName.indexOf(".")), resourceLoader.apply(DIRECTORY_PATH + fileName));
+                String filePath = DIRECTORY_PATH + attackName + "/" + fileName;
+                updateFileName(Settings.RESOURCE_PATH + DIRECTORY_PATH + filePath);
+                images.add(resourceLoader.apply(filePath));
             }
+            resourceMap.put(attackName, images);
         }
     }
 

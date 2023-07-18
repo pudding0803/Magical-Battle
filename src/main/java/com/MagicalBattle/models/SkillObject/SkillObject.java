@@ -1,9 +1,11 @@
 package com.MagicalBattle.models.SkillObject;
 
+import com.MagicalBattle.constants.Settings;
 import com.MagicalBattle.loaders.AssetLoader;
 import com.MagicalBattle.models.Character.Character;
 import com.MagicalBattle.models.enums.StatusName;
 import javafx.geometry.NodeOrientation;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 import java.util.ArrayList;
@@ -16,14 +18,15 @@ public abstract class SkillObject {
     protected ArrayList<StatusName> statusList = new ArrayList<>();
     protected double damage;
     protected final Character character;
-    protected boolean attackBoth;
-    protected boolean gravity;
     protected double velocityX;
     protected double velocityY;
+    protected boolean attackBoth;
+    protected boolean gravity;
+    protected boolean finished = false;
 
-    public SkillObject(Character character, String image, String fireAudio, String hitAudio) {
+    public SkillObject(Character character, Image image, String fireAudio, String hitAudio) {
         this.character = character;
-        imageView.setImage(AssetLoader.getSkillImage(image));
+        imageView.setImage(image);
         if (character.isFacingLeft()) imageView.setNodeOrientation(NodeOrientation.RIGHT_TO_LEFT);
         setX(character.getX() + (character.isFacingLeft() ? -getWidth() : character.getWidth()));
         setY(character.getY() + (character.getHeight() - getHeight()) / 2);
@@ -87,6 +90,14 @@ public abstract class SkillObject {
         return velocityY;
     }
 
+    public void setVelocityX(double value) {
+        velocityX = value;
+    }
+
+    public void setVelocityY(double value) {
+        velocityY = value;
+    }
+
     public ArrayList<StatusName> getStatusList() {
         return statusList;
     }
@@ -97,5 +108,13 @@ public abstract class SkillObject {
 
     public void playHitMedia() {
         AssetLoader.playHitAudio(hitAudio);
+    }
+
+    public boolean isOutOfBound() {
+        return getX() <= 0 || getX() >= Settings.WIDTH - getWidth() || getY() <= 0;
+    }
+
+    public boolean isFinished() {
+        return finished;
     }
 }

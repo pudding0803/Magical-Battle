@@ -12,7 +12,7 @@ import java.util.Objects;
 
 public class ViewController {
     public static Stage currentStage;
-    
+
     private static URL getFXML(String path) {
         return Objects.requireNonNull(ViewController.class.getResource(Settings.RESOURCE_PATH + path));
     }

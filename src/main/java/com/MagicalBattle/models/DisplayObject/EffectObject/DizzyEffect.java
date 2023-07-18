@@ -1,12 +1,19 @@
 package com.MagicalBattle.models.DisplayObject.EffectObject;
 
+import com.MagicalBattle.loaders.AssetLoader;
 import com.MagicalBattle.models.Character.Character;
 import com.MagicalBattle.models.enums.StatusName;
 import javafx.scene.Node;
+import javafx.scene.image.Image;
+
+import java.util.ArrayList;
 
 public class DizzyEffect extends EffectObject {
+    private static final String NAME = "dizzy";
+    private static final ArrayList<Image> IMAGES = AssetLoader.getEffectImages(NAME);
+
     public DizzyEffect(Character character) {
-        super(character, "dizzy");
+        super(character, IMAGES.get(0));
     }
 
     public double getWidth() {

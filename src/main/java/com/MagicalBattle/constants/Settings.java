@@ -20,8 +20,4 @@ public final class Settings {
     public static final double INITIAL_VELOCITY = 9;
     public static final double BONUS_VELOCITY = 2;
     public static final double GRAVITY = 0.45;
-
-    public static final double MAGE_ATTACK_VELOCITY = 14;
-    public static final double ARCHER_ATTACK_VELOCITY = 12;
-    public static final double ASSASSIN_ATTACK_VELOCITY = 22;
 }
