@@ -36,7 +36,7 @@ public abstract class SkillObject {
 
     public void doByTime() {
         setX(getX() + getVelocityX());
-        setX(getX() + getVelocityY());
+        setY(getY() + getVelocityY());
         doPerTime();
     }
 

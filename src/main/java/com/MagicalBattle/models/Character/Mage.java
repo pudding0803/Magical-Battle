@@ -19,7 +19,10 @@ public class Mage extends Character {
 
     @Override
     public void attack() {
-
+        skillTimers.restartSkill(SkillType.ATTACK);
+        SkillObject skillObject = new MagicBall(this);
+        skillObject.playFireMedia();
+        GameController.newSkillObject(skillObject);
     }
 
     @Override

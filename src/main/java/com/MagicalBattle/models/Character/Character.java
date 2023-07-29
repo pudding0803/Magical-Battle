@@ -301,8 +301,8 @@ public abstract class Character {
                 GameController.newDisplayObject(new MissLabel(this));
             } else {
                 skillObject.playHitMedia();
-                double damage = Math.min(getDefense() - skillObject.getDamage(), 0);
-                setHealth(getHealth() + damage);
+                double damage = skillObject.getDamage() * 100 / (getDefense() + 100);
+                setHealth(getHealth() - damage);
                 GameController.newDisplayObject(new DamageLabel(this, damage, Color.RED));
                 statusTimers.getTimer(StatusName.HURT).restart();
                 skillObject.getStatusList().forEach(statusName -> statusTimers.restart(statusName, skillObject));

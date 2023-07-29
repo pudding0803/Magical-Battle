@@ -37,6 +37,6 @@ public class Arrow extends SkillObject {
 
     @Override
     public void doPerTime() {
-        damage += 0.39;
+        damage += 0.29;
     }
 }
